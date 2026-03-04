@@ -46,7 +46,7 @@ When $H_i$ is evaluated against $H_u$, it is a bit more complicated. Given that 
 When the true effect is 0.1, this means that either $H_i$ or $H_c$ is true, as they are mutually exclusive and theoretically $\rho$ can never perfectly equal 0.1. In this case, it would be expected that the $log_{10} \text{ } pBF_{ic}$ values fail to support either hypothesis, peaking around zero.
 
 ```{r, include=F, echo=F, message=F, warning=F}
-orig_dat <- read_csv("sim_results/sim_results_2025-10-16.csv")
+orig_dat <- read_csv("../../sim_results/01_sim_results_first_replication_WRONG_SEED/sim_results_2025-10-16.csv")
 ```
 
 ### Simulation 0-a: Testing $H_i$ against $H_c$
@@ -261,7 +261,7 @@ This will be tested by running the simulation again, while testing the following
 - $H_i: \rho > -0.8 \text{ versus } H_c: \le -0.8 \text{, when es = } -0.8$, in this case it is expected that with higher error values, there will be shift towards positive $log_{10} \text{ } pBF_{ic}$ values, indicating evidence for $H_i$, as now this hypothesis will entail the largest proportion of the parameter space.
 
 ```{r, message = F, echo = F}
-ext_dat <- read_csv("sim_results/sim_results_1000it_2026-01-10.csv")
+ext_dat <- read_csv("../../sim_results/02_sim_results_cov_cor/sim_results_1000it_2026-01-10.csv")
 ```
 
 #### 1-a1: $Log_{10} \text{ } pBF_{ic}$, es = 0.1, correlation

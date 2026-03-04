@@ -1,5 +1,5 @@
 ---
-title: "BES Manuscript Second Draft"
+title: "BES Manuscript Third Draft"
 author: "Loesje Ubbink"
 format:
   html:
@@ -36,7 +36,7 @@ The simulation conditions consist of various parameters:
 ```{r, include=F, echo=F, message=F, warning=F}
 orig_dat <- read_csv("../../sim_results/01_sim_results_first_replication_WRONG_SEED/sim_results_2025-10-16.csv")
 
-dat <- read_csv("../../sim_results/04_sim_results_cor_cov_z_beta/sim_results_2026-02-10_fixed.csv")
+dat <- read_csv("../../sim_results/05_sim_results_cor_cov_z_beta_meandiff/sim_results_2026-03-03.csv")
 ```
 
 ## Simulation 0: Orignial Simulation, general plots of distribution of $log_{10} \text{ } pBF_{ic}$ and $log_{10} \text{ } pBF_{iu}$
