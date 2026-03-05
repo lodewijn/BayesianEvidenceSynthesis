@@ -1,0 +1,1570 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.25">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Loesje Ubbink">
+
+<title>BES Manuscript Third Draft</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="BES_manuscript_third_draft_files/libs/clipboard/clipboard.min.js"></script>
+<script src="BES_manuscript_third_draft_files/libs/quarto-html/quarto.js" type="module"></script>
+<script src="BES_manuscript_third_draft_files/libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="BES_manuscript_third_draft_files/libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="BES_manuscript_third_draft_files/libs/quarto-html/popper.min.js"></script>
+<script src="BES_manuscript_third_draft_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="BES_manuscript_third_draft_files/libs/quarto-html/anchor.min.js"></script>
+<link href="BES_manuscript_third_draft_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="BES_manuscript_third_draft_files/libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="BES_manuscript_third_draft_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="BES_manuscript_third_draft_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="BES_manuscript_third_draft_files/libs/bootstrap/bootstrap-d6a003b94517c951b2d65075d42fb01b.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="quarto-light">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article toc-left">
+<div id="quarto-sidebar-toc-left" class="sidebar toc-left">
+  <nav id="TOC" role="doc-toc" class="toc-active" data-toc-expanded="-1">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#bayesian-evidence-systhesis" id="toc-bayesian-evidence-systhesis" class="nav-link active" data-scroll-target="#bayesian-evidence-systhesis">Bayesian Evidence Systhesis</a>
+  <ul>
+  <li><a href="#simulation-0-orignial-simulation-general-plots-of-distribution-of-log_10-text-pbf_ic-and-log_10-text-pbf_iu" id="toc-simulation-0-orignial-simulation-general-plots-of-distribution-of-log_10-text-pbf_ic-and-log_10-text-pbf_iu" class="nav-link" data-scroll-target="#simulation-0-orignial-simulation-general-plots-of-distribution-of-log_10-text-pbf_ic-and-log_10-text-pbf_iu">Simulation 0: Orignial Simulation, general plots of distribution of <span class="math inline">\(log_{10} \text{ } pBF_{ic}\)</span> and <span class="math inline">\(log_{10} \text{ } pBF_{iu}\)</span></a>
+  <ul class="collapse">
+  <li><a href="#simulation-0-a-testing-h_i-against-h_c" id="toc-simulation-0-a-testing-h_i-against-h_c" class="nav-link" data-scroll-target="#simulation-0-a-testing-h_i-against-h_c">Simulation 0-a: Testing <span class="math inline">\(H_i\)</span> against <span class="math inline">\(H_c\)</span></a>
+  <ul class="collapse">
+  <li><a href="#a1-log_10-text-pbf_ic-when-true-effect-is-0.2---h_i-is-true" id="toc-a1-log_10-text-pbf_ic-when-true-effect-is-0.2---h_i-is-true" class="nav-link" data-scroll-target="#a1-log_10-text-pbf_ic-when-true-effect-is-0.2---h_i-is-true">0-a1: <span class="math inline">\(Log_{10} \text{ } pBF_{ic}\)</span> When True Effect is 0.2 - <span class="math inline">\(H_i\)</span> is true</a></li>
+  <li><a href="#a2-log_10-text-pbf_ic-when-true-effect-is-0.1---h_i-is-false" id="toc-a2-log_10-text-pbf_ic-when-true-effect-is-0.1---h_i-is-false" class="nav-link" data-scroll-target="#a2-log_10-text-pbf_ic-when-true-effect-is-0.1---h_i-is-false">0-a2: <span class="math inline">\(Log_{10} \text{ } pBF_{ic}\)</span> When True Effect is 0.1 - <span class="math inline">\(H_i\)</span> is false</a></li>
+  </ul></li>
+  <li><a href="#simulation-0-b-testing-h_i-against-h_u" id="toc-simulation-0-b-testing-h_i-against-h_u" class="nav-link" data-scroll-target="#simulation-0-b-testing-h_i-against-h_u">Simulation 0-b: Testing <span class="math inline">\(H_i\)</span> against <span class="math inline">\(H_u\)</span></a>
+  <ul class="collapse">
+  <li><a href="#b1-log_10-text-pbf_iu-when-true-effect-is-0.2---h_i-is-true" id="toc-b1-log_10-text-pbf_iu-when-true-effect-is-0.2---h_i-is-true" class="nav-link" data-scroll-target="#b1-log_10-text-pbf_iu-when-true-effect-is-0.2---h_i-is-true">0-b1: <span class="math inline">\(Log_{10} \text{ } pBF_{iu}\)</span> When True Effect is 0.2 - <span class="math inline">\(H_i\)</span> is true</a></li>
+  <li><a href="#b2-log_10-text-pbf_iu-when-true-effect-is-0.1---h_i-is-false" id="toc-b2-log_10-text-pbf_iu-when-true-effect-is-0.1---h_i-is-false" class="nav-link" data-scroll-target="#b2-log_10-text-pbf_iu-when-true-effect-is-0.1---h_i-is-false">0-b2: <span class="math inline">\(Log_{10} \text{ } pBF_{iu}\)</span> When True Effect is 0.1 - <span class="math inline">\(H_i\)</span> is false</a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#simulation-1-correlations" id="toc-simulation-1-correlations" class="nav-link" data-scroll-target="#simulation-1-correlations">Simulation 1: Correlations</a>
+  <ul class="collapse">
+  <li><a href="#simulation-1-a-testing-hypotheses-h_i-versus-h_c-with-different-constrained-parameter-spaces-correlations" id="toc-simulation-1-a-testing-hypotheses-h_i-versus-h_c-with-different-constrained-parameter-spaces-correlations" class="nav-link" data-scroll-target="#simulation-1-a-testing-hypotheses-h_i-versus-h_c-with-different-constrained-parameter-spaces-correlations">Simulation 1-a: Testing hypotheses (<span class="math inline">\(H_i\)</span> versus <span class="math inline">\(H_c\)</span>) with different constrained parameter spaces (correlations)</a>
+  <ul class="collapse">
+  <li><a href="#a1-log_10-text-pbf_ic-es-0.1-correlation" id="toc-a1-log_10-text-pbf_ic-es-0.1-correlation" class="nav-link" data-scroll-target="#a1-log_10-text-pbf_ic-es-0.1-correlation">1-a1: <span class="math inline">\(Log_{10} \text{ } pBF_{ic}\)</span>, es = 0.1, correlation</a></li>
+  <li><a href="#a2-log_10-text-pbf_ic-es-0-correlation" id="toc-a2-log_10-text-pbf_ic-es-0-correlation" class="nav-link" data-scroll-target="#a2-log_10-text-pbf_ic-es-0-correlation">1-a2: <span class="math inline">\(Log_{10} \text{ } pBF_{ic}\)</span>, es = 0, correlation</a></li>
+  <li><a href="#a3-log_10-text-pbf_ic-es-0.8-correlation" id="toc-a3-log_10-text-pbf_ic-es-0.8-correlation" class="nav-link" data-scroll-target="#a3-log_10-text-pbf_ic-es-0.8-correlation">1-a3: <span class="math inline">\(Log_{10} \text{ } pBF_{ic}\)</span>, es = 0.8, correlation</a></li>
+  <li><a href="#a4-log_10-text-pbf_ic-es--0.8-correlation" id="toc-a4-log_10-text-pbf_ic-es--0.8-correlation" class="nav-link" data-scroll-target="#a4-log_10-text-pbf_ic-es--0.8-correlation">1-a4: <span class="math inline">\(Log_{10} \text{ } pBF_{ic}\)</span>, es = -0.8, correlation</a></li>
+  <li><a href="#summary-of-plots-log_10-text-pbf_ic-with-various-es-and-hyp_val-correlation" id="toc-summary-of-plots-log_10-text-pbf_ic-with-various-es-and-hyp_val-correlation" class="nav-link" data-scroll-target="#summary-of-plots-log_10-text-pbf_ic-with-various-es-and-hyp_val-correlation">Summary of plots <span class="math inline">\(log_{10} \text{ } pBF_{ic}\)</span> with various es and hyp_val, correlation</a></li>
+  </ul></li>
+  <li><a href="#simulation-1-b-testing-hypotheses-h_i-versus-h_u-with-different-constrained-parameter-spaces-correlations" id="toc-simulation-1-b-testing-hypotheses-h_i-versus-h_u-with-different-constrained-parameter-spaces-correlations" class="nav-link" data-scroll-target="#simulation-1-b-testing-hypotheses-h_i-versus-h_u-with-different-constrained-parameter-spaces-correlations">Simulation 1-b: Testing hypotheses (<span class="math inline">\(H_i\)</span> versus <span class="math inline">\(H_u\)</span>) with different constrained parameter spaces (correlations)</a>
+  <ul class="collapse">
+  <li><a href="#b1-log_10-text-pbf_iu-es-0.1-correlation" id="toc-b1-log_10-text-pbf_iu-es-0.1-correlation" class="nav-link" data-scroll-target="#b1-log_10-text-pbf_iu-es-0.1-correlation">1-b1: <span class="math inline">\(Log_{10} \text{ } pBF_{iu}\)</span>, es = 0.1, correlation</a></li>
+  <li><a href="#b2-log_10-text-pbf_iu-es-0-correlation" id="toc-b2-log_10-text-pbf_iu-es-0-correlation" class="nav-link" data-scroll-target="#b2-log_10-text-pbf_iu-es-0-correlation">1-b2: <span class="math inline">\(Log_{10} \text{ } pBF_{iu}\)</span>, es = 0, correlation</a></li>
+  <li><a href="#b3-log_10-text-pbf_iu-es-0.8-correlation" id="toc-b3-log_10-text-pbf_iu-es-0.8-correlation" class="nav-link" data-scroll-target="#b3-log_10-text-pbf_iu-es-0.8-correlation">1-b3: <span class="math inline">\(Log_{10} \text{ } pBF_{iu}\)</span>, es = 0.8, correlation</a></li>
+  <li><a href="#b4-log_10-text-pbf_iu-es--0.8-correlation" id="toc-b4-log_10-text-pbf_iu-es--0.8-correlation" class="nav-link" data-scroll-target="#b4-log_10-text-pbf_iu-es--0.8-correlation">1-b4: <span class="math inline">\(Log_{10} \text{ } pBF_{iu}\)</span>, es = -0.8, correlation</a></li>
+  <li><a href="#summary-of-plots-log_10-text-pbf_iu-with-various-es-and-hyp_val-correlation" id="toc-summary-of-plots-log_10-text-pbf_iu-with-various-es-and-hyp_val-correlation" class="nav-link" data-scroll-target="#summary-of-plots-log_10-text-pbf_iu-with-various-es-and-hyp_val-correlation">Summary of plots <span class="math inline">\(log_{10} \text{ } pBF_{iu}\)</span> with various es and hyp_val, correlation</a></li>
+  </ul></li>
+  <li><a href="#simulation-1-general-conclucion" id="toc-simulation-1-general-conclucion" class="nav-link" data-scroll-target="#simulation-1-general-conclucion">Simulation 1: General conclucion</a></li>
+  </ul></li>
+  <li><a href="#simulation-2-covariance" id="toc-simulation-2-covariance" class="nav-link" data-scroll-target="#simulation-2-covariance">Simulation 2: Covariance</a>
+  <ul class="collapse">
+  <li><a href="#simulation-2-a-testing-hypotheses-h_i-versus-h_c-with-different-unconstrained-parameter-spaces-covariances" id="toc-simulation-2-a-testing-hypotheses-h_i-versus-h_c-with-different-unconstrained-parameter-spaces-covariances" class="nav-link" data-scroll-target="#simulation-2-a-testing-hypotheses-h_i-versus-h_c-with-different-unconstrained-parameter-spaces-covariances">Simulation 2-a: Testing hypotheses (<span class="math inline">\(H_i\)</span> versus <span class="math inline">\(H_c\)</span>) with different unconstrained parameter spaces (covariances)</a>
+  <ul class="collapse">
+  <li><a href="#a1-log_10-text-pbf_ic-es-0.1-covariance" id="toc-a1-log_10-text-pbf_ic-es-0.1-covariance" class="nav-link" data-scroll-target="#a1-log_10-text-pbf_ic-es-0.1-covariance">2-a1: <span class="math inline">\(Log_{10} \text{ } pBF_{ic}\)</span>, es = 0.1, covariance</a></li>
+  <li><a href="#a2-log_10-text-pbf_ic-es-0-covariance" id="toc-a2-log_10-text-pbf_ic-es-0-covariance" class="nav-link" data-scroll-target="#a2-log_10-text-pbf_ic-es-0-covariance">2-a2: <span class="math inline">\(Log_{10} \text{ } pBF_{ic}\)</span>, es = 0, covariance</a></li>
+  <li><a href="#a3-log_10-text-pbf_ic-es-0.8-covariance" id="toc-a3-log_10-text-pbf_ic-es-0.8-covariance" class="nav-link" data-scroll-target="#a3-log_10-text-pbf_ic-es-0.8-covariance">2-a3: <span class="math inline">\(Log_{10} \text{ } pBF_{ic}\)</span>, es = 0.8, covariance</a></li>
+  <li><a href="#a4-log_10-text-pbf_ic-es--0.8-covariance" id="toc-a4-log_10-text-pbf_ic-es--0.8-covariance" class="nav-link" data-scroll-target="#a4-log_10-text-pbf_ic-es--0.8-covariance">2-a4: <span class="math inline">\(Log_{10} \text{ } pBF_{ic}\)</span>, es = -0.8, covariance</a></li>
+  <li><a href="#summary-of-plots-log_10-text-pbf_ic-with-various-es-and-hyp_val-covariance" id="toc-summary-of-plots-log_10-text-pbf_ic-with-various-es-and-hyp_val-covariance" class="nav-link" data-scroll-target="#summary-of-plots-log_10-text-pbf_ic-with-various-es-and-hyp_val-covariance">Summary of plots <span class="math inline">\(log_{10} \text{ } pBF_{ic}\)</span> with various es and hyp_val, covariance</a></li>
+  </ul></li>
+  <li><a href="#simulation-2-b-testing-hypotheses-h_i-versus-h_u-with-different-constrained-parameter-spaces-covariances" id="toc-simulation-2-b-testing-hypotheses-h_i-versus-h_u-with-different-constrained-parameter-spaces-covariances" class="nav-link" data-scroll-target="#simulation-2-b-testing-hypotheses-h_i-versus-h_u-with-different-constrained-parameter-spaces-covariances">Simulation 2-b: Testing hypotheses (<span class="math inline">\(H_i\)</span> versus <span class="math inline">\(H_u\)</span>) with different constrained parameter spaces (covariances)</a>
+  <ul class="collapse">
+  <li><a href="#b1-log_10-text-pbf_iu-es-0.1-covariance" id="toc-b1-log_10-text-pbf_iu-es-0.1-covariance" class="nav-link" data-scroll-target="#b1-log_10-text-pbf_iu-es-0.1-covariance">2-b1: <span class="math inline">\(Log_{10} \text{ } pBF_{iu}\)</span>, es = 0.1, covariance</a></li>
+  <li><a href="#b2-log_10-text-pbf_iu-es-0-covariance" id="toc-b2-log_10-text-pbf_iu-es-0-covariance" class="nav-link" data-scroll-target="#b2-log_10-text-pbf_iu-es-0-covariance">2-b2: <span class="math inline">\(Log_{10} \text{ } pBF_{iu}\)</span>, es = 0, covariance</a></li>
+  <li><a href="#b3-log_10-text-pbf_iu-es-0.8-covariance" id="toc-b3-log_10-text-pbf_iu-es-0.8-covariance" class="nav-link" data-scroll-target="#b3-log_10-text-pbf_iu-es-0.8-covariance">2-b3: <span class="math inline">\(Log_{10} \text{ } pBF_{iu}\)</span>, es = 0.8, covariance</a></li>
+  <li><a href="#b4-log_10-text-pbf_iu-es--0.8-covariance" id="toc-b4-log_10-text-pbf_iu-es--0.8-covariance" class="nav-link" data-scroll-target="#b4-log_10-text-pbf_iu-es--0.8-covariance">2-b4: <span class="math inline">\(Log_{10} \text{ } pBF_{iu}\)</span>, es = -0.8, covariance</a></li>
+  <li><a href="#summary-of-plots-log_10-text-pbf_iu-with-various-es-and-hyp_val-correlation-1" id="toc-summary-of-plots-log_10-text-pbf_iu-with-various-es-and-hyp_val-correlation-1" class="nav-link" data-scroll-target="#summary-of-plots-log_10-text-pbf_iu-with-various-es-and-hyp_val-correlation-1">Summary of plots <span class="math inline">\(log_{10} \text{ } pBF_{iu}\)</span> with various es and hyp_val, correlation</a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#simulation-3-z-transformation---transformed-atanhhyp_val" id="toc-simulation-3-z-transformation---transformed-atanhhyp_val" class="nav-link" data-scroll-target="#simulation-3-z-transformation---transformed-atanhhyp_val">Simulation 3: Z-transformation - Transformed atanh(hyp_val)</a>
+  <ul class="collapse">
+  <li><a href="#simulation-3-a-testing-hypotheses-h_i-versus-h_c-with-different-unconstrained-parameter-spaces-z-scores-transformed-hyp" id="toc-simulation-3-a-testing-hypotheses-h_i-versus-h_c-with-different-unconstrained-parameter-spaces-z-scores-transformed-hyp" class="nav-link" data-scroll-target="#simulation-3-a-testing-hypotheses-h_i-versus-h_c-with-different-unconstrained-parameter-spaces-z-scores-transformed-hyp">Simulation 3-a: Testing hypotheses (<span class="math inline">\(H_i\)</span> versus <span class="math inline">\(H_c\)</span>) with different unconstrained parameter spaces (z-scores transformed hyp)</a>
+  <ul class="collapse">
+  <li><a href="#a1-log_10-text-pbf_ic-es-0.1-z-scores-transformed-hyp" id="toc-a1-log_10-text-pbf_ic-es-0.1-z-scores-transformed-hyp" class="nav-link" data-scroll-target="#a1-log_10-text-pbf_ic-es-0.1-z-scores-transformed-hyp">3-a1: <span class="math inline">\(Log_{10} \text{ } pBF_{ic}\)</span>, es = 0.1, z-scores transformed hyp</a></li>
+  <li><a href="#a2-log_10-text-pbf_ic-es-0-z-scores-transformed-hyp" id="toc-a2-log_10-text-pbf_ic-es-0-z-scores-transformed-hyp" class="nav-link" data-scroll-target="#a2-log_10-text-pbf_ic-es-0-z-scores-transformed-hyp">3-a2: <span class="math inline">\(Log_{10} \text{ } pBF_{ic}\)</span>, es = 0, z-scores transformed hyp</a></li>
+  <li><a href="#a3-log_10-text-pbf_ic-es-0.8-z-scores-transformed-hyp" id="toc-a3-log_10-text-pbf_ic-es-0.8-z-scores-transformed-hyp" class="nav-link" data-scroll-target="#a3-log_10-text-pbf_ic-es-0.8-z-scores-transformed-hyp">3-a3: <span class="math inline">\(Log_{10} \text{ } pBF_{ic}\)</span>, es = 0.8, z-scores transformed hyp</a></li>
+  <li><a href="#a4-log_10-text-pbf_ic-es--0.8-z-scores-transformed-hyp" id="toc-a4-log_10-text-pbf_ic-es--0.8-z-scores-transformed-hyp" class="nav-link" data-scroll-target="#a4-log_10-text-pbf_ic-es--0.8-z-scores-transformed-hyp">3-a4: <span class="math inline">\(Log_{10} \text{ } pBF_{ic}\)</span>, es = -0.8, z-scores transformed hyp</a></li>
+  <li><a href="#summary-of-plots-log_10-text-pbf_ic-with-various-es-and-hyp_val-z-transformation-of-correlation" id="toc-summary-of-plots-log_10-text-pbf_ic-with-various-es-and-hyp_val-z-transformation-of-correlation" class="nav-link" data-scroll-target="#summary-of-plots-log_10-text-pbf_ic-with-various-es-and-hyp_val-z-transformation-of-correlation">Summary of plots <span class="math inline">\(log_{10} \text{ } pBF_{ic}\)</span> with various es and hyp_val, z-transformation of correlation</a></li>
+  </ul></li>
+  <li><a href="#simulation-3-b-testing-hypotheses-h_i-versus-h_u-with-different-constrained-parameter-spaces-z-scores-transformed-hyp" id="toc-simulation-3-b-testing-hypotheses-h_i-versus-h_u-with-different-constrained-parameter-spaces-z-scores-transformed-hyp" class="nav-link" data-scroll-target="#simulation-3-b-testing-hypotheses-h_i-versus-h_u-with-different-constrained-parameter-spaces-z-scores-transformed-hyp">Simulation 3-b: Testing hypotheses (<span class="math inline">\(H_i\)</span> versus <span class="math inline">\(H_u\)</span>) with different constrained parameter spaces (z-scores transformed hyp)</a>
+  <ul class="collapse">
+  <li><a href="#b1-log_10-text-pbf_iu-es-0.1-z-scores-transformed-hyp" id="toc-b1-log_10-text-pbf_iu-es-0.1-z-scores-transformed-hyp" class="nav-link" data-scroll-target="#b1-log_10-text-pbf_iu-es-0.1-z-scores-transformed-hyp">3-b1: <span class="math inline">\(Log_{10} \text{ } pBF_{iu}\)</span>, es = 0.1, z-scores transformed hyp</a></li>
+  <li><a href="#b2-log_10-text-pbf_iu-es-0-z-scores-transformed-hyp" id="toc-b2-log_10-text-pbf_iu-es-0-z-scores-transformed-hyp" class="nav-link" data-scroll-target="#b2-log_10-text-pbf_iu-es-0-z-scores-transformed-hyp">3-b2: <span class="math inline">\(Log_{10} \text{ } pBF_{iu}\)</span>, es = 0, z-scores transformed hyp</a></li>
+  <li><a href="#b3-log_10-text-pbf_iu-es-0.8-z-scores-transformed-hyp" id="toc-b3-log_10-text-pbf_iu-es-0.8-z-scores-transformed-hyp" class="nav-link" data-scroll-target="#b3-log_10-text-pbf_iu-es-0.8-z-scores-transformed-hyp">3-b3: <span class="math inline">\(Log_{10} \text{ } pBF_{iu}\)</span>, es = 0.8, z-scores transformed hyp</a></li>
+  <li><a href="#b4-log_10-text-pbf_iu-es--0.8-z-transformation" id="toc-b4-log_10-text-pbf_iu-es--0.8-z-transformation" class="nav-link" data-scroll-target="#b4-log_10-text-pbf_iu-es--0.8-z-transformation">3-b4: <span class="math inline">\(Log_{10} \text{ } pBF_{iu}\)</span>, es = -0.8, z-transformation</a></li>
+  <li><a href="#summary-of-plots-log_10-text-pbf_iu-with-various-es-and-hyp_val-z-transformation-of-correlation" id="toc-summary-of-plots-log_10-text-pbf_iu-with-various-es-and-hyp_val-z-transformation-of-correlation" class="nav-link" data-scroll-target="#summary-of-plots-log_10-text-pbf_iu-with-various-es-and-hyp_val-z-transformation-of-correlation">Summary of plots <span class="math inline">\(log_{10} \text{ } pBF_{iu}\)</span> with various es and hyp_val, z-transformation of correlation</a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#simulation-4-z-transformation---hyp_val-not-transformed" id="toc-simulation-4-z-transformation---hyp_val-not-transformed" class="nav-link" data-scroll-target="#simulation-4-z-transformation---hyp_val-not-transformed">Simulation 4: Z-transformation - Hyp_val NOT transformed</a>
+  <ul class="collapse">
+  <li><a href="#simulation-4-a-testing-hypotheses-h_i-versus-h_c-with-different-unconstrained-parameter-spaces-z-transformation" id="toc-simulation-4-a-testing-hypotheses-h_i-versus-h_c-with-different-unconstrained-parameter-spaces-z-transformation" class="nav-link" data-scroll-target="#simulation-4-a-testing-hypotheses-h_i-versus-h_c-with-different-unconstrained-parameter-spaces-z-transformation">Simulation 4-a: Testing hypotheses (<span class="math inline">\(H_i\)</span> versus <span class="math inline">\(H_c\)</span>) with different unconstrained parameter spaces (z-transformation)</a>
+  <ul class="collapse">
+  <li><a href="#a1-log_10-text-pbf_ic-es-0.1-z-transformation" id="toc-a1-log_10-text-pbf_ic-es-0.1-z-transformation" class="nav-link" data-scroll-target="#a1-log_10-text-pbf_ic-es-0.1-z-transformation">4-a1: <span class="math inline">\(Log_{10} \text{ } pBF_{ic}\)</span>, es = 0.1, z-transformation</a></li>
+  <li><a href="#a2-log_10-text-pbf_ic-es-0-z-transformation" id="toc-a2-log_10-text-pbf_ic-es-0-z-transformation" class="nav-link" data-scroll-target="#a2-log_10-text-pbf_ic-es-0-z-transformation">4-a2: <span class="math inline">\(Log_{10} \text{ } pBF_{ic}\)</span>, es = 0, z-transformation</a></li>
+  <li><a href="#a3-log_10-text-pbf_ic-es-0.8-z-transformation" id="toc-a3-log_10-text-pbf_ic-es-0.8-z-transformation" class="nav-link" data-scroll-target="#a3-log_10-text-pbf_ic-es-0.8-z-transformation">4-a3: <span class="math inline">\(Log_{10} \text{ } pBF_{ic}\)</span>, es = 0.8, z-transformation</a></li>
+  <li><a href="#a4-log_10-text-pbf_ic-es--0.8-z-transformation" id="toc-a4-log_10-text-pbf_ic-es--0.8-z-transformation" class="nav-link" data-scroll-target="#a4-log_10-text-pbf_ic-es--0.8-z-transformation">4-a4: <span class="math inline">\(Log_{10} \text{ } pBF_{ic}\)</span>, es = -0.8, z-transformation</a></li>
+  <li><a href="#summary-of-plots-log_10-text-pbf_ic-with-various-es-and-hyp_val-z-transformation-of-correlation-1" id="toc-summary-of-plots-log_10-text-pbf_ic-with-various-es-and-hyp_val-z-transformation-of-correlation-1" class="nav-link" data-scroll-target="#summary-of-plots-log_10-text-pbf_ic-with-various-es-and-hyp_val-z-transformation-of-correlation-1">Summary of plots <span class="math inline">\(log_{10} \text{ } pBF_{ic}\)</span> with various es and hyp_val, z-transformation of correlation</a></li>
+  </ul></li>
+  <li><a href="#simulation-4-b-testing-hypotheses-h_i-versus-h_u-with-different-constrained-parameter-spaces-z-transformation" id="toc-simulation-4-b-testing-hypotheses-h_i-versus-h_u-with-different-constrained-parameter-spaces-z-transformation" class="nav-link" data-scroll-target="#simulation-4-b-testing-hypotheses-h_i-versus-h_u-with-different-constrained-parameter-spaces-z-transformation">Simulation 4-b: Testing hypotheses (<span class="math inline">\(H_i\)</span> versus <span class="math inline">\(H_u\)</span>) with different constrained parameter spaces (z-transformation)</a>
+  <ul class="collapse">
+  <li><a href="#b1-log_10-text-pbf_iu-es-0.1-z-transformation" id="toc-b1-log_10-text-pbf_iu-es-0.1-z-transformation" class="nav-link" data-scroll-target="#b1-log_10-text-pbf_iu-es-0.1-z-transformation">4-b1: <span class="math inline">\(Log_{10} \text{ } pBF_{iu}\)</span>, es = 0.1, z-transformation</a></li>
+  <li><a href="#b2-log_10-text-pbf_iu-es-0-z-transformation" id="toc-b2-log_10-text-pbf_iu-es-0-z-transformation" class="nav-link" data-scroll-target="#b2-log_10-text-pbf_iu-es-0-z-transformation">4-b2: <span class="math inline">\(Log_{10} \text{ } pBF_{iu}\)</span>, es = 0, z-transformation</a></li>
+  <li><a href="#b3-log_10-text-pbf_iu-es-0.8-z-transformation" id="toc-b3-log_10-text-pbf_iu-es-0.8-z-transformation" class="nav-link" data-scroll-target="#b3-log_10-text-pbf_iu-es-0.8-z-transformation">4-b3: <span class="math inline">\(Log_{10} \text{ } pBF_{iu}\)</span>, es = 0.8, z-transformation</a></li>
+  <li><a href="#b4-log_10-text-pbf_iu-es--0.8-z-transformation-1" id="toc-b4-log_10-text-pbf_iu-es--0.8-z-transformation-1" class="nav-link" data-scroll-target="#b4-log_10-text-pbf_iu-es--0.8-z-transformation-1">4-b4: <span class="math inline">\(Log_{10} \text{ } pBF_{iu}\)</span>, es = -0.8, z-transformation</a></li>
+  <li><a href="#summary-of-plots-log_10-text-pbf_iu-with-various-es-and-hyp_val-z-transformation-of-correlation-1" id="toc-summary-of-plots-log_10-text-pbf_iu-with-various-es-and-hyp_val-z-transformation-of-correlation-1" class="nav-link" data-scroll-target="#summary-of-plots-log_10-text-pbf_iu-with-various-es-and-hyp_val-z-transformation-of-correlation-1">Summary of plots <span class="math inline">\(log_{10} \text{ } pBF_{iu}\)</span> with various es and hyp_val, z-transformation of correlation</a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#simulation-5-beta" id="toc-simulation-5-beta" class="nav-link" data-scroll-target="#simulation-5-beta">Simulation 5: Beta</a>
+  <ul class="collapse">
+  <li><a href="#simulation-5-a-testing-hypotheses-h_i-versus-h_c-with-different-unconstrained-parameter-spaces-beta" id="toc-simulation-5-a-testing-hypotheses-h_i-versus-h_c-with-different-unconstrained-parameter-spaces-beta" class="nav-link" data-scroll-target="#simulation-5-a-testing-hypotheses-h_i-versus-h_c-with-different-unconstrained-parameter-spaces-beta">Simulation 5-a: Testing hypotheses (<span class="math inline">\(H_i\)</span> versus <span class="math inline">\(H_c\)</span>) with different unconstrained parameter spaces (beta)</a>
+  <ul class="collapse">
+  <li><a href="#a1-log_10-text-pbf_ic-es-0.1-beta" id="toc-a1-log_10-text-pbf_ic-es-0.1-beta" class="nav-link" data-scroll-target="#a1-log_10-text-pbf_ic-es-0.1-beta">5-a1: <span class="math inline">\(Log_{10} \text{ } pBF_{ic}\)</span>, es = 0.1, beta</a></li>
+  <li><a href="#a2-log_10-text-pbf_ic-es-0-beta" id="toc-a2-log_10-text-pbf_ic-es-0-beta" class="nav-link" data-scroll-target="#a2-log_10-text-pbf_ic-es-0-beta">5-a2: <span class="math inline">\(Log_{10} \text{ } pBF_{ic}\)</span>, es = 0, beta</a></li>
+  <li><a href="#a3-log_10-text-pbf_ic-es-0.8-beta" id="toc-a3-log_10-text-pbf_ic-es-0.8-beta" class="nav-link" data-scroll-target="#a3-log_10-text-pbf_ic-es-0.8-beta">5-a3: <span class="math inline">\(Log_{10} \text{ } pBF_{ic}\)</span>, es = 0.8, beta</a></li>
+  <li><a href="#a4-log_10-text-pbf_ic-es--0.8-beta" id="toc-a4-log_10-text-pbf_ic-es--0.8-beta" class="nav-link" data-scroll-target="#a4-log_10-text-pbf_ic-es--0.8-beta">5-a4: <span class="math inline">\(Log_{10} \text{ } pBF_{ic}\)</span>, es = -0.8, beta</a></li>
+  <li><a href="#summary-of-plots-log_10-text-pbf_ic-with-various-es-and-hyp_val-beta" id="toc-summary-of-plots-log_10-text-pbf_ic-with-various-es-and-hyp_val-beta" class="nav-link" data-scroll-target="#summary-of-plots-log_10-text-pbf_ic-with-various-es-and-hyp_val-beta">Summary of plots <span class="math inline">\(log_{10} \text{ } pBF_{ic}\)</span> with various es and hyp_val, beta</a></li>
+  </ul></li>
+  <li><a href="#simulation-5-b-testing-hypotheses-h_i-versus-h_u-with-different-constrained-parameter-spaces-beta" id="toc-simulation-5-b-testing-hypotheses-h_i-versus-h_u-with-different-constrained-parameter-spaces-beta" class="nav-link" data-scroll-target="#simulation-5-b-testing-hypotheses-h_i-versus-h_u-with-different-constrained-parameter-spaces-beta">Simulation 5-b: Testing hypotheses (<span class="math inline">\(H_i\)</span> versus <span class="math inline">\(H_u\)</span>) with different constrained parameter spaces (beta)</a>
+  <ul class="collapse">
+  <li><a href="#b1-log_10-text-pbf_iu-es-0.1-beta" id="toc-b1-log_10-text-pbf_iu-es-0.1-beta" class="nav-link" data-scroll-target="#b1-log_10-text-pbf_iu-es-0.1-beta">5-b1: <span class="math inline">\(Log_{10} \text{ } pBF_{iu}\)</span>, es = 0.1, beta</a></li>
+  <li><a href="#b2-log_10-text-pbf_iu-es-0-beta" id="toc-b2-log_10-text-pbf_iu-es-0-beta" class="nav-link" data-scroll-target="#b2-log_10-text-pbf_iu-es-0-beta">5-b2: <span class="math inline">\(Log_{10} \text{ } pBF_{iu}\)</span>, es = 0, beta</a></li>
+  <li><a href="#b3-log_10-text-pbf_iu-es-0.8-beta" id="toc-b3-log_10-text-pbf_iu-es-0.8-beta" class="nav-link" data-scroll-target="#b3-log_10-text-pbf_iu-es-0.8-beta">5-b3: <span class="math inline">\(Log_{10} \text{ } pBF_{iu}\)</span>, es = 0.8, beta</a></li>
+  <li><a href="#b4-log_10-text-pbf_iu-es--0.8-beta" id="toc-b4-log_10-text-pbf_iu-es--0.8-beta" class="nav-link" data-scroll-target="#b4-log_10-text-pbf_iu-es--0.8-beta">5-b4: <span class="math inline">\(Log_{10} \text{ } pBF_{iu}\)</span>, es = -0.8, beta</a></li>
+  <li><a href="#summary-of-plots-log_10-text-pbf_iu-with-various-es-and-hyp_val-beta" id="toc-summary-of-plots-log_10-text-pbf_iu-with-various-es-and-hyp_val-beta" class="nav-link" data-scroll-target="#summary-of-plots-log_10-text-pbf_iu-with-various-es-and-hyp_val-beta">Summary of plots <span class="math inline">\(log_{10} \text{ } pBF_{iu}\)</span> with various es and hyp_val, beta</a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#simulation-6-mean-difference" id="toc-simulation-6-mean-difference" class="nav-link" data-scroll-target="#simulation-6-mean-difference">Simulation 6: Mean Difference</a>
+  <ul class="collapse">
+  <li><a href="#simulation-6-a-testing-hypotheses-h_i-versus-h_c-with-different-unconstrained-parameter-spaces-mean-difference" id="toc-simulation-6-a-testing-hypotheses-h_i-versus-h_c-with-different-unconstrained-parameter-spaces-mean-difference" class="nav-link" data-scroll-target="#simulation-6-a-testing-hypotheses-h_i-versus-h_c-with-different-unconstrained-parameter-spaces-mean-difference">Simulation 6-a: Testing hypotheses (<span class="math inline">\(H_i\)</span> versus <span class="math inline">\(H_c\)</span>) with different unconstrained parameter spaces (mean difference)</a>
+  <ul class="collapse">
+  <li><a href="#a1-log_10-text-pbf_ic-es-0.1-meandiff" id="toc-a1-log_10-text-pbf_ic-es-0.1-meandiff" class="nav-link" data-scroll-target="#a1-log_10-text-pbf_ic-es-0.1-meandiff">6-a1: <span class="math inline">\(Log_{10} \text{ } pBF_{ic}\)</span>, es = 0.1, meandiff</a></li>
+  <li><a href="#a2-log_10-text-pbf_ic-es-0-meandiff" id="toc-a2-log_10-text-pbf_ic-es-0-meandiff" class="nav-link" data-scroll-target="#a2-log_10-text-pbf_ic-es-0-meandiff">6-a2: <span class="math inline">\(Log_{10} \text{ } pBF_{ic}\)</span>, es = 0, meandiff</a></li>
+  <li><a href="#a3-log_10-text-pbf_ic-es-0.8-meandiff" id="toc-a3-log_10-text-pbf_ic-es-0.8-meandiff" class="nav-link" data-scroll-target="#a3-log_10-text-pbf_ic-es-0.8-meandiff">6-a3: <span class="math inline">\(Log_{10} \text{ } pBF_{ic}\)</span>, es = 0.8, meandiff</a></li>
+  <li><a href="#a4-log_10-text-pbf_ic-es--0.8-meandiff" id="toc-a4-log_10-text-pbf_ic-es--0.8-meandiff" class="nav-link" data-scroll-target="#a4-log_10-text-pbf_ic-es--0.8-meandiff">6-a4: <span class="math inline">\(Log_{10} \text{ } pBF_{ic}\)</span>, es = -0.8, meandiff</a></li>
+  <li><a href="#summary-of-plots-log_10-text-pbf_ic-with-various-es-and-hyp_val-meandiff" id="toc-summary-of-plots-log_10-text-pbf_ic-with-various-es-and-hyp_val-meandiff" class="nav-link" data-scroll-target="#summary-of-plots-log_10-text-pbf_ic-with-various-es-and-hyp_val-meandiff">Summary of plots <span class="math inline">\(log_{10} \text{ } pBF_{ic}\)</span> with various es and hyp_val, meandiff</a></li>
+  </ul></li>
+  <li><a href="#simulation-6-b-testing-hypotheses-h_i-versus-h_u-with-different-unconstrained-parameter-spaces-mean-difference" id="toc-simulation-6-b-testing-hypotheses-h_i-versus-h_u-with-different-unconstrained-parameter-spaces-mean-difference" class="nav-link" data-scroll-target="#simulation-6-b-testing-hypotheses-h_i-versus-h_u-with-different-unconstrained-parameter-spaces-mean-difference">Simulation 6-b: Testing hypotheses (<span class="math inline">\(H_i\)</span> versus <span class="math inline">\(H_u\)</span>) with different unconstrained parameter spaces (mean difference)</a>
+  <ul class="collapse">
+  <li><a href="#b1-log_10-text-pbf_iu-es-0.1-meandiff" id="toc-b1-log_10-text-pbf_iu-es-0.1-meandiff" class="nav-link" data-scroll-target="#b1-log_10-text-pbf_iu-es-0.1-meandiff">6-b1: <span class="math inline">\(Log_{10} \text{ } pBF_{iu}\)</span>, es = 0.1, meandiff</a></li>
+  <li><a href="#b2-log_10-text-pbf_iu-es-0-meandiff" id="toc-b2-log_10-text-pbf_iu-es-0-meandiff" class="nav-link" data-scroll-target="#b2-log_10-text-pbf_iu-es-0-meandiff">6-b2: <span class="math inline">\(Log_{10} \text{ } pBF_{iu}\)</span>, es = 0, meandiff</a></li>
+  <li><a href="#b3-log_10-text-pbf_iu-es-0.8-meandiff" id="toc-b3-log_10-text-pbf_iu-es-0.8-meandiff" class="nav-link" data-scroll-target="#b3-log_10-text-pbf_iu-es-0.8-meandiff">6-b3: <span class="math inline">\(Log_{10} \text{ } pBF_{iu}\)</span>, es = 0.8, meandiff</a></li>
+  <li><a href="#b4-log_10-text-pbf_iu-es--0.8-meandiff" id="toc-b4-log_10-text-pbf_iu-es--0.8-meandiff" class="nav-link" data-scroll-target="#b4-log_10-text-pbf_iu-es--0.8-meandiff">6-b4: <span class="math inline">\(Log_{10} \text{ } pBF_{iu}\)</span>, es = -0.8, meandiff</a></li>
+  <li><a href="#summary-of-plots-log_10-text-pbf_iu-with-various-es-and-hyp_val-meandiff" id="toc-summary-of-plots-log_10-text-pbf_iu-with-various-es-and-hyp_val-meandiff" class="nav-link" data-scroll-target="#summary-of-plots-log_10-text-pbf_iu-with-various-es-and-hyp_val-meandiff">Summary of plots <span class="math inline">\(log_{10} \text{ } pBF_{iu}\)</span> with various es and hyp_val, meandiff</a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#simulation-7-absolute-mean-difference" id="toc-simulation-7-absolute-mean-difference" class="nav-link" data-scroll-target="#simulation-7-absolute-mean-difference">Simulation 7: Absolute Mean Difference</a>
+  <ul class="collapse">
+  <li><a href="#simulation-7-a-testing-hypotheses-h_i-versus-h_c-with-different-unconstrained-parameter-spaces-absolute-mean-difference" id="toc-simulation-7-a-testing-hypotheses-h_i-versus-h_c-with-different-unconstrained-parameter-spaces-absolute-mean-difference" class="nav-link" data-scroll-target="#simulation-7-a-testing-hypotheses-h_i-versus-h_c-with-different-unconstrained-parameter-spaces-absolute-mean-difference">Simulation 7-a: Testing hypotheses (<span class="math inline">\(H_i\)</span> versus <span class="math inline">\(H_c\)</span>) with different unconstrained parameter spaces (absolute mean difference)</a>
+  <ul class="collapse">
+  <li><a href="#a1-log_10-text-pbf_ic-es-0.1-abs-meandiff" id="toc-a1-log_10-text-pbf_ic-es-0.1-abs-meandiff" class="nav-link" data-scroll-target="#a1-log_10-text-pbf_ic-es-0.1-abs-meandiff">7-a1: <span class="math inline">\(Log_{10} \text{ } pBF_{ic}\)</span>, es = 0.1, abs meandiff</a></li>
+  <li><a href="#a2-log_10-text-pbf_ic-es-0-abs-meandiff" id="toc-a2-log_10-text-pbf_ic-es-0-abs-meandiff" class="nav-link" data-scroll-target="#a2-log_10-text-pbf_ic-es-0-abs-meandiff">7-a2: <span class="math inline">\(Log_{10} \text{ } pBF_{ic}\)</span>, es = 0, abs meandiff</a></li>
+  <li><a href="#a3-log_10-text-pbf_ic-es-0.8-abs-meandiff" id="toc-a3-log_10-text-pbf_ic-es-0.8-abs-meandiff" class="nav-link" data-scroll-target="#a3-log_10-text-pbf_ic-es-0.8-abs-meandiff">7-a3: <span class="math inline">\(Log_{10} \text{ } pBF_{ic}\)</span>, es = 0.8, abs meandiff</a></li>
+  <li><a href="#a4-log_10-text-pbf_ic-es--0.8-abs-meandiff" id="toc-a4-log_10-text-pbf_ic-es--0.8-abs-meandiff" class="nav-link" data-scroll-target="#a4-log_10-text-pbf_ic-es--0.8-abs-meandiff">7-a4: <span class="math inline">\(Log_{10} \text{ } pBF_{ic}\)</span>, es = -0.8, abs meandiff</a></li>
+  <li><a href="#summary-of-plots-log_10-text-pbf_ic-with-various-es-and-hyp_val-abs-meandiff" id="toc-summary-of-plots-log_10-text-pbf_ic-with-various-es-and-hyp_val-abs-meandiff" class="nav-link" data-scroll-target="#summary-of-plots-log_10-text-pbf_ic-with-various-es-and-hyp_val-abs-meandiff">Summary of plots <span class="math inline">\(log_{10} \text{ } pBF_{ic}\)</span> with various es and hyp_val, abs meandiff</a></li>
+  </ul></li>
+  <li><a href="#simulation-7-b-testing-hypotheses-h_i-versus-h_u-with-different-unconstrained-parameter-spaces-absolute-mean-difference" id="toc-simulation-7-b-testing-hypotheses-h_i-versus-h_u-with-different-unconstrained-parameter-spaces-absolute-mean-difference" class="nav-link" data-scroll-target="#simulation-7-b-testing-hypotheses-h_i-versus-h_u-with-different-unconstrained-parameter-spaces-absolute-mean-difference">Simulation 7-b: Testing hypotheses (<span class="math inline">\(H_i\)</span> versus <span class="math inline">\(H_u\)</span>) with different unconstrained parameter spaces (absolute mean difference)</a>
+  <ul class="collapse">
+  <li><a href="#b1-log_10-text-pbf_iu-es-0.1-abs-meandiff" id="toc-b1-log_10-text-pbf_iu-es-0.1-abs-meandiff" class="nav-link" data-scroll-target="#b1-log_10-text-pbf_iu-es-0.1-abs-meandiff">7-b1: <span class="math inline">\(Log_{10} \text{ } pBF_{iu}\)</span>, es = 0.1, abs meandiff</a></li>
+  <li><a href="#b2-log_10-text-pbf_iu-es-0-abs-meandiff" id="toc-b2-log_10-text-pbf_iu-es-0-abs-meandiff" class="nav-link" data-scroll-target="#b2-log_10-text-pbf_iu-es-0-abs-meandiff">7-b2: <span class="math inline">\(Log_{10} \text{ } pBF_{iu}\)</span>, es = 0, abs meandiff</a></li>
+  <li><a href="#b3-log_10-text-pbf_iu-es-0.8-abs-meandiff" id="toc-b3-log_10-text-pbf_iu-es-0.8-abs-meandiff" class="nav-link" data-scroll-target="#b3-log_10-text-pbf_iu-es-0.8-abs-meandiff">7-b3: <span class="math inline">\(Log_{10} \text{ } pBF_{iu}\)</span>, es = 0.8, abs meandiff</a></li>
+  <li><a href="#b4-log_10-text-pbf_iu-es--0.8-abs-meandiff" id="toc-b4-log_10-text-pbf_iu-es--0.8-abs-meandiff" class="nav-link" data-scroll-target="#b4-log_10-text-pbf_iu-es--0.8-abs-meandiff">7-b4: <span class="math inline">\(Log_{10} \text{ } pBF_{iu}\)</span>, es = -0.8, abs meandiff</a></li>
+  <li><a href="#summary-of-plots-log_10-text-pbf_iu-with-various-es-and-hyp_val-absolute-meandiff" id="toc-summary-of-plots-log_10-text-pbf_iu-with-various-es-and-hyp_val-absolute-meandiff" class="nav-link" data-scroll-target="#summary-of-plots-log_10-text-pbf_iu-with-various-es-and-hyp_val-absolute-meandiff">Summary of plots <span class="math inline">\(log_{10} \text{ } pBF_{iu}\)</span> with various es and hyp_val, absolute meandiff</a></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+  </ul>
+</nav>
+</div>
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+</div>
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">BES Manuscript Third Draft</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Loesje Ubbink </p>
+          </div>
+  </div>
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="bayesian-evidence-systhesis" class="level1">
+<h1>Bayesian Evidence Systhesis</h1>
+<p>In the original simulation published by <span class="citation" data-cites="van_lissa_tutorial_2024">@van_lissa_tutorial_2024</span>, the hypothesis <span class="math inline">\(H_i: \rho &gt; 0.1\)</span> is tested against either the unconstrained hypothesis, which includes all possible values of <span class="math inline">\(\rho\)</span>: <span class="math inline">\(H_u: \rho \in [-1, 1]\)</span>, or the complement hypothesis, which is mutually exclusive with <span class="math inline">\(H_i\)</span>: <span class="math inline">\(H_c: \rho \le 0.1\)</span>.</p>
+<p>The simulation conditions consist of various parameters:</p>
+<ul>
+<li><code>ndataset:</code> number of iterations per condition (1000)</li>
+<li><code>errorsd:</code> reliability (0.6, 0.8 and 1) in terms of standard error (<em>note: lower errorsd correspond to higher relability</em>)</li>
+<li><code>es:</code> true effect size (.1 or 0.2)</li>
+<li><code>n:</code> mean sample size per study (20, 80, 200, 500)</li>
+<li><code>k:</code> number of studies (2, 3, 10)</li>
+<li><code>hyp_val:</code> threshold for <span class="math inline">\(H_i\)</span> (.1)</li>
+</ul>
+<section id="simulation-0-orignial-simulation-general-plots-of-distribution-of-log_10-text-pbf_ic-and-log_10-text-pbf_iu" class="level2">
+<h2 class="anchored" data-anchor-id="simulation-0-orignial-simulation-general-plots-of-distribution-of-log_10-text-pbf_ic-and-log_10-text-pbf_iu">Simulation 0: Orignial Simulation, general plots of distribution of <span class="math inline">\(log_{10} \text{ } pBF_{ic}\)</span> and <span class="math inline">\(log_{10} \text{ } pBF_{iu}\)</span></h2>
+<p>When using Bayesian Evidence Synthesis/product Bayes factors (pBF), <span class="citation" data-cites="van_lissa_tutorial_2024">@van_lissa_tutorial_2024</span> used a threshold pBF value of 3 to assess sensitivity (the ability to detect a true effect in the population) and specificity (the ability to correctly reject a hypothesis when it is false). As this threshold is arbitrary, we decided to instead examine the full distribution of pBF values to better understand its behaviour across conditions. A <span class="math inline">\(BF_{ic}\)</span> of 1 indicates there is no evidence for either <span class="math inline">\(H_i\)</span> or <span class="math inline">\(H_c\)</span>, all <span class="math inline">\(BF_{ic}\)</span> values above 1 are classified as evidence in favour of <span class="math inline">\(H_i\)</span>, and all <span class="math inline">\(BF_{ic}\)</span> values below 1 are classified as evidence in favour of <span class="math inline">\(H_c\)</span></p>
+<p>For each condition, pBFs obtained from 1000 simulation iterations are visualised using raincloud plots. To make the plots easier to interpret, the pBFs were <span class="math inline">\(log_{10}\)</span> transformed. This means that positive <span class="math inline">\(log_{10}\)</span> pBF values (&gt; <span class="math inline">\(log_{10}(1) = 0\)</span>) indicate evidence for <span class="math inline">\(H_i\)</span>, whereas negative <span class="math inline">\(log_{10}\)</span> pBF values (&lt; <span class="math inline">\(log_{10}(1) = 0\)</span>) indicate evidence in favour of the competing hypothesis (either <span class="math inline">\(H_i\)</span> or <span class="math inline">\(H_c\)</span>).</p>
+<p>When the true effect (<code>es</code>) is <span class="math inline">\(\rho = .2\)</span>, this means that <span class="math inline">\(H_i\)</span> is true and, by definition, <span class="math inline">\(H_c\)</span> is false. Because these hypotheses are mutually exclusive, <span class="math inline">\(log_{10} \text{ } pBF_{ic}\)</span> values greater than zero can be classified as ‘true positives’ (TP), whereas values below zero can be classified as ‘false negatives’ (FN).</p>
+<p>When <span class="math inline">\(H_i\)</span> is evaluated against <span class="math inline">\(H_u\)</span>, it is a bit more complicated. Given that <span class="math inline">\(H_u\)</span> contains all possible values of <span class="math inline">\(\rho\)</span>, <span class="math inline">\(H_u\)</span> is not false when <span class="math inline">\(H_i\)</span> is true. Postitive <span class="math inline">\(log_{10} \text{ } pBF_{iu}\)</span> values then indicate there is just more evidence in favour of the more informative hypothesis <span class="math inline">\(H_i\)</span> than in favour of the less informative hypothesis <span class="math inline">\(H_u\)</span>. Similarly, negative <span class="math inline">\(log_{10} \text{ } pBF_{ic}\)</span> values do not indicate evidence for a false hypothesis (FN), but rather indicate failing to support the more informative hypothesis <span class="math inline">\(H_i\)</span> over the less informative <span class="math inline">\(H_u\)</span>.</p>
+<p>When the true effect is 0.1, this means that either <span class="math inline">\(H_i\)</span> or <span class="math inline">\(H_c\)</span> is true, as they are mutually exclusive and theoretically <span class="math inline">\(\rho\)</span> can never perfectly equal 0.1. In this case, it would be expected that the <span class="math inline">\(log_{10} \text{ } pBF_{ic}\)</span> values fail to support either hypothesis, peaking around zero.</p>
+<section id="simulation-0-a-testing-h_i-against-h_c" class="level3">
+<h3 class="anchored" data-anchor-id="simulation-0-a-testing-h_i-against-h_c">Simulation 0-a: Testing <span class="math inline">\(H_i\)</span> against <span class="math inline">\(H_c\)</span></h3>
+<section id="a1-log_10-text-pbf_ic-when-true-effect-is-0.2---h_i-is-true" class="level4">
+<h4 class="anchored" data-anchor-id="a1-log_10-text-pbf_ic-when-true-effect-is-0.2---h_i-is-true">0-a1: <span class="math inline">\(Log_{10} \text{ } pBF_{ic}\)</span> When True Effect is 0.2 - <span class="math inline">\(H_i\)</span> is true</h4>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="BES_manuscript_third_draft_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>This plot shows that the number of FN (<span class="math inline">\(log_{10} \text{ } pBF_{ic} &lt; 0\)</span>) decreases when the number of studies (<code>k</code>), and the within-study sample size (<code>n</code>) increase. When the reliability of the studies is low (at higher values of <code>errorsd</code>), the decrease in FN is least prominent.</p>
+</section>
+<section id="a2-log_10-text-pbf_ic-when-true-effect-is-0.1---h_i-is-false" class="level4">
+<h4 class="anchored" data-anchor-id="a2-log_10-text-pbf_ic-when-true-effect-is-0.1---h_i-is-false">0-a2: <span class="math inline">\(Log_{10} \text{ } pBF_{ic}\)</span> When True Effect is 0.1 - <span class="math inline">\(H_i\)</span> is false</h4>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="BES_manuscript_third_draft_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>In this plot, the true effect size (<code>es</code>) equals 0.1, which means that the true parameter value is on the boundary of the hypotheses <span class="math inline">\(H_i\)</span> and <span class="math inline">\(H_c\)</span>. Therefore it is expected that the <span class="math inline">\(log_{10} pBF_ic\)</span> would be distributed symmetrically around zero, being unable to provide convincing evidence for either hypothesis.</p>
+<p>If the within-study sample sizes (<code>n</code>) are small (e.g., 20 or 50), this is roughly the case. However, when the within-study sample sizes (<code>n</code>) increase (e.g., 200, 500), the <span class="math inline">\(log_{10} pBF_ic\)</span> shifts towards evidence for <span class="math inline">\(H_c\)</span>, which is surprising. This pattern is especially prominent with increasing <code>errorsd</code> values. Whereas the <span class="math inline">\(log_{10} pBF_ic\)</span> distributions are symmetrical around zero when the error of 0 - which we would expect - at higher error values the <span class="math inline">\(log_{10} pBF_ic\)</span> shifts towards evidence in favour of <span class="math inline">\(H_c\)</span>.</p>
+</section>
+</section>
+<section id="simulation-0-b-testing-h_i-against-h_u" class="level3">
+<h3 class="anchored" data-anchor-id="simulation-0-b-testing-h_i-against-h_u">Simulation 0-b: Testing <span class="math inline">\(H_i\)</span> against <span class="math inline">\(H_u\)</span></h3>
+<section id="b1-log_10-text-pbf_iu-when-true-effect-is-0.2---h_i-is-true" class="level4">
+<h4 class="anchored" data-anchor-id="b1-log_10-text-pbf_iu-when-true-effect-is-0.2---h_i-is-true">0-b1: <span class="math inline">\(Log_{10} \text{ } pBF_{iu}\)</span> When True Effect is 0.2 - <span class="math inline">\(H_i\)</span> is true</h4>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="BES_manuscript_third_draft_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>This figure shows that when the true effect <code>es = 0.2</code>, in general, evidence accumulates in favour of <span class="math inline">\(H_i\)</span>. As the within-study sample size (<code>n</code>) and the number of studies (<code>k</code>) increase, the distributions shift further towards more positive <span class="math inline">\(log_{10} \text{ } pBF_{iu}\)</span> values. However, with higher error (<code>errorsd = 0.81</code>) the shift towards evidence for <span class="math inline">\(H_i\)</span> is not as present, with negative <span class="math inline">\(log_{10} \text{ } pBF_{iu}\)</span> values, or <span class="math inline">\(log_{10} \text{ } pBF_{iu}\)</span> values around zero.</p>
+</section>
+<section id="b2-log_10-text-pbf_iu-when-true-effect-is-0.1---h_i-is-false" class="level4">
+<h4 class="anchored" data-anchor-id="b2-log_10-text-pbf_iu-when-true-effect-is-0.1---h_i-is-false">0-b2: <span class="math inline">\(Log_{10} \text{ } pBF_{iu}\)</span> When True Effect is 0.1 - <span class="math inline">\(H_i\)</span> is false</h4>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="BES_manuscript_third_draft_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>This figure shows that when the true effect <code>es = 0.1</code>, higher <code>errorsd</code> values, and increasing number of studies (<code>k</code>) and within-study sample size (<code>n</code>) result in a larger shift of evidence towards <span class="math inline">\(H_u\)</span>.</p>
+<hr>
+</section>
+</section>
+</section>
+<section id="simulation-1-correlations" class="level2">
+<h2 class="anchored" data-anchor-id="simulation-1-correlations">Simulation 1: Correlations</h2>
+<section id="simulation-1-a-testing-hypotheses-h_i-versus-h_c-with-different-constrained-parameter-spaces-correlations" class="level3">
+<h3 class="anchored" data-anchor-id="simulation-1-a-testing-hypotheses-h_i-versus-h_c-with-different-constrained-parameter-spaces-correlations">Simulation 1-a: Testing hypotheses (<span class="math inline">\(H_i\)</span> versus <span class="math inline">\(H_c\)</span>) with different constrained parameter spaces (correlations)</h3>
+<p>Given that the parameter of interest in this simulation study is a correlation, this implies that the full parameter space is constrained: <span class="math inline">\(\rho \in [-1, 1]\)</span>. This means that <span class="math inline">\(H_c\)</span> contains a larger proportion of the full parameter space (<span class="math inline">\(\rho \in [-1, 0.1]\)</span>) than <span class="math inline">\(H_i\)</span> (<span class="math inline">\(\rho \in [0.1 - 1]\)</span>), raising the question if the distributional shift we observe when es = 0.1 can be explained by the fact that the two hypotheses are not equally large in terms of the parameter space. When there’s error, will the evidence distribution always shift in favour of the hypothesis that contains the largest parameter space?</p>
+<p>This will be tested by running the simulation again, while testing the following hypotheses:</p>
+<ul>
+<li><span class="math inline">\(H_i: \rho &gt; 0 \text{ versus } H_c: \le 0 \text{, when es = } 0\)</span>, in this case it is expected that at all error values, the distributions will be symmetrical around <span class="math inline">\(log_{10} \text{ } pBF_{ic}\)</span> values of zero, as both hypotheses entail an equally large parameter space.</li>
+<li><span class="math inline">\(H_i: \rho &gt; 0.8 \text{ versus } H_c: \le 0.8 \text{, when es = } 0.8\)</span>, in this case it is expected that with higher error values, there will be an even more dramatic shift towards negative <span class="math inline">\(log_{10} \text{ } pBF_{ic}\)</span> values, indicating evidence for <span class="math inline">\(H_c\)</span>.</li>
+<li><span class="math inline">\(H_i: \rho &gt; -0.8 \text{ versus } H_c: \le -0.8 \text{, when es = } -0.8\)</span>, in this case it is expected that with higher error values, there will be shift towards positive <span class="math inline">\(log_{10} \text{ } pBF_{ic}\)</span> values, indicating evidence for <span class="math inline">\(H_i\)</span>, as now this hypothesis will entail the largest proportion of the parameter space.</li>
+</ul>
+<section id="a1-log_10-text-pbf_ic-es-0.1-correlation" class="level4">
+<h4 class="anchored" data-anchor-id="a1-log_10-text-pbf_ic-es-0.1-correlation">1-a1: <span class="math inline">\(Log_{10} \text{ } pBF_{ic}\)</span>, es = 0.1, correlation</h4>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="BES_manuscript_third_draft_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>This plot shows the same pattern as in the original simulation, where higher error (<code>errorsd</code>) results in a shift towards evidence in favour of <span class="math inline">\(H_c\)</span>, especially when the number of studies (<code>k</code>) and the within-study sample sizes (<code>n</code>) are large.</p>
+</section>
+<section id="a2-log_10-text-pbf_ic-es-0-correlation" class="level4">
+<h4 class="anchored" data-anchor-id="a2-log_10-text-pbf_ic-es-0-correlation">1-a2: <span class="math inline">\(Log_{10} \text{ } pBF_{ic}\)</span>, es = 0, correlation</h4>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="BES_manuscript_third_draft_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>This plot shows that when both hypotheses have equal parameter spaces (<span class="math inline">\(H_i: [0 , 1] \text{ versus } H_c: [-1 , 0]\)</span>), across all conditions the <span class="math inline">\(log_{10} \text{ } pBF_{ic}\)</span> is nicely symmetrical around the value of zero, as expected.</p>
+</section>
+<section id="a3-log_10-text-pbf_ic-es-0.8-correlation" class="level4">
+<h4 class="anchored" data-anchor-id="a3-log_10-text-pbf_ic-es-0.8-correlation">1-a3: <span class="math inline">\(Log_{10} \text{ } pBF_{ic}\)</span>, es = 0.8, correlation</h4>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="BES_manuscript_third_draft_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>This plot shows that the distribution-shift pattern is more exaggerated when the difference between the parameter space sizes of the hypotheses is larger (<span class="math inline">\(H_i: [0.8 , 1] \text{ versus } H_c: [-1 , 0.8]\)</span>). In this case, the parameter space of <span class="math inline">\(H_c\)</span> is much larger than that of <span class="math inline">\(H_i\)</span>, and the evidence shifts in favour of <span class="math inline">\(H_c\)</span> as the error (<code>errorsd</code>), number of studies (<code>k</code>), and within-study sample size (<code>n</code>) increase.</p>
+</section>
+<section id="a4-log_10-text-pbf_ic-es--0.8-correlation" class="level4">
+<h4 class="anchored" data-anchor-id="a4-log_10-text-pbf_ic-es--0.8-correlation">1-a4: <span class="math inline">\(Log_{10} \text{ } pBF_{ic}\)</span>, es = -0.8, correlation</h4>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="BES_manuscript_third_draft_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>This plot is in line with the previous one, and shows that the opposite distribution-shift arises when the large differences between the parameter space sizes are the other way around (<span class="math inline">\(H_i: [-0.8 , 1] \text{ versus } H_c: [-1 , -0.8]\)</span>). In this case, the parameter space of <span class="math inline">\(H_i\)</span> is much larger than that of <span class="math inline">\(H_c\)</span>, and the evidence shifts in favour of <span class="math inline">\(H_i\)</span> as the error (<code>errorsd</code>), number of studies (<code>k</code>), and within-study sample size (<code>n</code>) increase.</p>
+</section>
+<section id="summary-of-plots-log_10-text-pbf_ic-with-various-es-and-hyp_val-correlation" class="level4">
+<h4 class="anchored" data-anchor-id="summary-of-plots-log_10-text-pbf_ic-with-various-es-and-hyp_val-correlation">Summary of plots <span class="math inline">\(log_{10} \text{ } pBF_{ic}\)</span> with various es and hyp_val, correlation</h4>
+<p>These simulated results show exactly what we expected: when the reliability is low (high error), the <span class="math inline">\(log_{10} \text{ } pBF_{ic}\)</span> will always tend to provide evidence for the hypothesis that has the largest parameter space.</p>
+</section>
+</section>
+<section id="simulation-1-b-testing-hypotheses-h_i-versus-h_u-with-different-constrained-parameter-spaces-correlations" class="level3">
+<h3 class="anchored" data-anchor-id="simulation-1-b-testing-hypotheses-h_i-versus-h_u-with-different-constrained-parameter-spaces-correlations">Simulation 1-b: Testing hypotheses (<span class="math inline">\(H_i\)</span> versus <span class="math inline">\(H_u\)</span>) with different constrained parameter spaces (correlations)</h3>
+<p>Now we know how the <span class="math inline">\(log_{10} \text{ } pBF_{ic}\)</span> behaves with a constrained parameter space. However, in this case the evaluated hypotheses are mutually exclusive, so if one, e.g.&nbsp;<span class="math inline">\(H_i\)</span>, has a bigger parameter space, the other, e.g.&nbsp;<span class="math inline">\(H_c\)</span>, automatically has a smaller parameter space.</p>
+<p>This raises the question how the <span class="math inline">\(log_{10} \text{ } pBF_{iu}\)</span> distribution behaves when <span class="math inline">\(H_i\)</span> is tested against <span class="math inline">\(H_u\)</span>. In other words, when the parameter space sizes are not mutually exclusive. To test this, the same hypotheses (<span class="math inline">\(H_i &gt; 0\)</span>; <span class="math inline">\(H_i &gt; 0.1\)</span>; <span class="math inline">\(H_i &gt; 0.8\)</span>; <span class="math inline">\(H_i &gt; -0.8\)</span>) are tested, and <span class="math inline">\(log_{10} \text{ } pBF_{iu}\)</span> distributions are evaluated.</p>
+<p>If it is true that under certain conditions evidence will shift towards hypotheses with larger parameter spaces, we would expect there to always be an evidence shift towards <span class="math inline">\(H_u\)</span>, as this hypothesis will always have the largest parameter space (<span class="math inline">\(H_u: \rho \in [-1,1]\)</span>).</p>
+<section id="b1-log_10-text-pbf_iu-es-0.1-correlation" class="level4">
+<h4 class="anchored" data-anchor-id="b1-log_10-text-pbf_iu-es-0.1-correlation">1-b1: <span class="math inline">\(Log_{10} \text{ } pBF_{iu}\)</span>, es = 0.1, correlation</h4>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="BES_manuscript_third_draft_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>This plot shows the same pattern as the distribution of <span class="math inline">\(log_{10} \text{ } pBF_{ic}\)</span> that we observed in Simulation 1-a. Higher <code>errorsd</code>, number of studies (<code>k</code>) and within-study sample size (<code>n</code>) result in a larger shift of evidence towards <span class="math inline">\(H_u\)</span>.</p>
+<p>Since the parameter space of <span class="math inline">\(H_u\)</span> is much larger than that of <span class="math inline">\(H_i\)</span> (<span class="math inline">\(H_i: [0.1 , 1] \text{ versus } H_u: [-1 , 1]\)</span>), this is consistent with the expectation that under certain conditions, evidence will shift towards hypotheses with larger parameter spaces.</p>
+</section>
+<section id="b2-log_10-text-pbf_iu-es-0-correlation" class="level4">
+<h4 class="anchored" data-anchor-id="b2-log_10-text-pbf_iu-es-0-correlation">1-b2: <span class="math inline">\(Log_{10} \text{ } pBF_{iu}\)</span>, es = 0, correlation</h4>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="BES_manuscript_third_draft_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>When the true effect (<code>es</code>) is 0, the distributions of <span class="math inline">\(log_{10} \text{ } pBF_{iu}\)</span>) are largely similar across conditions varying in within-study sample size (<code>n</code>) and measurement error (<code>errorsd</code>). In these conditions, the distributions are approximately centred around zero, although they consistently exhibit a tail favouring <span class="math inline">\(H_u\)</span>.</p>
+<p>In contrast, increasing the number of studies (<code>k</code>) seems to lead to a clearer shift of the distribution towards negative <span class="math inline">\(log_{10} \text{ } pBF_{iu}\)</span>) values, indicating stronger evidence for <span class="math inline">\(H_u\)</span>.</p>
+</section>
+<section id="b3-log_10-text-pbf_iu-es-0.8-correlation" class="level4">
+<h4 class="anchored" data-anchor-id="b3-log_10-text-pbf_iu-es-0.8-correlation">1-b3: <span class="math inline">\(Log_{10} \text{ } pBF_{iu}\)</span>, es = 0.8, correlation</h4>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="BES_manuscript_third_draft_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>This plot is consistent with the pattern observed in Simulation 1-a, as well as the expectation that hypotheses with larger parameter spaces tend to gain more evidence when <code>errorsd</code>, <code>k</code> and <code>n</code> increase. Only when the <code>errorsd</code> is 0, the distributions are nicely centered around 0.</p>
+<p>As differences in parameter spaces between <span class="math inline">\(H_u\)</span> and <span class="math inline">\(H_i\)</span> are now even more extreme (<span class="math inline">\(H_i: [0.8 , 1] \text{ versus } H_u: [-1 , 1]\)</span>), this is reflected in the more extreme distributional shifts.</p>
+</section>
+<section id="b4-log_10-text-pbf_iu-es--0.8-correlation" class="level4">
+<h4 class="anchored" data-anchor-id="b4-log_10-text-pbf_iu-es--0.8-correlation">1-b4: <span class="math inline">\(Log_{10} \text{ } pBF_{iu}\)</span>, es = -0.8, correlation</h4>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="BES_manuscript_third_draft_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Although <span class="math inline">\(H_u\)</span> still has a larger parameter space than <span class="math inline">\(H_i\)</span> (<span class="math inline">\(H_i: [-0.8 , 1] \text{ versus } H_u: [-1 , 1]\)</span>), when the <code>errorsd</code> increases, we observe a shift in evidence towards <span class="math inline">\(H_i\)</span>. At the same time, when the <code>errorsd</code> is 0, it seems like the evidence tends slightly towards <span class="math inline">\(H_u\)</span>.</p>
+</section>
+<section id="summary-of-plots-log_10-text-pbf_iu-with-various-es-and-hyp_val-correlation" class="level4">
+<h4 class="anchored" data-anchor-id="summary-of-plots-log_10-text-pbf_iu-with-various-es-and-hyp_val-correlation">Summary of plots <span class="math inline">\(log_{10} \text{ } pBF_{iu}\)</span> with various es and hyp_val, correlation</h4>
+<p>The resulting <span class="math inline">\(log_{10} \text{ } pBF_{iu}\)</span> distributions under various different operationalisations of <span class="math inline">\(H_i\)</span>, and different simulation conditions, seem largely consistent with the idea that evidence shifts towards the hypothesis with the largest parameter space, when the <code>errorsd</code> (and <code>k</code> and <code>n</code>) increases.</p>
+<p>However, the observation that evidence shifts towards <span class="math inline">\(H_i\)</span> and away from <span class="math inline">\(H_u\)</span>, when <code>es</code> = -0.8 and the <code>errorsd</code> increases, was not in line with what was expectated.</p>
+</section>
+</section>
+<section id="simulation-1-general-conclucion" class="level3">
+<h3 class="anchored" data-anchor-id="simulation-1-general-conclucion">Simulation 1: General conclucion</h3>
+<p>The observation that evidence shifts towards <span class="math inline">\(H_i\)</span> and away from <span class="math inline">\(H_u\)</span>, when <code>es</code> = -0.8 and the <code>errorsd</code> increases, hints that all observed evidence shifts might be explained in terms of <em>fit</em> and <em>complexity</em>.</p>
+<p>By definition, Bayes factors reward hypotheses that fit the data well without being unnecessarily complex, and penalise hypotheses that are either too restrictive (poor fit), or insufficiently restrictive by allowing many values that are not in line with the data (too complex). It is therefore likely that hypotheses with larger parameter spaces will often fit the data better. In Simulations 1-a and 1-b, this improved fit may often have outweighed the increasing complexity of hypotheses with larger parameter spaces, resulting in an evidence shift towards the hypothesis with the largest parameter space.</p>
+<p>However, when additional values allowed by a less restricted hypothesis are not supported by the data, their complexity can become a disadvantage, and a more restricted hypothesis can be preferred. This appears to be the case in the condition in Simulation 1-b where <code>es</code> was -0.8 and the evidence shifted in favour of <span class="math inline">\(H_i\)</span>, the hypothesis with the smallest parameter space. Because both hypotheses are both relatively complex, the more restricted hypothesis, <span class="math inline">\(H_i\)</span>, likely gains an advantage over the less restricted hypothesis, <span class="math inline">\(H_u\)</span>.</p>
+</section>
+</section>
+<section id="simulation-2-covariance" class="level2">
+<h2 class="anchored" data-anchor-id="simulation-2-covariance">Simulation 2: Covariance</h2>
+<p>To test whether the same effect holds in an unconstrained parameter space, instead of using correlations, the simulation was ran with covariances, that can range from <span class="math inline">\([-\infty,\infty]\)</span>. If the size of the parameter space indeed plays a role in the shift of distributions, when using covariances, we would expect the distributions to be symmetrical around <span class="math inline">\(log_{10}\)</span> pBF values of zero, at all error values and true effect sizes, as the differences in parameter space sizes would be neglectable in this case.</p>
+<p>These plots show that if there is an unconstrained parameter space, no matter what the hypothesis or error is, the distributions are symmetrical around a <span class="math inline">\(log_{10}\)</span> pBF of zero, indicating that the studies do not provide convincing evidence for either <span class="math inline">\(H_i\)</span> or <span class="math inline">\(H_c\)</span>.</p>
+<section id="simulation-2-a-testing-hypotheses-h_i-versus-h_c-with-different-unconstrained-parameter-spaces-covariances" class="level3">
+<h3 class="anchored" data-anchor-id="simulation-2-a-testing-hypotheses-h_i-versus-h_c-with-different-unconstrained-parameter-spaces-covariances">Simulation 2-a: Testing hypotheses (<span class="math inline">\(H_i\)</span> versus <span class="math inline">\(H_c\)</span>) with different unconstrained parameter spaces (covariances)</h3>
+<section id="a1-log_10-text-pbf_ic-es-0.1-covariance" class="level4">
+<h4 class="anchored" data-anchor-id="a1-log_10-text-pbf_ic-es-0.1-covariance">2-a1: <span class="math inline">\(Log_{10} \text{ } pBF_{ic}\)</span>, es = 0.1, covariance</h4>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="BES_manuscript_third_draft_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>When <code>es = 0.1</code>, across all conditions, the <span class="math inline">\(log_{10} \text{ } pBF_{ic}\)</span> distributions are nicely centered around zero.</p>
+</section>
+<section id="a2-log_10-text-pbf_ic-es-0-covariance" class="level4">
+<h4 class="anchored" data-anchor-id="a2-log_10-text-pbf_ic-es-0-covariance">2-a2: <span class="math inline">\(Log_{10} \text{ } pBF_{ic}\)</span>, es = 0, covariance</h4>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="BES_manuscript_third_draft_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>When <code>es = 0</code>, across all conditions, the <span class="math inline">\(log_{10} \text{ } pBF_{ic}\)</span> distributions are nicely centered around zero.</p>
+</section>
+<section id="a3-log_10-text-pbf_ic-es-0.8-covariance" class="level4">
+<h4 class="anchored" data-anchor-id="a3-log_10-text-pbf_ic-es-0.8-covariance">2-a3: <span class="math inline">\(Log_{10} \text{ } pBF_{ic}\)</span>, es = 0.8, covariance</h4>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="BES_manuscript_third_draft_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>When <code>es = 0.8</code>, across almost all conditions, the <span class="math inline">\(log_{10} \text{ } pBF_{ic}\)</span> distributions are nicely centered around zero. Only when the within-study sample size is low (<code>n = 20</code>, also a little when <code>n = 80</code>), there seems to be quite a large tail favouring <span class="math inline">\(H_c\)</span>, especially when the number of studies (<code>k</code>) is high.</p>
+</section>
+<section id="a4-log_10-text-pbf_ic-es--0.8-covariance" class="level4">
+<h4 class="anchored" data-anchor-id="a4-log_10-text-pbf_ic-es--0.8-covariance">2-a4: <span class="math inline">\(Log_{10} \text{ } pBF_{ic}\)</span>, es = -0.8, covariance</h4>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="BES_manuscript_third_draft_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>When <code>es = -0.8</code>, in general, across most conditions the <span class="math inline">\(log_{10} \text{ } pBF_{ic}\)</span> distributions are centered around zero. However, again, when the within-study sample size is low (e.g., <code>n = 20</code> or <code>n = 80</code>) and when the number of studies increases (<code>k</code>), there is quite a large tail favouring <span class="math inline">\(H_i\)</span>. The <code>errorsd</code> does not seem to affect the distributions. This skew seems even more prominent than when <code>es = 0.8</code>.</p>
+</section>
+<section id="summary-of-plots-log_10-text-pbf_ic-with-various-es-and-hyp_val-covariance" class="level4">
+<h4 class="anchored" data-anchor-id="summary-of-plots-log_10-text-pbf_ic-with-various-es-and-hyp_val-covariance">Summary of plots <span class="math inline">\(log_{10} \text{ } pBF_{ic}\)</span> with various es and hyp_val, covariance</h4>
+</section>
+</section>
+<section id="simulation-2-b-testing-hypotheses-h_i-versus-h_u-with-different-constrained-parameter-spaces-covariances" class="level3">
+<h3 class="anchored" data-anchor-id="simulation-2-b-testing-hypotheses-h_i-versus-h_u-with-different-constrained-parameter-spaces-covariances">Simulation 2-b: Testing hypotheses (<span class="math inline">\(H_i\)</span> versus <span class="math inline">\(H_u\)</span>) with different constrained parameter spaces (covariances)</h3>
+<section id="b1-log_10-text-pbf_iu-es-0.1-covariance" class="level4">
+<h4 class="anchored" data-anchor-id="b1-log_10-text-pbf_iu-es-0.1-covariance">2-b1: <span class="math inline">\(Log_{10} \text{ } pBF_{iu}\)</span>, es = 0.1, covariance</h4>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="BES_manuscript_third_draft_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>When <code>es = 0.1</code>, although varying <code>errorsd</code> and <code>n</code> values do not seem to drastically affect the distributions, with increasing within-study sample size (<code>n</code>) the <span class="math inline">\(log_{10} \text{ } pBF_{iu}\)</span> distributions show a shift of evidence towards <span class="math inline">\(H_u\)</span>.</p>
+</section>
+<section id="b2-log_10-text-pbf_iu-es-0-covariance" class="level4">
+<h4 class="anchored" data-anchor-id="b2-log_10-text-pbf_iu-es-0-covariance">2-b2: <span class="math inline">\(Log_{10} \text{ } pBF_{iu}\)</span>, es = 0, covariance</h4>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="BES_manuscript_third_draft_files/figure-html/unnamed-chunk-20-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>When <code>es = 0</code>, the pattern is consistent with that in 2-b1; although varying <code>errorsd</code> and <code>n</code> values do not seem to drastically affect the distributions, with increasing within-study sample size (<code>n</code>) the <span class="math inline">\(log_{10} \text{ } pBF_{iu}\)</span> distributions show a shift of evidence towards <span class="math inline">\(H_u\)</span>.</p>
+</section>
+<section id="b3-log_10-text-pbf_iu-es-0.8-covariance" class="level4">
+<h4 class="anchored" data-anchor-id="b3-log_10-text-pbf_iu-es-0.8-covariance">2-b3: <span class="math inline">\(Log_{10} \text{ } pBF_{iu}\)</span>, es = 0.8, covariance</h4>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="BES_manuscript_third_draft_files/figure-html/unnamed-chunk-21-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Although the skew seems more prominent here, this pattern is consistent with those in 2-b1 and 2-b2. In most cases the tail of the <span class="math inline">\(log_{10} \text{ } pBF_{iu}\)</span> distribution is skewed towards evidence for <span class="math inline">\(H_u\)</span>, which increases with increasing <code>k</code>. Again <code>errorsd</code> does not seem to affect the <span class="math inline">\(log_{10} \text{ } pBF_{iu}\)</span> distributions a lot.</p>
+</section>
+<section id="b4-log_10-text-pbf_iu-es--0.8-covariance" class="level4">
+<h4 class="anchored" data-anchor-id="b4-log_10-text-pbf_iu-es--0.8-covariance">2-b4: <span class="math inline">\(Log_{10} \text{ } pBF_{iu}\)</span>, es = -0.8, covariance</h4>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="BES_manuscript_third_draft_files/figure-html/unnamed-chunk-22-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>When <code>es = -0.8</code>, almost all <span class="math inline">\(log_{10} \text{ } pBF_{iu}\)</span> distributions are centered around zero quite nicely.</p>
+</section>
+<section id="summary-of-plots-log_10-text-pbf_iu-with-various-es-and-hyp_val-correlation-1" class="level4">
+<h4 class="anchored" data-anchor-id="summary-of-plots-log_10-text-pbf_iu-with-various-es-and-hyp_val-correlation-1">Summary of plots <span class="math inline">\(log_{10} \text{ } pBF_{iu}\)</span> with various es and hyp_val, correlation</h4>
+<p>Across covariance-based analyses, the <span class="math inline">\(log_{10} \text{ } pBF_{iu}\)</span> seem more stable compared to the correlation case, as was expected with an unconstrained parameter space if the fit/complexity indeed play a role in the distributional shifts observed in Simulation 1. Regardless of the true effect size <code>es</code>, variations in error (<code>errorsd</code>) and within-study sample size (<code>n</code>) did not seem to affect the distributions much, and did not seem to induce strong shifts in evidence. In contrast, increasing the number of studies (<code>k</code>) did seem to introduce a skew towards negative <span class="math inline">\(log_{10} \text{ } pBF_{iu}\)</span> values, indicating increasing evidence in favour of <span class="math inline">\(H_u\)</span>.</p>
+<p>These results suggest that when the effect size has an unbounded parameter space, differences in hypothesis fit and complexity are less important than when the parameter space is constrained, and shifts in evidence seem to be driven by the number of studies, rather than other parameters.</p>
+</section>
+</section>
+</section>
+<section id="simulation-3-z-transformation---transformed-atanhhyp_val" class="level2">
+<h2 class="anchored" data-anchor-id="simulation-3-z-transformation---transformed-atanhhyp_val">Simulation 3: Z-transformation - Transformed atanh(hyp_val)</h2>
+<section id="simulation-3-a-testing-hypotheses-h_i-versus-h_c-with-different-unconstrained-parameter-spaces-z-scores-transformed-hyp" class="level3">
+<h3 class="anchored" data-anchor-id="simulation-3-a-testing-hypotheses-h_i-versus-h_c-with-different-unconstrained-parameter-spaces-z-scores-transformed-hyp">Simulation 3-a: Testing hypotheses (<span class="math inline">\(H_i\)</span> versus <span class="math inline">\(H_c\)</span>) with different unconstrained parameter spaces (z-scores transformed hyp)</h3>
+<section id="a1-log_10-text-pbf_ic-es-0.1-z-scores-transformed-hyp" class="level4">
+<h4 class="anchored" data-anchor-id="a1-log_10-text-pbf_ic-es-0.1-z-scores-transformed-hyp">3-a1: <span class="math inline">\(Log_{10} \text{ } pBF_{ic}\)</span>, es = 0.1, z-scores transformed hyp</h4>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="BES_manuscript_third_draft_files/figure-html/unnamed-chunk-23-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="a2-log_10-text-pbf_ic-es-0-z-scores-transformed-hyp" class="level4">
+<h4 class="anchored" data-anchor-id="a2-log_10-text-pbf_ic-es-0-z-scores-transformed-hyp">3-a2: <span class="math inline">\(Log_{10} \text{ } pBF_{ic}\)</span>, es = 0, z-scores transformed hyp</h4>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="BES_manuscript_third_draft_files/figure-html/unnamed-chunk-24-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="a3-log_10-text-pbf_ic-es-0.8-z-scores-transformed-hyp" class="level4">
+<h4 class="anchored" data-anchor-id="a3-log_10-text-pbf_ic-es-0.8-z-scores-transformed-hyp">3-a3: <span class="math inline">\(Log_{10} \text{ } pBF_{ic}\)</span>, es = 0.8, z-scores transformed hyp</h4>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="BES_manuscript_third_draft_files/figure-html/unnamed-chunk-25-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="a4-log_10-text-pbf_ic-es--0.8-z-scores-transformed-hyp" class="level4">
+<h4 class="anchored" data-anchor-id="a4-log_10-text-pbf_ic-es--0.8-z-scores-transformed-hyp">3-a4: <span class="math inline">\(Log_{10} \text{ } pBF_{ic}\)</span>, es = -0.8, z-scores transformed hyp</h4>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="BES_manuscript_third_draft_files/figure-html/unnamed-chunk-26-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="summary-of-plots-log_10-text-pbf_ic-with-various-es-and-hyp_val-z-transformation-of-correlation" class="level4">
+<h4 class="anchored" data-anchor-id="summary-of-plots-log_10-text-pbf_ic-with-various-es-and-hyp_val-z-transformation-of-correlation">Summary of plots <span class="math inline">\(log_{10} \text{ } pBF_{ic}\)</span> with various es and hyp_val, z-transformation of correlation</h4>
+</section>
+</section>
+<section id="simulation-3-b-testing-hypotheses-h_i-versus-h_u-with-different-constrained-parameter-spaces-z-scores-transformed-hyp" class="level3">
+<h3 class="anchored" data-anchor-id="simulation-3-b-testing-hypotheses-h_i-versus-h_u-with-different-constrained-parameter-spaces-z-scores-transformed-hyp">Simulation 3-b: Testing hypotheses (<span class="math inline">\(H_i\)</span> versus <span class="math inline">\(H_u\)</span>) with different constrained parameter spaces (z-scores transformed hyp)</h3>
+<section id="b1-log_10-text-pbf_iu-es-0.1-z-scores-transformed-hyp" class="level4">
+<h4 class="anchored" data-anchor-id="b1-log_10-text-pbf_iu-es-0.1-z-scores-transformed-hyp">3-b1: <span class="math inline">\(Log_{10} \text{ } pBF_{iu}\)</span>, es = 0.1, z-scores transformed hyp</h4>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="BES_manuscript_third_draft_files/figure-html/unnamed-chunk-27-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="b2-log_10-text-pbf_iu-es-0-z-scores-transformed-hyp" class="level4">
+<h4 class="anchored" data-anchor-id="b2-log_10-text-pbf_iu-es-0-z-scores-transformed-hyp">3-b2: <span class="math inline">\(Log_{10} \text{ } pBF_{iu}\)</span>, es = 0, z-scores transformed hyp</h4>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="BES_manuscript_third_draft_files/figure-html/unnamed-chunk-28-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="b3-log_10-text-pbf_iu-es-0.8-z-scores-transformed-hyp" class="level4">
+<h4 class="anchored" data-anchor-id="b3-log_10-text-pbf_iu-es-0.8-z-scores-transformed-hyp">3-b3: <span class="math inline">\(Log_{10} \text{ } pBF_{iu}\)</span>, es = 0.8, z-scores transformed hyp</h4>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="BES_manuscript_third_draft_files/figure-html/unnamed-chunk-29-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="b4-log_10-text-pbf_iu-es--0.8-z-transformation" class="level4">
+<h4 class="anchored" data-anchor-id="b4-log_10-text-pbf_iu-es--0.8-z-transformation">3-b4: <span class="math inline">\(Log_{10} \text{ } pBF_{iu}\)</span>, es = -0.8, z-transformation</h4>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="BES_manuscript_third_draft_files/figure-html/unnamed-chunk-30-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="summary-of-plots-log_10-text-pbf_iu-with-various-es-and-hyp_val-z-transformation-of-correlation" class="level4">
+<h4 class="anchored" data-anchor-id="summary-of-plots-log_10-text-pbf_iu-with-various-es-and-hyp_val-z-transformation-of-correlation">Summary of plots <span class="math inline">\(log_{10} \text{ } pBF_{iu}\)</span> with various es and hyp_val, z-transformation of correlation</h4>
+</section>
+</section>
+</section>
+<section id="simulation-4-z-transformation---hyp_val-not-transformed" class="level2">
+<h2 class="anchored" data-anchor-id="simulation-4-z-transformation---hyp_val-not-transformed">Simulation 4: Z-transformation - Hyp_val NOT transformed</h2>
+<section id="simulation-4-a-testing-hypotheses-h_i-versus-h_c-with-different-unconstrained-parameter-spaces-z-transformation" class="level3">
+<h3 class="anchored" data-anchor-id="simulation-4-a-testing-hypotheses-h_i-versus-h_c-with-different-unconstrained-parameter-spaces-z-transformation">Simulation 4-a: Testing hypotheses (<span class="math inline">\(H_i\)</span> versus <span class="math inline">\(H_c\)</span>) with different unconstrained parameter spaces (z-transformation)</h3>
+<section id="a1-log_10-text-pbf_ic-es-0.1-z-transformation" class="level4">
+<h4 class="anchored" data-anchor-id="a1-log_10-text-pbf_ic-es-0.1-z-transformation">4-a1: <span class="math inline">\(Log_{10} \text{ } pBF_{ic}\)</span>, es = 0.1, z-transformation</h4>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="BES_manuscript_third_draft_files/figure-html/unnamed-chunk-31-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="a2-log_10-text-pbf_ic-es-0-z-transformation" class="level4">
+<h4 class="anchored" data-anchor-id="a2-log_10-text-pbf_ic-es-0-z-transformation">4-a2: <span class="math inline">\(Log_{10} \text{ } pBF_{ic}\)</span>, es = 0, z-transformation</h4>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="BES_manuscript_third_draft_files/figure-html/unnamed-chunk-32-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="a3-log_10-text-pbf_ic-es-0.8-z-transformation" class="level4">
+<h4 class="anchored" data-anchor-id="a3-log_10-text-pbf_ic-es-0.8-z-transformation">4-a3: <span class="math inline">\(Log_{10} \text{ } pBF_{ic}\)</span>, es = 0.8, z-transformation</h4>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="BES_manuscript_third_draft_files/figure-html/unnamed-chunk-33-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="a4-log_10-text-pbf_ic-es--0.8-z-transformation" class="level4">
+<h4 class="anchored" data-anchor-id="a4-log_10-text-pbf_ic-es--0.8-z-transformation">4-a4: <span class="math inline">\(Log_{10} \text{ } pBF_{ic}\)</span>, es = -0.8, z-transformation</h4>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="BES_manuscript_third_draft_files/figure-html/unnamed-chunk-34-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="summary-of-plots-log_10-text-pbf_ic-with-various-es-and-hyp_val-z-transformation-of-correlation-1" class="level4">
+<h4 class="anchored" data-anchor-id="summary-of-plots-log_10-text-pbf_ic-with-various-es-and-hyp_val-z-transformation-of-correlation-1">Summary of plots <span class="math inline">\(log_{10} \text{ } pBF_{ic}\)</span> with various es and hyp_val, z-transformation of correlation</h4>
+</section>
+</section>
+<section id="simulation-4-b-testing-hypotheses-h_i-versus-h_u-with-different-constrained-parameter-spaces-z-transformation" class="level3">
+<h3 class="anchored" data-anchor-id="simulation-4-b-testing-hypotheses-h_i-versus-h_u-with-different-constrained-parameter-spaces-z-transformation">Simulation 4-b: Testing hypotheses (<span class="math inline">\(H_i\)</span> versus <span class="math inline">\(H_u\)</span>) with different constrained parameter spaces (z-transformation)</h3>
+<section id="b1-log_10-text-pbf_iu-es-0.1-z-transformation" class="level4">
+<h4 class="anchored" data-anchor-id="b1-log_10-text-pbf_iu-es-0.1-z-transformation">4-b1: <span class="math inline">\(Log_{10} \text{ } pBF_{iu}\)</span>, es = 0.1, z-transformation</h4>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="BES_manuscript_third_draft_files/figure-html/unnamed-chunk-35-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="b2-log_10-text-pbf_iu-es-0-z-transformation" class="level4">
+<h4 class="anchored" data-anchor-id="b2-log_10-text-pbf_iu-es-0-z-transformation">4-b2: <span class="math inline">\(Log_{10} \text{ } pBF_{iu}\)</span>, es = 0, z-transformation</h4>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="BES_manuscript_third_draft_files/figure-html/unnamed-chunk-36-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="b3-log_10-text-pbf_iu-es-0.8-z-transformation" class="level4">
+<h4 class="anchored" data-anchor-id="b3-log_10-text-pbf_iu-es-0.8-z-transformation">4-b3: <span class="math inline">\(Log_{10} \text{ } pBF_{iu}\)</span>, es = 0.8, z-transformation</h4>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="BES_manuscript_third_draft_files/figure-html/unnamed-chunk-37-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="b4-log_10-text-pbf_iu-es--0.8-z-transformation-1" class="level4">
+<h4 class="anchored" data-anchor-id="b4-log_10-text-pbf_iu-es--0.8-z-transformation-1">4-b4: <span class="math inline">\(Log_{10} \text{ } pBF_{iu}\)</span>, es = -0.8, z-transformation</h4>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="BES_manuscript_third_draft_files/figure-html/unnamed-chunk-38-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="summary-of-plots-log_10-text-pbf_iu-with-various-es-and-hyp_val-z-transformation-of-correlation-1" class="level4">
+<h4 class="anchored" data-anchor-id="summary-of-plots-log_10-text-pbf_iu-with-various-es-and-hyp_val-z-transformation-of-correlation-1">Summary of plots <span class="math inline">\(log_{10} \text{ } pBF_{iu}\)</span> with various es and hyp_val, z-transformation of correlation</h4>
+</section>
+</section>
+</section>
+<section id="simulation-5-beta" class="level2">
+<h2 class="anchored" data-anchor-id="simulation-5-beta">Simulation 5: Beta</h2>
+<section id="simulation-5-a-testing-hypotheses-h_i-versus-h_c-with-different-unconstrained-parameter-spaces-beta" class="level3">
+<h3 class="anchored" data-anchor-id="simulation-5-a-testing-hypotheses-h_i-versus-h_c-with-different-unconstrained-parameter-spaces-beta">Simulation 5-a: Testing hypotheses (<span class="math inline">\(H_i\)</span> versus <span class="math inline">\(H_c\)</span>) with different unconstrained parameter spaces (beta)</h3>
+<section id="a1-log_10-text-pbf_ic-es-0.1-beta" class="level4">
+<h4 class="anchored" data-anchor-id="a1-log_10-text-pbf_ic-es-0.1-beta">5-a1: <span class="math inline">\(Log_{10} \text{ } pBF_{ic}\)</span>, es = 0.1, beta</h4>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="BES_manuscript_third_draft_files/figure-html/unnamed-chunk-39-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="a2-log_10-text-pbf_ic-es-0-beta" class="level4">
+<h4 class="anchored" data-anchor-id="a2-log_10-text-pbf_ic-es-0-beta">5-a2: <span class="math inline">\(Log_{10} \text{ } pBF_{ic}\)</span>, es = 0, beta</h4>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="BES_manuscript_third_draft_files/figure-html/unnamed-chunk-40-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="a3-log_10-text-pbf_ic-es-0.8-beta" class="level4">
+<h4 class="anchored" data-anchor-id="a3-log_10-text-pbf_ic-es-0.8-beta">5-a3: <span class="math inline">\(Log_{10} \text{ } pBF_{ic}\)</span>, es = 0.8, beta</h4>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="BES_manuscript_third_draft_files/figure-html/unnamed-chunk-41-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="a4-log_10-text-pbf_ic-es--0.8-beta" class="level4">
+<h4 class="anchored" data-anchor-id="a4-log_10-text-pbf_ic-es--0.8-beta">5-a4: <span class="math inline">\(Log_{10} \text{ } pBF_{ic}\)</span>, es = -0.8, beta</h4>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="BES_manuscript_third_draft_files/figure-html/unnamed-chunk-42-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="summary-of-plots-log_10-text-pbf_ic-with-various-es-and-hyp_val-beta" class="level4">
+<h4 class="anchored" data-anchor-id="summary-of-plots-log_10-text-pbf_ic-with-various-es-and-hyp_val-beta">Summary of plots <span class="math inline">\(log_{10} \text{ } pBF_{ic}\)</span> with various es and hyp_val, beta</h4>
+</section>
+</section>
+<section id="simulation-5-b-testing-hypotheses-h_i-versus-h_u-with-different-constrained-parameter-spaces-beta" class="level3">
+<h3 class="anchored" data-anchor-id="simulation-5-b-testing-hypotheses-h_i-versus-h_u-with-different-constrained-parameter-spaces-beta">Simulation 5-b: Testing hypotheses (<span class="math inline">\(H_i\)</span> versus <span class="math inline">\(H_u\)</span>) with different constrained parameter spaces (beta)</h3>
+<section id="b1-log_10-text-pbf_iu-es-0.1-beta" class="level4">
+<h4 class="anchored" data-anchor-id="b1-log_10-text-pbf_iu-es-0.1-beta">5-b1: <span class="math inline">\(Log_{10} \text{ } pBF_{iu}\)</span>, es = 0.1, beta</h4>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="BES_manuscript_third_draft_files/figure-html/unnamed-chunk-43-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="b2-log_10-text-pbf_iu-es-0-beta" class="level4">
+<h4 class="anchored" data-anchor-id="b2-log_10-text-pbf_iu-es-0-beta">5-b2: <span class="math inline">\(Log_{10} \text{ } pBF_{iu}\)</span>, es = 0, beta</h4>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="BES_manuscript_third_draft_files/figure-html/unnamed-chunk-44-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="b3-log_10-text-pbf_iu-es-0.8-beta" class="level4">
+<h4 class="anchored" data-anchor-id="b3-log_10-text-pbf_iu-es-0.8-beta">5-b3: <span class="math inline">\(Log_{10} \text{ } pBF_{iu}\)</span>, es = 0.8, beta</h4>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="BES_manuscript_third_draft_files/figure-html/unnamed-chunk-45-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="b4-log_10-text-pbf_iu-es--0.8-beta" class="level4">
+<h4 class="anchored" data-anchor-id="b4-log_10-text-pbf_iu-es--0.8-beta">5-b4: <span class="math inline">\(Log_{10} \text{ } pBF_{iu}\)</span>, es = -0.8, beta</h4>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="BES_manuscript_third_draft_files/figure-html/unnamed-chunk-46-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="summary-of-plots-log_10-text-pbf_iu-with-various-es-and-hyp_val-beta" class="level4">
+<h4 class="anchored" data-anchor-id="summary-of-plots-log_10-text-pbf_iu-with-various-es-and-hyp_val-beta">Summary of plots <span class="math inline">\(log_{10} \text{ } pBF_{iu}\)</span> with various es and hyp_val, beta</h4>
+</section>
+</section>
+</section>
+<section id="simulation-6-mean-difference" class="level2">
+<h2 class="anchored" data-anchor-id="simulation-6-mean-difference">Simulation 6: Mean Difference</h2>
+<section id="simulation-6-a-testing-hypotheses-h_i-versus-h_c-with-different-unconstrained-parameter-spaces-mean-difference" class="level3">
+<h3 class="anchored" data-anchor-id="simulation-6-a-testing-hypotheses-h_i-versus-h_c-with-different-unconstrained-parameter-spaces-mean-difference">Simulation 6-a: Testing hypotheses (<span class="math inline">\(H_i\)</span> versus <span class="math inline">\(H_c\)</span>) with different unconstrained parameter spaces (mean difference)</h3>
+<section id="a1-log_10-text-pbf_ic-es-0.1-meandiff" class="level4">
+<h4 class="anchored" data-anchor-id="a1-log_10-text-pbf_ic-es-0.1-meandiff">6-a1: <span class="math inline">\(Log_{10} \text{ } pBF_{ic}\)</span>, es = 0.1, meandiff</h4>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="BES_manuscript_third_draft_files/figure-html/unnamed-chunk-47-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="a2-log_10-text-pbf_ic-es-0-meandiff" class="level4">
+<h4 class="anchored" data-anchor-id="a2-log_10-text-pbf_ic-es-0-meandiff">6-a2: <span class="math inline">\(Log_{10} \text{ } pBF_{ic}\)</span>, es = 0, meandiff</h4>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="BES_manuscript_third_draft_files/figure-html/unnamed-chunk-48-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="a3-log_10-text-pbf_ic-es-0.8-meandiff" class="level4">
+<h4 class="anchored" data-anchor-id="a3-log_10-text-pbf_ic-es-0.8-meandiff">6-a3: <span class="math inline">\(Log_{10} \text{ } pBF_{ic}\)</span>, es = 0.8, meandiff</h4>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="BES_manuscript_third_draft_files/figure-html/unnamed-chunk-49-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="a4-log_10-text-pbf_ic-es--0.8-meandiff" class="level4">
+<h4 class="anchored" data-anchor-id="a4-log_10-text-pbf_ic-es--0.8-meandiff">6-a4: <span class="math inline">\(Log_{10} \text{ } pBF_{ic}\)</span>, es = -0.8, meandiff</h4>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="BES_manuscript_third_draft_files/figure-html/unnamed-chunk-50-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="summary-of-plots-log_10-text-pbf_ic-with-various-es-and-hyp_val-meandiff" class="level4">
+<h4 class="anchored" data-anchor-id="summary-of-plots-log_10-text-pbf_ic-with-various-es-and-hyp_val-meandiff">Summary of plots <span class="math inline">\(log_{10} \text{ } pBF_{ic}\)</span> with various es and hyp_val, meandiff</h4>
+</section>
+</section>
+<section id="simulation-6-b-testing-hypotheses-h_i-versus-h_u-with-different-unconstrained-parameter-spaces-mean-difference" class="level3">
+<h3 class="anchored" data-anchor-id="simulation-6-b-testing-hypotheses-h_i-versus-h_u-with-different-unconstrained-parameter-spaces-mean-difference">Simulation 6-b: Testing hypotheses (<span class="math inline">\(H_i\)</span> versus <span class="math inline">\(H_u\)</span>) with different unconstrained parameter spaces (mean difference)</h3>
+<section id="b1-log_10-text-pbf_iu-es-0.1-meandiff" class="level4">
+<h4 class="anchored" data-anchor-id="b1-log_10-text-pbf_iu-es-0.1-meandiff">6-b1: <span class="math inline">\(Log_{10} \text{ } pBF_{iu}\)</span>, es = 0.1, meandiff</h4>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="BES_manuscript_third_draft_files/figure-html/unnamed-chunk-51-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="b2-log_10-text-pbf_iu-es-0-meandiff" class="level4">
+<h4 class="anchored" data-anchor-id="b2-log_10-text-pbf_iu-es-0-meandiff">6-b2: <span class="math inline">\(Log_{10} \text{ } pBF_{iu}\)</span>, es = 0, meandiff</h4>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="BES_manuscript_third_draft_files/figure-html/unnamed-chunk-52-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="b3-log_10-text-pbf_iu-es-0.8-meandiff" class="level4">
+<h4 class="anchored" data-anchor-id="b3-log_10-text-pbf_iu-es-0.8-meandiff">6-b3: <span class="math inline">\(Log_{10} \text{ } pBF_{iu}\)</span>, es = 0.8, meandiff</h4>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="BES_manuscript_third_draft_files/figure-html/unnamed-chunk-53-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="b4-log_10-text-pbf_iu-es--0.8-meandiff" class="level4">
+<h4 class="anchored" data-anchor-id="b4-log_10-text-pbf_iu-es--0.8-meandiff">6-b4: <span class="math inline">\(Log_{10} \text{ } pBF_{iu}\)</span>, es = -0.8, meandiff</h4>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="BES_manuscript_third_draft_files/figure-html/unnamed-chunk-54-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="summary-of-plots-log_10-text-pbf_iu-with-various-es-and-hyp_val-meandiff" class="level4">
+<h4 class="anchored" data-anchor-id="summary-of-plots-log_10-text-pbf_iu-with-various-es-and-hyp_val-meandiff">Summary of plots <span class="math inline">\(log_{10} \text{ } pBF_{iu}\)</span> with various es and hyp_val, meandiff</h4>
+</section>
+</section>
+</section>
+<section id="simulation-7-absolute-mean-difference" class="level2">
+<h2 class="anchored" data-anchor-id="simulation-7-absolute-mean-difference">Simulation 7: Absolute Mean Difference</h2>
+<section id="simulation-7-a-testing-hypotheses-h_i-versus-h_c-with-different-unconstrained-parameter-spaces-absolute-mean-difference" class="level3">
+<h3 class="anchored" data-anchor-id="simulation-7-a-testing-hypotheses-h_i-versus-h_c-with-different-unconstrained-parameter-spaces-absolute-mean-difference">Simulation 7-a: Testing hypotheses (<span class="math inline">\(H_i\)</span> versus <span class="math inline">\(H_c\)</span>) with different unconstrained parameter spaces (absolute mean difference)</h3>
+<section id="a1-log_10-text-pbf_ic-es-0.1-abs-meandiff" class="level4">
+<h4 class="anchored" data-anchor-id="a1-log_10-text-pbf_ic-es-0.1-abs-meandiff">7-a1: <span class="math inline">\(Log_{10} \text{ } pBF_{ic}\)</span>, es = 0.1, abs meandiff</h4>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="BES_manuscript_third_draft_files/figure-html/unnamed-chunk-55-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="a2-log_10-text-pbf_ic-es-0-abs-meandiff" class="level4">
+<h4 class="anchored" data-anchor-id="a2-log_10-text-pbf_ic-es-0-abs-meandiff">7-a2: <span class="math inline">\(Log_{10} \text{ } pBF_{ic}\)</span>, es = 0, abs meandiff</h4>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="BES_manuscript_third_draft_files/figure-html/unnamed-chunk-56-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="a3-log_10-text-pbf_ic-es-0.8-abs-meandiff" class="level4">
+<h4 class="anchored" data-anchor-id="a3-log_10-text-pbf_ic-es-0.8-abs-meandiff">7-a3: <span class="math inline">\(Log_{10} \text{ } pBF_{ic}\)</span>, es = 0.8, abs meandiff</h4>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="BES_manuscript_third_draft_files/figure-html/unnamed-chunk-57-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="a4-log_10-text-pbf_ic-es--0.8-abs-meandiff" class="level4">
+<h4 class="anchored" data-anchor-id="a4-log_10-text-pbf_ic-es--0.8-abs-meandiff">7-a4: <span class="math inline">\(Log_{10} \text{ } pBF_{ic}\)</span>, es = -0.8, abs meandiff</h4>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="BES_manuscript_third_draft_files/figure-html/unnamed-chunk-58-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="summary-of-plots-log_10-text-pbf_ic-with-various-es-and-hyp_val-abs-meandiff" class="level4">
+<h4 class="anchored" data-anchor-id="summary-of-plots-log_10-text-pbf_ic-with-various-es-and-hyp_val-abs-meandiff">Summary of plots <span class="math inline">\(log_{10} \text{ } pBF_{ic}\)</span> with various es and hyp_val, abs meandiff</h4>
+</section>
+</section>
+<section id="simulation-7-b-testing-hypotheses-h_i-versus-h_u-with-different-unconstrained-parameter-spaces-absolute-mean-difference" class="level3">
+<h3 class="anchored" data-anchor-id="simulation-7-b-testing-hypotheses-h_i-versus-h_u-with-different-unconstrained-parameter-spaces-absolute-mean-difference">Simulation 7-b: Testing hypotheses (<span class="math inline">\(H_i\)</span> versus <span class="math inline">\(H_u\)</span>) with different unconstrained parameter spaces (absolute mean difference)</h3>
+<section id="b1-log_10-text-pbf_iu-es-0.1-abs-meandiff" class="level4">
+<h4 class="anchored" data-anchor-id="b1-log_10-text-pbf_iu-es-0.1-abs-meandiff">7-b1: <span class="math inline">\(Log_{10} \text{ } pBF_{iu}\)</span>, es = 0.1, abs meandiff</h4>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="BES_manuscript_third_draft_files/figure-html/unnamed-chunk-59-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="b2-log_10-text-pbf_iu-es-0-abs-meandiff" class="level4">
+<h4 class="anchored" data-anchor-id="b2-log_10-text-pbf_iu-es-0-abs-meandiff">7-b2: <span class="math inline">\(Log_{10} \text{ } pBF_{iu}\)</span>, es = 0, abs meandiff</h4>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="BES_manuscript_third_draft_files/figure-html/unnamed-chunk-60-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="b3-log_10-text-pbf_iu-es-0.8-abs-meandiff" class="level4">
+<h4 class="anchored" data-anchor-id="b3-log_10-text-pbf_iu-es-0.8-abs-meandiff">7-b3: <span class="math inline">\(Log_{10} \text{ } pBF_{iu}\)</span>, es = 0.8, abs meandiff</h4>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="BES_manuscript_third_draft_files/figure-html/unnamed-chunk-61-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="b4-log_10-text-pbf_iu-es--0.8-abs-meandiff" class="level4">
+<h4 class="anchored" data-anchor-id="b4-log_10-text-pbf_iu-es--0.8-abs-meandiff">7-b4: <span class="math inline">\(Log_{10} \text{ } pBF_{iu}\)</span>, es = -0.8, abs meandiff</h4>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="BES_manuscript_third_draft_files/figure-html/unnamed-chunk-62-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="summary-of-plots-log_10-text-pbf_iu-with-various-es-and-hyp_val-absolute-meandiff" class="level4">
+<h4 class="anchored" data-anchor-id="summary-of-plots-log_10-text-pbf_iu-with-various-es-and-hyp_val-absolute-meandiff">Summary of plots <span class="math inline">\(log_{10} \text{ } pBF_{iu}\)</span> with various es and hyp_val, absolute meandiff</h4>
+</section>
+</section>
+</section>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
