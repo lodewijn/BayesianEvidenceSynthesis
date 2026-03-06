@@ -1087,7 +1087,7 @@ These results suggest that when the effect size has an unbounded parameter space
 ## Simulation 3: Testing unconstrained parameter spaces - z-transformation of correlation 
 
 ```{r, message = F, echo = F}
-z_dat <- read_csv("sim_results/sim_results_2026-02-01.csv")
+z_dat <- read_csv("../../sim_results/03_sim_results_cor_cov_z/sim_results_2026-02-01.csv")
 ```
 
 ### Simulation 3-a: Testing hypotheses ($H_i$ versus $H_c$) with different unconstrained parameter spaces (z-transformation)

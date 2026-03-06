@@ -247,7 +247,6 @@ This figure shows that when the true effect `es = 0.1`, higher `errorsd` values,
 
 ---
 
-
 ## Simulation 1: Correlations
 ### Simulation 1-a: Testing hypotheses ($H_i$ versus $H_c$) with different constrained parameter spaces (correlations)
 
