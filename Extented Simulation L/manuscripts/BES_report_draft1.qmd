@@ -1,0 +1,70 @@
+---
+title: "Untitled"
+format: pdf
+---
+
+An interesting pattern was found in the 'boundary case', where $H_i: \rho > 0.1$ is tested against $Hc: \rho \le 0.1$ and the true effect $es = 0.1$ exactly equals the boundary value. Given that an estimate can never exactly equal any specific value, both $H_i$ and $H_c$ are by definition not true. Therefore, in this boundary case, we would expect all log-pBF values to be centered around 0 (1 if it were untransformed BFs). This would indicate neutral evidence for both hypotheses. However, in the simulation where correlation was the effect size of interest, an interesting pattern emerged. When the reliability of the studies decreased (modelled as an increased standard deviation), an evidence shift favouring $H_c$ was observed in the log-pBF distributions. 
+
+### Simulation 1: Correlations
+Given that the parameter of interest in this simulation study is a correlation, this implies that the full parameter space is constrained: $\rho \in [-1, 1]$. This means that $H_c$ contains a larger proportion of the full parameter space ($\rho \in [-1, 0.1]$) than $H_i$ ($\rho \in [0.1 - 1]$), raising the question if the distributional shift we observe when es = 0.1 can be explained by the fact that the two hypotheses are not equally large in terms of the parameter space. When there's error, will the evidence distribution always shift in favour of the hypothesis that contains the largest parameter space?
+
+This will be tested by running the simulation again, while testing the following hypotheses: 
+
+- $H_i: \rho > 0 \text{ versus } H_c: \le 0 \text{, when es = } 0$, in this case it is expected that at all error values, the distributions will be symmetrical around $log_{10} \text{ } pBF_{ic}$ values of zero, as both hypotheses entail an equally large parameter space. 
+- $H_i: \rho > 0.8 \text{ versus } H_c: \le 0.8 \text{, when es = } 0.8$, in this case it is expected that with higher error values, there will be an even more dramatic shift towards negative $log_{10} \text{ } pBF_{ic}$ values, indicating evidence for $H_c$. 
+- $H_i: \rho > -0.8 \text{ versus } H_c: \le -0.8 \text{, when es = } -0.8$, in this case it is expected that with higher error values, there will be shift towards positive $log_{10} \text{ } pBF_{ic}$ values, indicating evidence for $H_i$, as now this hypothesis will entail the largest proportion of the parameter space.
+
+These simulated results show exactly what we expected: when the reliability is low (high error), the $log_{10} \text{ } pBF_{ic}$ will always tend to provide evidence for the hypothesis that has the largest parameter space.
+
+Now we know how the $log_{10} \text{ } pBF_{ic}$ behaves with a constrained parameter space. However, in this case the evaluated hypotheses are mutually exclusive, so if one, e.g. $H_i$, has a bigger parameter space, the other, e.g. $H_c$, automatically has a smaller parameter space. 
+
+This raises the question how the $log_{10} \text{ } pBF_{iu}$ distribution behaves when $H_i$ is tested against $H_u$. In other words, when the parameter space sizes are not mutually exclusive. To test this, the same hypotheses ($H_i > 0$; $H_i > 0.1$; $H_i > 0.8$; $H_i > -0.8$) are tested, and $log_{10} \text{ } pBF_{iu}$ distributions are evaluated.
+
+If it is true that under certain conditions evidence will shift towards hypotheses with larger parameter spaces, we would expect there to always be an evidence shift towards $H_u$, as this hypothesis will always have the largest parameter space ($H_u: \rho \in [-1,1]$).
+
+The resulting $log_{10} \text{ } pBF_{iu}$ distributions under various different operationalisations of $H_i$, and different simulation conditions, seem largely consistent with the idea that evidence shifts towards the hypothesis with the largest parameter space, when the `errorsd` (and `k` and `n`) increases. 
+
+However, the observation that evidence shifts towards $H_i$ and away from $H_u$, when `es` = -0.8 and the `errorsd` increases, was not in line with what was expectated.
+
+#### Simulation 1: General conclucion
+The observation that evidence shifts towards $H_i$ and away from $H_u$, when `es` = -0.8 and the `errorsd` increases, hints that all observed evidence shifts might be explained in terms of *fit* and *complexity*.
+
+By definition, Bayes factors reward hypotheses that fit the data well without being unnecessarily complex, and penalise hypotheses that are either too restrictive (poor fit), or insufficiently restrictive by allowing many values that are not in line with the data (too complex). It is therefore likely that hypotheses with larger parameter spaces will often fit the data better. In Simulations 1-a and 1-b, this improved fit may often have outweighed the increasing complexity of hypotheses with larger parameter spaces, resulting in an evidence shift towards the hypothesis with the largest parameter space. 
+
+However, when additional values allowed by a less restricted hypothesis are not supported by the data, their complexity can become a disadvantage, and a more restricted hypothesis can be preferred. This appears to be the case in the condition in Simulation 1-b where `es` was -0.8 and the evidence shifted in favour of $H_i$, the hypothesis with the smallest parameter space. Because both hypotheses are both relatively complex, the more restricted hypothesis, $H_i$, likely gains an advantage over the less restricted hypothesis, $H_u$. 
+
+### Simulation 2: Covariances
+To test whether the same effect holds in an unconstrained parameter space, instead of using correlations, the simulation was ran with covariances, that can range from $[-\infty,\infty]$. If the size of the parameter space indeed plays a role in the shift of distributions, when using covariances, we would expect the distributions to be symmetrical around $log_{10}$ pBF values of zero, at all error values and true effect sizes, as the differences in parameter space sizes would be neglectable in this case.
+
+These plots show that if there is an unconstrained parameter space, no matter what the hypothesis or error is, the distributions are symmetrical around a $log_{10}$ pBF of zero, indicating that the studies do not provide convincing evidence for either $H_i$ or $H_c$.
+
+Across covariance-based analyses, the $log_{10} \text{ } pBF_{iu}$ seem more stable compared to the correlation case, as was expected with an unconstrained parameter space if the fit/complexity indeed play a role in the distributional shifts observed in Simulation 1. Regardless of the true effect size `es`, variations in error (`errorsd`) and within-study sample size (`n`) did not seem to affect the distributions much, and did not seem to induce strong shifts in evidence. In contrast, increasing the number of studies (`k`) did seem to introduce a skew towards negative $log_{10} \text{ } pBF_{iu}$ values, indicating increasing evidence in favour of $H_u$.
+
+These results suggest that when the effect size has an unbounded parameter space, differences in hypothesis fit and complexity are less important than when the parameter space is constrained, and shifts in evidence seem to be driven by the number of studies, rather than other parameters.
+
+### Properties of the effect sizes
+
+In the data generating mechanism of this simulation, in the covariance structure that is assumed $Var(X) = Var(Y) = 1$. 
+
+$\rho = Cor(X,Y) = \frac{Cov(X,Y)}{\sqrt(Var(X) \cdot Var(Y)} = Cov(X,Y)$
+
+Given that $\beta$ is an ordinary least squares (OLS) estimator, the following holds:
+
+$\beta = \frac{Cov(X,Y)}{Var(X)} = Cov(X,Y) = \rho$
+
+This means that all effect sizes are constrained to be equal due to the data generating mechanism, possibly explaining the somewhat unexpected similarities in log-pBF distributions between $\rho$ and $\beta$. However, the fact that the covariance plots behave as we would expect given that it has an unconstrained parameter space that thus has equal prior probabilities for $H_i$ and $H_c$, unlike those of $\beta$, was surprising in this light. If $Cov(X,Y) = \beta = \rho$ why would the pBFs act differently in case of covariances? 
+
+When we look at the data generating mechanism again, we have to take into account that noise is added to X and Y, such that $X_{obs} = X + \epsilon$ and $Y_{obs} = Y + \epsilon$. 
+
+Taking into account that $\epsilon$ is a random variable, translating this to the formulas of the effect sizes of interest, gives:
+
+- $Cov(X_{obs} + \epsilon_X,Y_{obs} + X + \epsilon_Y) = Cov(X,Y) + Cov(X, \epsilon_Y) + Cov(Y,\epsilon_X) + Cov(\epsilon_X,\epsilon_Y) = Cov(X,Y) = \rho$, given that $\epsilon_Y$ and $\epsilon_X$ are unrelated to each other and to X and Y. 
+- $Cor(X_{obs} + \epsilon_X,Y_{obs} + X + \epsilon_Y) = \frac{Cov(X_{obs} + \epsilon_X,Y_{obs} + X + \epsilon_Y)}{\sqrt(Var(X + \epsilon_X) \cdot Var(Y + \epsilon_Y)} = \frac{\rho}{\sqrt((Var(X) + Var(\epsilon_X)) \cdot (Var(Y) + Var(\epsilon_Y))} = \frac{\rho}{\sqrt((1 + errorsd^2) \cdot (1 + errorsd^2)} = \frac{\rho}{1 + errorsd^2}$
+- $\beta = \frac{Cov(X_{obs} + \epsilon_X,Y_{obs} + X + \epsilon_Y)}{Var(X_{obs} + \epsilon_X)} = \frac{\rho}{1 + errorsd^2}$
+
+This means that both $\rho$ and $\beta$ are limited by the standard deviation that is specified in the model parameters, while this does not hold for the covariances, explaining why the observed shift with increasing error is only visible in $\rho$ and $\beta$, but not in the covariances. 
+
+
+
+
+

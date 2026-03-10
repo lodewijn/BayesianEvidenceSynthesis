@@ -127,7 +127,7 @@ tab <- foreach(
   # COVARIANCES
   res_cov <- sapply(dfs, function(x) {
     cov_xy <- cov(x)[2, 1]
-    se_cov <- sqrt((var(x[,1]) * var(x[,2]) + cov_xy^2) / (n - 1))
+    se_cov <- sqrt((var(x[,1]) * var(x[,2]) + cov_xy^2) /  (n - 1))
     c(cov = cov_xy, se = se_cov)
   })
   
@@ -293,8 +293,7 @@ tab <- foreach(
   #### ABS MEAN DIFFERENCE: |mean(Y) - mean(X)|
   res_abs_meandiff <- res_meandiff
   res_abs_meandiff[1,] <- abs(res_meandiff[1,])
-  # SE stays the same (delta method: derivative of |x| at x != 0 is ±1, so SE unchanged)
-  
+
   # ABS MD: necessary naming for bain and further preparing
   colnames(res_abs_meandiff) <- paste0('r', 1:k)
   sig_abs_meandiff <- lapply(res_abs_meandiff[2,], function(x) matrix(x^2))

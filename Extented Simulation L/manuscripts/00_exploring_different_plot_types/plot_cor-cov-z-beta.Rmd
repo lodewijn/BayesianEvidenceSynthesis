@@ -1,5 +1,5 @@
 ---
-title: "Untitled"
+title: "Plot distributions of raw estimates"
 output: html_document
 date: "2026-02-04"
 ---
@@ -9,10 +9,10 @@ library(mvtnorm)
 library(metafor)
 library(data.table)
 
-n       <- 50
+n       <- 500
 k       <- 10
-es      <- -0.8
-errorsd <- 10
+es      <- 0.1
+errorsd <- 1
 ndataset <- 1000
 
 set.seed(6164900)
@@ -32,8 +32,21 @@ results <- lapply(seq_len(ndataset), function(i) {
   })
 
   cor_est <- sapply(dfs, function(x) cor(x)[2, 1])
+  
+  res_cor <- sapply(dfs, function(x) {
+    r <- cor(x)[2, 1]
+    se_r <- sqrt((1 - r^2) / (n - 2))
+    c(r = r, se = se_r)
+  })
+  
   cov_est <- sapply(dfs, function(x) cov(x)[2, 1])
 
+  res_cov <- sapply(dfs, function(x) {
+    cov_xy <- cov(x)[2, 1]
+    se_cov <- sqrt((var(x[,1]) * var(x[,2]) + cov_xy^2) / (n - 1))
+    c(cov = cov_xy, se = se_cov)
+  })
+  
   z_est <- escalc(
     measure = "ZCOR",
     ri = cor_est,
@@ -44,15 +57,26 @@ results <- lapply(seq_len(ndataset), function(i) {
   res_beta <- sapply(dfs, function(x) {
     model <- lm(x[,2] ~ x[,1])
     beta_coef <- coef(model)[2]
+    se_beta <- summary(model)$coefficients[2, 2]
+    c(beta_coef, se_beta)
   })
+  
+  res_meandiff <- sapply(dfs, function(x) mean(x[,2]) - mean(x[,1]))
+  
+  res_abs_meandiff <- abs(res_meandiff)
 
   data.frame(
     replication = i,
     study       = seq_len(k),
-    cor         = cor_est,
+    corest      = res_cor[1],
     cov         = cov_est,
     z           = z_est,
-    beta =res_beta
+    beta        = res_beta[1],
+    secor       = res_cor[2],
+    sebeta      = res_beta[2],
+    secov       = res_cov[2],
+    meandiff = res_meandiff,
+    abs_meandiff = res_abs_meandiff
   )
 })
 
@@ -66,10 +90,6 @@ raw_estimates[, `:=`(
 )]
 
 raw_estimates
-
-mean(raw_estimates$cor)
-mean(raw_estimates$cov)
-
 ```
 
 ```{r}
@@ -90,6 +110,14 @@ ggplot(raw_estimates, aes(z)) +
 ggplot(raw_estimates, aes(beta)) +
   geom_density() +
   ggtitle("Sampling distribution of beta")
+
+ggplot(raw_estimates, aes(res_meandiff)) +
+  geom_density() +
+  ggtitle("Sampling distribution of mean diff")
+
+ggplot(raw_estimates, aes(res_abs_meandiff)) +
+  geom_density() +
+  ggtitle("Sampling distribution of abs mean diff")
 ```
 
 

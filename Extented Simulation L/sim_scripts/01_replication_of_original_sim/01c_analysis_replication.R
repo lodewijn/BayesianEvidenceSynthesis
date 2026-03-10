@@ -1,7 +1,7 @@
 #dat <- readRDS("tabres.RData")
 library(data.table)
 outlist <- list()
-dat <- readRDS(file.path("Sim", "sim_results_2022-05-08.RData"))
+dat <- readRDS(file.path("Sim", "sim_results_2026-03-10.RData"))
 lapply_at <- function(var, truees) {
   results <- sapply(var, function(var) {
     table(ordered(truees > .1, levels = c("FALSE", "TRUE")), ordered(var > 3, levels = c("FALSE", "TRUE")))
@@ -11,6 +11,7 @@ lapply_at <- function(var, truees) {
                            USE.NAMES = FALSE)
   as.list(results)
 }
+
 names(dat) <- c("ndataset", "es", "reliability", "n", "k", "hyp_val", "seed", "IPD", 
                 "RMA", "VC", "gpbf_ic", "gpbf_iu", "PBF", "prodbf_iu", 
                 "tbf_ic", "tbf_iu")
@@ -96,8 +97,7 @@ etasqs <- merge(etasqs, diffanovas, by = "condition", all.x = TRUE)
 write.csv(etasqs, "effect_of_conditions.csv", row.names = FALSE)
 
 res <- dat[!es < .1, sapply(.SD, function(var) {
-  table(ordered(es > .1, levels = c("FALSE", "TRUE")), 
-        ordered(var > 3, levels = c("FALSE", "TRUE")))
+  table(ordered(es > .1, levels = c("FALSE", "TRUE")), ordered(var > 3, levels = c("FALSE", "TRUE")))
 }), .SDcols = varsout]
 rownames(res) <- c("TN", "FN", "FP", "TP")
 
@@ -117,9 +117,9 @@ stats <- apply(res, 2, function(x){
     neg_lr = (1 - sensitivity) / specificity)
 })
 stats <- stats[, order(stats["accuracy",], decreasing = T)]
-write.csv(stats, "confusion.csv")
+write.csv(stats, "confusion_rep.csv")
 
-saveRDS(out, "out.RData")
+saveRDS(out, "out_rep.RData")
 # library(ggplot2)
 # df_plot <- data.frame(Method = colnames(stats),
 #                       Sensitivity = stats["sensitivity", ],
