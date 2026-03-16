@@ -1,7 +1,7 @@
 #dat <- readRDS("tabres.RData")
 library(data.table)
 outlist <- list()
-dat <- readRDS(file.path("Sim", "sim_results_2026-03-10.RData"))
+dat <- readRDS(file.path(..,"Sim", "sim_results_2026-03-10.RData"))
 lapply_at <- function(var, truees) {
   results <- sapply(var, function(var) {
     table(ordered(truees > .1, levels = c("FALSE", "TRUE")), ordered(var > 3, levels = c("FALSE", "TRUE")))
