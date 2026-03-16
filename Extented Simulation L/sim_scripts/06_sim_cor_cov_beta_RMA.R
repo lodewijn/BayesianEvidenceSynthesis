@@ -11,10 +11,10 @@ dependencies <- c('MASS', 'bain', 'metafor', 'lme4', 'mvtnorm')
 lapply(dependencies, function(x){library(x, character.only = T)})
 
 # Check package versions
-#versions <- c(
-#  compareVersion(as.character(packageVersion("bain")), "0.2.8"),
-#  compareVersion(as.character(packageVersion("MASS")), "7.3.55"))
-#if(!all(versions == 0)) stop("Using the incorrect version of one or more packages.")
+versions <- c(
+  compareVersion(as.character(packageVersion("bain")), "0.2.8"),
+  compareVersion(as.character(packageVersion("MASS")), "7.3.58"))
+if(!all(versions == 0)) stop("Using the incorrect version of one or more packages.")
 
 # Load simulation functions from source -----------------------------------
 # source('sim/functions.R')
@@ -131,7 +131,7 @@ tab <- foreach(
     c(cov = cov_xy, se = se_cov)
   })
   
-    ##### COV: necessary naming for bain and further preparing
+  ##### COV: necessary naming for bain and further preparing
   colnames(res_cov) <- paste0('r', 1:k)
   sig <- lapply(res_cov[2,], function(x){matrix(x^2)})    # make list of covariance matrices for the datasets, make sure to square the standard errors
   #ngroup <- rep(n, k)       # obtain sample size per group
@@ -156,69 +156,7 @@ tab <- foreach(
     c(prod_bf_cov^(1/k), prod_bf_cov)  #concatenate geometric product and regular product
   })
   
-  # Z-SCORES tan(HYP)
-  res_z <- metafor::escalc(
-    measure = "ZCOR",
-    ri = res_cor["r", ],
-    ni = rep(n, k),
-    append = FALSE
-  )
-  
-  # Z-SCORES tan(HYP): name the z parameters to match your existing r1..rk naming
-  z_yi <- as.numeric(res_z$yi)
-  names(z_yi) <- colnames(res_z)
-  
-  # Z-SCORES tan(HYP): sampling variances and corresponding Sigma list
-  z_vi <- as.numeric(res_z$vi)
-  sig_z <- lapply(z_vi, function(v) matrix(v, 1, 1))
-  
-  # Z-SCORES tan(HYP): hypothesis threshold also needs to be on z scale
-  hyp_z <- atanh(hyp_val)
-  
-  # Z-SCORES tan(HYP): Bayes factors per study on z scale (same structure as your cor part)
-  bf_individual_z_tanh <- lapply(
-    paste0(colnames(res_z), ">", hyp_z),
-    bain,
-    x = z_yi,
-    Sigma = sig_z,
-    n = rep(n, k),
-    group_parameters = 1,
-    joint_parameters = 0
-  )
-  
-  # Z-SCORES tan(HYP): extract BF_ic_z and BF_iu_z per study
-  BFs_z_tanh <- t(sapply(bf_individual_z_tanh, function(x)
-    c(x$fit$BF.c[1], x$fit$BF.u[1])
-  ))
-  
-  # Z-SCORES tan(HYP): geometric product and regular product of z-transformed BFs
-  gp_and_prod_z_tanh <- apply(BFs_z_tanh, 2, function(x) {
-    prod_bf_z_tanh <- prod(x)
-    c(prod_bf_z_tanh^(1/k), prod_bf_z_tanh)
-  })
-  
-  ### Z-SCORES HYP
-  bf_individual_z <- lapply(
-    paste0(colnames(res_z), ">", hyp_val),
-    bain,
-    x = z_yi,
-    Sigma = sig_z,
-    n = rep(n, k),
-    group_parameters = 1,
-    joint_parameters = 0
-  )
-  
-  # Z-SCORES HYP: extract BF_ic_z and BF_iu_z per study
-  BFs_z <- t(sapply(bf_individual_z, function(x)
-    c(x$fit$BF.c[1], x$fit$BF.u[1])
-  ))
-  
-  # Z-SCORES HYP: geometric product and regular product of z-transformed BFs
-  gp_and_prod_z <- apply(BFs_z, 2, function(x) {
-    gp_and_prod_z <- prod(x)
-    c(gp_and_prod_z^(1/k), gp_and_prod_z)
-  })
-  
+ 
   # BETA
   # get beta coefficients and their standard errors
   res_beta <- sapply(dfs, function(x) {
@@ -255,87 +193,46 @@ tab <- foreach(
     c(prod_bf_beta^(1/k), prod_bf_beta)  #concatenate geometric product and regular product
   })
   
-
-  ## MEAN DIFFERENCES
-  #### MD: mean(Y) - mean(X)
-  res_meandiff <- sapply(dfs, function(x) {
-    meandiff <- mean(x[,2]) - mean(x[,1])
-    se_meandiff <- sqrt(var(x[,1])/n + var(x[,2])/n - 2*cov(x[,1], x[,2])/n)
-    c(meandiff = meandiff, se = se_meandiff)
-  })
-  
-  # MD: necessary naming for bain and further preparing
-  colnames(res_meandiff) <- paste0('r', 1:k)
-  sig_meandiff <- lapply(res_meandiff[2,], function(x) matrix(x^2))
-  
-  # MD: run bf_individual to extract product bf and geometric product bf
-  bf_individual_meandiff <- lapply(
-    paste0(colnames(res_meandiff), ">", hyp_val),
-    bain,
-    x = res_meandiff[1,],
-    Sigma = sig_meandiff,
-    n = rep(n, k),
-    group_parameters = 1,
-    joint_parameters = 0
+  # RMA for correlation
+  res_rma <- tryCatch(
+    rma(yi = res_cor["r", ], 
+        sei = res_cor["se", ],
+        method = "REML"),
+    error = function(e) {
+      # fall back to fixed-effects when REML fails to converge (common with small k)
+      rma(yi = res_cor["r", ], 
+          sei = res_cor["se", ],
+          method = "FE")
+    }
   )
   
-  # MD: extract BF_ic and BF_iu for the parameter of every group
-  BFs_meandiff <- t(sapply(bf_individual_meandiff, function(x) {
-    c(x$fit$BF.c[1], x$fit$BF.u[1])
-  }))
+  # RMA: Get pooled rho and SE
+  rma_est <- as.numeric(res_rma$beta)
+  rma_se  <- as.numeric(res_rma$se)
   
-  # MD: obtain geometric product and regular product
-  gp_and_prod_meandiff <- apply(BFs_meandiff, 2, function(x) {
-    prod_bf_meandiff <- prod(x)
-    c(prod_bf_meandiff^(1/k), prod_bf_meandiff)
-  })
+  # RMA: pass pooled estimate and SE to bain
+  bf_rma <- bain(x = c(rma = rma_est),
+                 hypothesis = paste0("rma >", hyp_val),
+                 Sigma = list(rma = matrix(rma_se^2)),
+                 n = k * n,
+                 group_parameters = 1,
+                 joint_parameters = 0)
   
-  #### ABS MEAN DIFFERENCE: |mean(Y) - mean(X)|
-  res_abs_meandiff <- res_meandiff
-  res_abs_meandiff[1,] <- abs(res_meandiff[1,])
-
-  # ABS MD: necessary naming for bain and further preparing
-  colnames(res_abs_meandiff) <- paste0('r', 1:k)
-  sig_abs_meandiff <- lapply(res_abs_meandiff[2,], function(x) matrix(x^2))
+  # RMA: Get BFic and BFiu based on pooled estimates
+  bf_rma_ic <- bf_rma$fit$BF.c[1]
+  bf_rma_iu <- bf_rma$fit$BF.u[1]
   
-  # ABS MD: run bf_individual to extract product bf and geometric product bf
-  bf_individual_abs_meandiff <- lapply(
-    paste0(colnames(res_abs_meandiff), ">", abs(hyp_val)),
-    bain,
-    x = res_abs_meandiff[1,],
-    Sigma = sig_abs_meandiff,
-    n = rep(n, k),
-    group_parameters = 1,
-    joint_parameters = 0
-  )
   
-  # ABS MD: extract BF_ic and BF_iu for the parameter of every group
-  BFs_abs_meandiff <- t(sapply(bf_individual_abs_meandiff, function(x) {
-    c(x$fit$BF.c[1], x$fit$BF.u[1])
-  }))
-  
-  # ABS MD: obtain geometric product and regular product
-  gp_and_prod_abs_meandiff <- apply(BFs_abs_meandiff, 2, function(x) {
-    prod_bf_abs_meandiff <- prod(x)
-    c(prod_bf_abs_meandiff^(1/k), prod_bf_abs_meandiff)
-  })
-  
-  # returns in order: gpbf_ic, gpbf_iu, prodbf_ic, prodbf_iu
+  # returns in order: gpbf_ic, gpbf_iu, prodbf_ic, prodbf_iu, bf_rma_ic, bf_rma_iu
   fits <- c(rownum,
             gp_and_prod_cor[1,],
             gp_and_prod_cor[2,], 
             gp_and_prod_cov[1,],
             gp_and_prod_cov[2,], 
-            gp_and_prod_z_tanh[1, ], 
-            gp_and_prod_z_tanh[2, ],
-            gp_and_prod_z[1, ], 
-            gp_and_prod_z[2, ],
             gp_and_prod_beta[1, ],
-            gp_and_prod_beta[2, ], 
-            gp_and_prod_meandiff[1,],
-            gp_and_prod_meandiff[2,], 
-            gp_and_prod_abs_meandiff[1,],
-            gp_and_prod_abs_meandiff[2,])
+            gp_and_prod_beta[2, ],
+            bf_rma_ic,
+            bf_rma_iu)
   write.table(x = t(fits), file = sprintf("results/results_%d.txt" , Sys.getpid()), sep = "\t", append = TRUE, row.names = FALSE, col.names = FALSE)
   NULL
 }
@@ -362,11 +259,7 @@ setorderv(tab, cols = "V1", order=1L, na.last=FALSE)
 # algorithms (geometric product Bayes Factor, product Bayes Factor, together Bayes Factor)
 algorithms <- c("gpbf_cor", "prodbf_cor",
                 "gpbf_cov", "prodbf_cov",
-                "gpbf_z_tanh", "prodbf_z_tanh",
-                "gpbf_z", "prodbf_z",
-                "gpbf_beta", "prodbf_beta", 
-                "gpbf_meandiff", "prodbf_meandiff",
-                "gpbf_abs_meandiff", "prodbf_abs_meandiff")
+                "gpbf_beta", "prodbf_beta")
 
 hyps <- c("_ic", "_iu")  # using both complementary and unconstrained
 alg_names <- c(paste0(rep(algorithms, each = length(hyps)), hyps))
@@ -387,8 +280,8 @@ res<- cbind(res, tab)
 rm(tab)
 
 # write results to .RData and .csv extension and delete .txt files in the results folder.
-fwrite(res, file.path("sim", paste0("sim_results_", Sys.Date(), ".csv")))
-saveRDS(res, file.path("sim", paste0("sim_results_", Sys.Date(), ".RData")))
+fwrite(res, file.path("Extended Simulation L", "sim_results", "06_sim_results_cor_cov_beta_RMA", paste0("sim_results_", Sys.Date(), ".csv")))
+saveRDS(res, file.path("Extended Simulation L", "sim_results", "06_sim_results_cor_cov_beta_RMA", paste0("sim_results_", Sys.Date(), ".RData")))
 
 # END OF FILE
 tabres <- res[, lapply(.SD, function(x){mean(x > 3)}), .SDcols = alg_names, by = c("es", "errorsd", "n", "k")]

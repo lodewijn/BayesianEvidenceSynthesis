@@ -12,7 +12,7 @@ library(data.table)
 n       <- 500
 k       <- 10
 es      <- 0.1
-errorsd <- 1
+errorsd <- 0
 ndataset <- 1000
 
 set.seed(6164900)

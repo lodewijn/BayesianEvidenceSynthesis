@@ -11,10 +11,10 @@ dependencies <- c('MASS', 'bain', 'metafor', 'lme4', 'mvtnorm')
 lapply(dependencies, function(x){library(x, character.only = T)})
 
 # Check package versions
-#versions <- c(
-#  compareVersion(as.character(packageVersion("bain")), "0.2.8"),
-#  compareVersion(as.character(packageVersion("MASS")), "7.3.55"))
-#if(!all(versions == 0)) stop("Using the incorrect version of one or more packages.")
+versions <- c(
+  compareVersion(as.character(packageVersion("bain")), "0.2.8"),
+  compareVersion(as.character(packageVersion("MASS")), "7.3.58"))
+if(!all(versions == 0)) stop("Using the incorrect version of one or more packages.")
 
 # Load simulation functions from source -----------------------------------
 # source('sim/functions.R')
