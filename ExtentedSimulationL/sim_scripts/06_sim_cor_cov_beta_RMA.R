@@ -259,7 +259,7 @@ setorderv(tab, cols = "V1", order=1L, na.last=FALSE)
 # algorithms (geometric product Bayes Factor, product Bayes Factor, together Bayes Factor)
 algorithms <- c("gpbf_cor", "prodbf_cor",
                 "gpbf_cov", "prodbf_cov",
-                "gpbf_beta", "prodbf_beta")
+                "gpbf_beta", "prodbf_beta","rma")
 
 hyps <- c("_ic", "_iu")  # using both complementary and unconstrained
 alg_names <- c(paste0(rep(algorithms, each = length(hyps)), hyps))
@@ -280,8 +280,8 @@ res<- cbind(res, tab)
 rm(tab)
 
 # write results to .RData and .csv extension and delete .txt files in the results folder.
-fwrite(res, file.path("Extended Simulation L", "sim_results", "06_sim_results_cor_cov_beta_RMA", paste0("sim_results_", Sys.Date(), ".csv")))
-saveRDS(res, file.path("Extended Simulation L", "sim_results", "06_sim_results_cor_cov_beta_RMA", paste0("sim_results_", Sys.Date(), ".RData")))
+fwrite(res, file.path("Sim", paste0("sim_results_", Sys.Date(), ".csv")))
+saveRDS(res, file.path("Sim", paste0("sim_results_", Sys.Date(), ".RData")))
 
 # END OF FILE
 tabres <- res[, lapply(.SD, function(x){mean(x > 3)}), .SDcols = alg_names, by = c("es", "errorsd", "n", "k")]
