@@ -1,7 +1,9 @@
 ---
-title: "Untitled"
+title: "Bayesian Evidence Synthesis"
 format: pdf
 ---
+
+
 
 An interesting pattern was found in the 'boundary case', where $H_i: \rho > 0.1$ is tested against $Hc: \rho \le 0.1$ and the true effect $es = 0.1$ exactly equals the boundary value. Given that an estimate can never exactly equal any specific value, both $H_i$ and $H_c$ are by definition not true. Therefore, in this boundary case, we would expect all log-pBF values to be centered around 0 (1 if it were untransformed BFs). This would indicate neutral evidence for both hypotheses. However, in the simulation where correlation was the effect size of interest, an interesting pattern emerged. When the reliability of the studies decreased (modelled as an increased standard deviation), an evidence shift favouring $H_c$ was observed in the log-pBF distributions. 
 
