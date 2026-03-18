@@ -5,12 +5,10 @@ format: pdf
 
 
 
-An interesting pattern was found in the 'boundary case', where $H_i: \rho > 0.1$ is tested against $Hc: \rho \le 0.1$ and the true effect $es = 0.1$ exactly equals the boundary value. Given that an estimate can never exactly equal any specific value, both $H_i$ and $H_c$ are by definition not true. Therefore, in this boundary case, we would expect all log-pBF values to be centered around 0 (1 if it were untransformed BFs). This would indicate neutral evidence for both hypotheses. However, in the simulation where correlation was the effect size of interest, an interesting pattern emerged. When the reliability of the studies decreased (modelled as an increased standard deviation), an evidence shift favouring $H_c$ was observed in the log-pBF distributions. 
+An interesting pattern was found in the 'boundary case', where $H_i: \rho > 0.1$ was tested against $Hc: \rho \le 0.1$ and the true effect was $es = 0.1$, which is exactly on the boundary between the two hypotheses. Given that an estimate can never exactly equal any specific value, in this case, by definition both $H_i$ and $H_c$ are not true. Therefore, in this boundary case, we would expect all log-pBF values to be centered around 0 (or around 1 if it were untransformed pBFs). This would indicate neutral evidence for either hypothesis. However, in the simulation where a correlation was the effect size of interest, an interesting pattern emerged. When the reliability of the studies decreased (modeled as increased standard deviation), an evidence shift favouring $H_c$ was observed in the log-pBF distributions. 
 
 ### Simulation 1: Correlations
-Given that the parameter of interest in this simulation study is a correlation, this implies that the full parameter space is constrained: $\rho \in [-1, 1]$. This means that $H_c$ contains a larger proportion of the full parameter space ($\rho \in [-1, 0.1]$) than $H_i$ ($\rho \in [0.1 - 1]$), raising the question if the distributional shift we observe when es = 0.1 can be explained by the fact that the two hypotheses are not equally large in terms of the parameter space. When there's error, will the evidence distribution always shift in favour of the hypothesis that contains the largest parameter space?
-
-This will be tested by running the simulation again, while testing the following hypotheses: 
+The parameter of interest in this simulation study is a correlation, implying that the full parameter space is constrained: $\rho \in [-1, 1]$. This means that $H_c$ contains a larger proportion of the full parameter space ($\rho \in [-1, 0.1]$) than $H_i$ ($\rho \in [0.1 - 1]$), raising the question if the distributional shift we observe when es = 0.1 can be explained by the fact that the two hypotheses are not equally large in terms of the parameter space. When there's error, will the evidence distribution always shift in favour of the hypothesis that contains the largest parameter space? This will be tested by running the simulation again, while testing the following hypotheses: 
 
 - $H_i: \rho > 0 \text{ versus } H_c: \le 0 \text{, when es = } 0$, in this case it is expected that at all error values, the distributions will be symmetrical around $log_{10} \text{ } pBF_{ic}$ values of zero, as both hypotheses entail an equally large parameter space. 
 - $H_i: \rho > 0.8 \text{ versus } H_c: \le 0.8 \text{, when es = } 0.8$, in this case it is expected that with higher error values, there will be an even more dramatic shift towards negative $log_{10} \text{ } pBF_{ic}$ values, indicating evidence for $H_c$. 
@@ -35,14 +33,12 @@ By definition, Bayes factors reward hypotheses that fit the data well without be
 
 However, when additional values allowed by a less restricted hypothesis are not supported by the data, their complexity can become a disadvantage, and a more restricted hypothesis can be preferred. This appears to be the case in the condition in Simulation 1-b where `es` was -0.8 and the evidence shifted in favour of $H_i$, the hypothesis with the smallest parameter space. Because both hypotheses are both relatively complex, the more restricted hypothesis, $H_i$, likely gains an advantage over the less restricted hypothesis, $H_u$. 
 
-### Simulation 2: Covariances
-To test whether the same effect holds in an unconstrained parameter space, instead of using correlations, the simulation was ran with covariances, that can range from $[-\infty,\infty]$. If the size of the parameter space indeed plays a role in the shift of distributions, when using covariances, we would expect the distributions to be symmetrical around $log_{10}$ pBF values of zero, at all error values and true effect sizes, as the differences in parameter space sizes would be neglectable in this case.
+### Simulation 2: Covariances and Beta Coefficients
+To test whether the same effect holds in an unconstrained parameter space, instead of using correlations, the simulation was ran with covariances and beta coefficients, that can both range from $[-\infty,\infty]$. If the size of the parameter space indeed plays a role in the shift of distributions, when using these other two types of effect sizes, we would expect the pBF distributions to be symmetrical around $log_{10}$ pBF values of zero, at all error values and true effect sizes, as the differences in parameter space sizes would be negligible in this case.
 
-These plots show that if there is an unconstrained parameter space, no matter what the hypothesis or error is, the distributions are symmetrical around a $log_{10}$ pBF of zero, indicating that the studies do not provide convincing evidence for either $H_i$ or $H_c$.
+As expected, the correlation plots show that if there is an unconstrained parameter space, no matter what the hypothesis or error is, the pBF distributions are symmetrical around a $log_{10}$ pBF of zero, indicating neutral evidence for both $H_i$ and $H_c$.These results would suggest that when the effect size has an unbounded parameter space, differences in hypothesis fit and complexity are less important than when the parameter space is constrained. 
 
-Across covariance-based analyses, the $log_{10} \text{ } pBF_{iu}$ seem more stable compared to the correlation case, as was expected with an unconstrained parameter space if the fit/complexity indeed play a role in the distributional shifts observed in Simulation 1. Regardless of the true effect size `es`, variations in error (`errorsd`) and within-study sample size (`n`) did not seem to affect the distributions much, and did not seem to induce strong shifts in evidence. In contrast, increasing the number of studies (`k`) did seem to introduce a skew towards negative $log_{10} \text{ } pBF_{iu}$ values, indicating increasing evidence in favour of $H_u$.
-
-These results suggest that when the effect size has an unbounded parameter space, differences in hypothesis fit and complexity are less important than when the parameter space is constrained, and shifts in evidence seem to be driven by the number of studies, rather than other parameters.
+However, surprisingly, when looking at the $log_{10}$ pBF distribution plots of beta, it stood out the pattern that was observed in correlations was also visible in this case. If the shift would only be due to fit/complexity, the $log_{10}$ pBF distibutions of beta should also be symmetrical around zero. 
 
 ### Properties of the effect sizes
 
@@ -66,7 +62,8 @@ Taking into account that $\epsilon$ is a random variable, translating this to th
 
 This means that both $\rho$ and $\beta$ are limited by the standard deviation that is specified in the model parameters, while this does not hold for the covariances, explaining why the observed shift with increasing error is only visible in $\rho$ and $\beta$, but not in the covariances. 
 
-
+### Simulation 3: BF of RMA
+To see if the attenuation would also play a role using frequentist methods, RMA was performed to pool the results from 
 
 
 

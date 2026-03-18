@@ -1,0 +1,174 @@
+---
+title: "RMA and ordered hypothesis p"
+format: html
+---
+
+```{r, warning = F, message=FALSE}
+library(tidyverse)
+library(tidyquant)
+library(ggdist)
+library(ggthemes)
+library(readr)
+
+dat1 <- read_csv("../../sim_results/06_sim_results_cor_cov_beta_RMA/sim_results_2026-03-17.csv")
+dat2 <- read_csv("../../sim_results/07_sim_results_ordered_hypothesis/sim_results_ordered_2026-03-18.csv")
+```
+
+```{r, warning=FALSE}
+# log pbf IC, true es = 0.1
+# Hi is false
+
+# New facet label names for k variable
+k.labs <- c("k = 2", "k = 3", "k = 10")
+names(k.labs) <- c("2", "3", "10")
+
+# New facet label names for n variable
+n.labs <- c("n = 20", "n = 80", "n = 200", "n = 500")
+names(n.labs) <- c("20", "80", "200", "500")
+
+dat1 %>%
+  filter(es == "0.1") %>%
+  ggplot(aes(x = log10(rma_ic), y = factor(k), fill = factor(errorsd))) +
+  stat_halfeye(
+    adjust = 0.5,
+    justification = -0.3,
+    .width = 0,
+    point_colour = NA, 
+    alpha = 0.5
+  ) +
+  geom_boxplot(
+    width = 0.12,
+    outlier.color = NA,
+    alpha = 0.7
+  ) +
+  stat_dots(
+    side = "left",
+    justification = 1.3,
+    binwidth = 0.1, 
+    alpha=0.05, 
+  ) +
+  facet_wrap(~ n, labeller = labeller(n = n.labs,k = k.labs)) + 
+   geom_vline(xintercept=log10(1), color = "red", size = 0.2) +
+    labs(x = expression(log[10](BF_rma_ic)), 
+       y = "Number of Studies (k)", 
+       title = "log BF_rma_ic (es = 0.1, Hi is false)",
+       subtitle = "Sample Size (n), Number of Studies (k) and Reliability (errorsd)",
+       caption = "Red line: log(1) = 0, 1000 iterations", fill = "Error SD") +  
+  theme_minimal()
+```
+
+```{r, warning=FALSE}
+# log pbf IC, true rho_type = ordered
+# Hi is true
+
+# New facet label names for k variable
+k.labs <- c("k = 2", "k = 3", "k = 10")
+names(k.labs) <- c("2", "3", "10")
+
+# New facet label names for n variable
+n.labs <- c("n = 20", "n = 80", "n = 200", "n = 500")
+names(n.labs) <- c("20", "80", "200", "500")
+
+dat2 %>%
+  filter(rho_type == "ordered") %>%
+  ggplot(aes(x = log10(prodbf_ordered_ic), y = factor(k), fill = factor(errorsd_type))) +
+  stat_halfeye(
+    adjust = 0.5,
+    justification = -0.3,
+    .width = 0,
+    point_colour = NA, 
+    alpha = 0.5
+  ) +
+  geom_boxplot(
+    width = 0.12,
+    outlier.color = NA,
+    alpha = 0.7
+  ) +
+  stat_dots(
+    side = "left",
+    justification = 1.3,
+    binwidth = 0.1, 
+    alpha=0.05, 
+  ) +
+  facet_wrap(~ n, labeller = labeller(n = n.labs,k = k.labs)) + 
+   geom_vline(xintercept=log10(1), color = "red", size = 0.2) +
+    labs(x = expression(log[10](pBF_ic)), 
+       y = "Number of Studies (k)", 
+       title = "log pBF_ic (rho_type = ordered, Hi is true)",
+       subtitle = "Sample Size (n), Number of Studies (k) and Reliability (errorsd)",
+       caption = "Red line: log(1) = 0, 1000 iterations", fill = "Error SD") +  
+  theme_minimal()
+```
+
+
+```{r, warning=FALSE}
+# log pbf IC, true rho_type = equal
+# Hi is false
+
+# New facet label names for k variable
+k.labs <- c("k = 2", "k = 3", "k = 10")
+names(k.labs) <- c("2", "3", "10")
+
+# New facet label names for n variable
+n.labs <- c("n = 20", "n = 80", "n = 200", "n = 500")
+names(n.labs) <- c("20", "80", "200", "500")
+
+dat2 %>%
+  filter(rho_type == "equal") %>%
+  ggplot(aes(x = log10(prodbf_ordered_ic), y = factor(k), fill = factor(errorsd_type))) +
+  stat_halfeye(
+    adjust = 0.5,
+    justification = -0.3,
+    .width = 0,
+    point_colour = NA, 
+    alpha = 0.5
+  ) +
+  geom_boxplot(
+    width = 0.12,
+    outlier.color = NA,
+    alpha = 0.7
+  ) +
+  stat_dots(
+    side = "left",
+    justification = 1.3,
+    binwidth = 0.1, 
+    alpha=0.05, 
+  ) +
+  facet_wrap(~ n, labeller = labeller(n = n.labs,k = k.labs)) + 
+   geom_vline(xintercept=log10(1), color = "red", size = 0.2) +
+    labs(x = expression(log[10](pBF_ic)), 
+       y = "Number of Studies (k)", 
+       title = "log pBF_ic (rho_type = equal, Hi is false)",
+       subtitle = "Sample Size (n), Number of Studies (k) and Reliability (errorsd)",
+       caption = "Red line: log(1) = 0, 1000 iterations", fill = "Error SD") +  
+  theme_minimal()
+```
+
+## Test how observed rho changes with errorsd
+```{r}
+r1 = 0.05 # X,Y
+r2 = 0.1 # X, Z
+r3 = 0.15 # Y, Z
+
+errorsd_X = 0.5
+errorsd_Y = 0.5
+errorsd_Z = 0.5
+
+r_obs = function(r, error1, error2) {r / sqrt((1+error1^2) * (1+error2^2))}
+
+r1_obs = r_obs(r1, errorsd_X, errorsd_Y)
+r2_obs = r_obs(r2, errorsd_X, errorsd_Z)
+r3_obs = r_obs(r3, errorsd_Y, errorsd_Z)
+
+r1_obs
+r2_obs
+r3_obs
+
+0.15 - 0.05 # error = 0
+0.12 - 0.04 # error = 0.5
+0.09 - 0.03 # error = 0.81
+
+# the difference between r1_obs and r3_obs becomes smaller when the error increases
+# indicating that more and more power is needed to detect an effect (which can be a problem with pBF)
+```
+

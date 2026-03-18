@@ -157,7 +157,7 @@ stop("End of simulation")
 # Merge files -------------------------------------------------------------
 library(data.table)
 
-res <- readRDS("./sim/summarydata_ordered.RData")
+res <- readRDS("./sim/summarydata.RData")
 setDT(res)
 
 f   <- list.files("results/", full.names = TRUE)
