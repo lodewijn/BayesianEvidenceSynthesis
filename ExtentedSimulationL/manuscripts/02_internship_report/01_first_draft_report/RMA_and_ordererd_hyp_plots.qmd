@@ -15,7 +15,7 @@ dat2 <- read_csv("../../sim_results/07_sim_results_ordered_hypothesis/sim_result
 ```
 
 ```{r, warning=FALSE}
-# log pbf IC, true es = 0.1
+# log RMA pbf IC, true es = 0.1
 # Hi is false
 
 # New facet label names for k variable
@@ -57,6 +57,7 @@ dat1 %>%
   theme_minimal()
 ```
 
+# Ordered Hypothesis
 ```{r, warning=FALSE}
 # log pbf IC, true rho_type = ordered
 # Hi is true

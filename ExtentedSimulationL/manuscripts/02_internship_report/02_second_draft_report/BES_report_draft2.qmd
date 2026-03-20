@@ -1,0 +1,149 @@
+---
+title: "BES Report Draft 2"
+format: pdf
+---
+
+```{r, warning=FALSE, include=TRUE, echo=FALSE, message=FALSE}
+# Load Required Packages
+library(knitr)
+library(kableExtra)
+library(tidyverse)
+library(tidyquant)
+library(ggdist)
+library(ggthemes)
+library(readr)
+
+# Read in Relevant Simulation Result Data Sets
+orig_dat <- read_csv("../../../sim_results/01b_sim_results_first_corrected_replication/sim_results_2026-03-10.csv")
+
+dat_all_es_types <- read_csv("../../../sim_results/06_sim_results_cor_cov_beta_RMA/sim_results_2026-03-17.csv")
+
+dat_ordered_hyp <- read_csv("../../../sim_results/07_sim_results_ordered_hypothesis/sim_results_ordered_2026-03-18.csv")
+```
+
+Over recent years, the scientific community has been facing a replication crisis, with growing numbers of studies failing to reproduce previously published findings @klugkist_volker. In this light, research synthesis methods that aggregate evidence from multiple replication studies, have gained more popularity @vanlissa. One of the most well known research synthesis methods is meta-analysis, in which results from multiple studies are pooled on the level of effect sizes, increasing the power of the individual studies @klugkist, @vanlissa. Especially when using random-effects meta-analysis (RMA), which accounts for random between-study variation, studies do not need to be exact replications, making it a good way to deal with the replicaiton crisis.
+
+However, because results are pooled at the effect size level, a drawback of meta-analysis is that the effect sizes and methodologies of the synthesized studies need to be similar/comparable. So even when studies are theoretically similar and focus on the same underlying hypothesis, meta-analysis may not always be able to synthesise their results if their effect sizes differ @volker_klugkist. An alternative synthesis method that does allow synthesis on the hypothesis level, rather than the effect size level, is Bayesian Evidence Synthesis (BES) @volker, @vanlissa. Because the method does not pool the data, one disadvantage is that BES does not increase the power, but rather shows whether all studies align in the presence and direction of any effect. 
+
+In a simulation study by @vanlissa, BES was shown to be a promising synthesis method. This internship was aimed to replicate this simulation study, and expand it to new scenarios to test whether the very positive image they pained of BES would remain the same. *[mention here that they used an arbitrary threshold or do that later??]*
+
+## Bayesian Evidence Synthesis
+To understand BES, it is important to first understand how Bayes Factors (BFs) are defined. BFs measure the relative probability of the data under two different hypotheses, $H_1$ and $H_2$ @volkerklugkist, @hoijtink2019. This means that an informative hypothesis $H_i$ is always tested against an alternative hypothesis $H_a$. Three hypotheses that are often used as alternatives are (1) the unconstrained hypothesis, $H_u$, that includes all possible values within the parameter space, (2) the complement of the informative hypothesis, $H_c$, that includes the set of all values that are not in $H_i$, and (3) the null hypothesis, $H_0$.
+
+The BF is calculated by taking the ratio of the marginal likelihoods of the two hypotheses $P(E|H_1)$ and $P(E|H_2)$: 
+
+  $BF_{ia} = \frac{P(D|H_i)}{P(D|H_a)}$. 
+
+When the $BF_{ia}$ is larger than 1, this means there is more support for $H_i$, while a BF smaller than 1 implies evidence in favour of $H_a$. A BF of 3 indicates that there is three times more evidence in favour of $H_i$ than for $H_a$. 
+
+Another way of conceptualising the BF, is in terms of the relative fit and relative complexity of $H_i$ versus $H_u$:
+
+  $BF_{iu} = \frac{f_i}{c_i}$,  
+
+where the fit denotes the area under the unconstrained posterior curve that agrees with $H_i$, and the complexity is the area under the unconstrained prior curve that agrees with $H_i$ @hoijtink2019. By definition, Bayes Factors reward hypotheses that fit the data well without being unnecessarily complex, and penalise hypotheses that are either too restrictive (poor fit), or insufficiently restrictive by allowing many values that are not in line with the data (too complex).
+
+In Bayesian Evidence Synthesis, study results are aggregated on the level of Bayes Factors. First, individual BFs are calculated per study. Assuming that all studies provide independent evidence for the hypothesis under consideration, the results can be synthesised by simply taking the product of all individual BFs (hereafter referred to as pBF):
+
+$pBF_{iu} = \prod_{i=1}^K (BF_{iu})^k \text{,  where k = {1, ..., K} is the number of studies}$
+
+This way, BES quantifies the amount of evidence for an overarching hypothesis in each of the studies. 
+
+## Performance of Bayesian Evidence Synthesis Versus Other Synthesis Methods
+Although one of the major advantages of BES is that it is a flexible method that allows synthesis of studies on a conceptual level, it is important to highlight that BES does not pool the results and thus does not increase power to find support for a hypothesized effect, contrasting with other synthesis methods such as Bayesian updating or meta-analysis. @vanlissa performed a simulation study to evaluate the pBF algorithm and compare its performance with other evidence synthesis methods. They contrasted the results of BES, where BFs were calculated using `bain`, to those of RMA, individual participant data (IPD), and vote counting. Specifically, they focused on the sensitivity (detecting an effect when it is truly present in the population, true positives (TP)) and specificity (ability to reject $H_i$ when it is not supported in the population, true negatives (TN)). They used $H_i: \rho > 0.1$, and tested this under different conditions, shown in Table 1.
+
+```{r, warning=FALSE, include=TRUE, echo=FALSE}
+sim_conditions <- data.frame(
+  Condition = c("Number of Studies", 
+                "Within Study Sample Size", 
+                "True Effect Size", 
+                "Reliability", 
+                "Error Corresponding to Reliability"),
+   Value = c("2, 3, 5",
+         "20, 80, 200, 500",
+         "0.1, 0.2", 
+         "0.6, 0.8, 1",
+         "0.81, 0.5, 0"),
+  check.names = FALSE
+)
+
+kable(
+  sim_conditions,
+  booktabs = TRUE
+) |>
+  kable_styling(
+    full_width = FALSE,
+    bootstrap_options = c()
+  )
+```
+
+For RMA and IPD, $H_0$ was rejected if the 90% confidence interval excluded the hypothesised value under $H_i$. For vote counting, they simply counted the number of significant results, and if $H_0$ was rejected in the majority of all studies, it was classified as evidence for $H_i$. For BES, a decision criterion of a pBF larger than 3 was used to classify support for $H_i$. Using the true population effect sizes corresponding to $H_i$ or $H_0$, they found that the pBF had relatively high sensitivity and low specificity, compared to the other methods.
+
+## Present Study
+One drawback of the simulation by @vanlissa is that they used an arbitrary decision criterion to evaluate the pBF. Given that BES is a relatively new synthesis method, it is highly relevant to get a complete picture of its performance under different conditions. Moreover, as @hoijtink argues, unlike p-values, the BF can and should be interpreted on a continuous scale, which will likely give a better overview of the general performance of BES.
+
+This internship was focused on evaluating the performance of BES based on the full distribution of pBF values, to better understand its behaviour across conditions, aiming to identify the parameters that seem to influence the results the most. To better visualise the pBF distributions, all pBF values were $log_{10}$ transformed. In addition, after exploring the pBF distributions, this internship extended the original simulation by also including other effect size types, namely covariances and regression coefficients ($\beta$). Additionally, instead of testing only $H_i: \rho > 0.1$, this internship also extended the simulation by including an ordered hypothesis: $H_i: \rho_1 < \rho_2 < \rho_3$ to evaluate the performance of the pBF in this scenario. 
+
+`Because the original simulation study focused on TP and TN, this internship mainly explored $pBF_{ic}$ distributions, as in this case either $H_i$ or $H_c$ would be true.` As it is already known that especially in boundary cases, where neither $H_i$ or $H_c$ is true, the performance of BES is not always optimal @elise, this scenario was highlighted in this internship. In this simulation, the boundary case was when $H_i: \rho > 0.1$ was tested against $H_c: \rho \leq 0.1$ and the true effect was $\rho = 0.1$. Given that an estimate can never exactly equal any specific value, in this case, by definition both $H_i$ and $H_c$ are not true. Therefore, in this boundary case, we would expect all pBF values to be centered around 1. This would indicate neutral evidence for either hypothesis. 
+
+## Simulation 1: Replication / Correlation Plots
+`Except for the results of the pBF, the confusion matrix did not completely replicate, which was likely due to slight numerical sensitivity of the evidence methods (see <github.com/lodewijn> for the replication scripts).`
+
+#### Simulation 1: Boundary Case: $Log_{10} \text{ } pBF_{ic}$, True Effect of $\rho = 0.1$ - $H_i$ and $H_c$ are both false
+
+```{r, warning=FALSE, include=TRUE, echo=FALSE, message=FALSE}
+# log pbf IC, es = 0.1
+
+# New facet label names for k variable
+k.labs <- c("k = 2", "k = 3", "k = 10")
+names(k.labs) <- c("2", "3", "10")
+
+# New facet label names for n variable
+n.labs <- c("n = 20", "n = 80", "n = 200", "n = 500")
+names(n.labs) <- c("20", "80", "200", "500")
+
+orig_dat %>%
+  filter(es == 0.1) %>%
+  ggplot(aes(x = log10(prodbf_ic), y = factor(k), fill = factor(errorsd))) +
+  stat_halfeye(
+    adjust = 0.5,
+    justification = -0.3,
+    .width = 0,
+    point_colour = NA, 
+    alpha = 0.5
+  ) +
+  geom_boxplot(
+    width = 0.12,
+    outlier.color = NA,
+    alpha = 0.7
+  ) +
+  stat_dots(
+    side = "left",
+    justification = 1.3,
+    binwidth = 0.1, 
+    alpha=0.05, 
+  ) +
+  facet_wrap(~ n, labeller = labeller(n = n.labs,k = k.labs)) + 
+   geom_vline(xintercept=log10(1), color = "red", size = 0.2) +
+  labs(x = expression(log[10](pBF_ic)), 
+       y = "Number of Studies (k)", 
+       subtitle = "Per Sample Size (n), Number of Studies (k) and Reliability (errorsd)",
+       caption = "Red line: log(1) = 0, 1000 iterations", fill = "Error SD") +  
+  theme_minimal()
+```
+
+In this plot, the true effect size (`es`) equals 0.1, which means that the true parameter value is on the boundary of the hypotheses $H_i$ and $H_c$. Therefore it is expected that the $log_{10} pBF_ic$ would be distributed symmetrically around zero, being unable to provide convincing evidence for either hypothesis. 
+
+Especially with increasing `errorsd` values, an interesting pattern emerged. Whereas the $log_{10} pBF_ic$ distributions were symmetrical around zero when the error was 0, at higher error values the $log_{10} pBF_ic$ shifted towards evidence in favour of $H_c$. If the within-study sample sizes (`n`) are small (e.g., 20 or 50), the shift was less prominent. However, when the within-study sample sizes (`n`) increase (e.g., 200, 500), especially in combination with higher numbers of studies (`k`), $H_c$ was consistently favoured over $H_i$. This suggests that higher error, especially in combination with many and large studies, will result in a stronger shift towards evidence for $H_c$.
+
+### Constrained Versus Unconstrained: Complexity
+The parameter of interest in this simulation study is a correlation, implying that the full parameter space is constrained: $\rho \in [-1, 1]$. This means that $H_c$ contains a larger proportion of the full parameter space ($\rho \in [-1, 0.1]$) than $H_i$ ($\rho \in [0.1 - 1]$), raising the question if the distributional shift we observe when es = 0.1 can be explained by the fact that the two hypotheses are not equally large in terms of the parameter space. When there's error, will the evidence distribution always shift in favour of the hypothesis that contains the largest parameter space? This was be tested by running the simulation again, while testing the following hypotheses: 
+
+- (1a) $H_i: \rho > 0 \text{ versus } H_c: \rho\le 0 \text{, when es = } 0$, in this case it is expected that at all error values, the distributions will be symmetrical around $log_{10} \text{ } pBF_{ic}$ values of zero, as both hypotheses entail an equally large parameter space. 
+- (1b) $H_i: \rho > 0.8 \text{ versus } H_c: \rho \le 0.8 \text{, when es = } 0.8$, in this case it is expected that with higher error values, there will be an even more dramatic shift towards negative $log_{10} \text{ } pBF_{ic}$ values, indicating evidence for $H_c$.
+- (1c) $H_i: \rho > -0.8 \text{ versus } H_c: \rho \le -0.8 \text{, when es = } -0.8$, in this case it is expected that with higher error values, there will be shift towards positive $log_{10} \text{ } pBF_{ic}$ values, indicating evidence for $H_i$, as now this hypothesis will entail the largest proportion of the parameter space.
+
+These simulated results show exactly what we expected: when the reliability is low (high error), the $log_{10} \text{ } pBF_{ic}$ will always tend to provide evidence for the hypothesis that has the largest parameter space.
+
+As shown before, BFs reward hypotheses that fit the data well ($f_i$) without being unnecessarily complex ($c_i$). It is likely that hypotheses with larger parameter spaces will often fit the data better. In Simulation 1a where both hypotheses had equal parameter spaces, $H_i: \rho \in [0,1]$ and $H_c: \rho \in [-1, 0]$, it stood out that all pBF distributions were centered nicely around $log_{10} \text{ } pBF_{ic}$ of zero. `In Simulation 1b and 1c, the improved fit of hypotheses with larger parameter spaces may often have outweighed the increasing complexity of hypotheses with larger parameter spaces, resulting in an evidence shift towards the hypothesis with the largest parameter space. `
+
+To understand looking at the way `bain` defines the prior probability, it is noticable 
