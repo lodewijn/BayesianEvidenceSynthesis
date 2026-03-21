@@ -32,19 +32,25 @@ To understand BES, it is important to first understand how Bayes Factors (BFs) a
 
 The BF is calculated by taking the ratio of the marginal likelihoods of the two hypotheses $P(E|H_1)$ and $P(E|H_2)$: 
 
-  $BF_{ia} = \frac{P(D|H_i)}{P(D|H_a)}$. 
+\begin{align}
+  BF_{ia} = \frac{P(D|H_i)}{P(D|H_a)}. 
+\end{align}
 
 When the $BF_{ia}$ is larger than 1, this means there is more support for $H_i$, while a BF smaller than 1 implies evidence in favour of $H_a$. A BF of 3 indicates that there is three times more evidence in favour of $H_i$ than for $H_a$. 
 
 Another way of conceptualising the BF, is in terms of the relative fit and relative complexity of $H_i$ versus $H_u$:
 
-  $BF_{iu} = \frac{f_i}{c_i}$,  
+\begin{align}
+  BF_{iu} = \frac{f_i}{c_i},  
+\end{align}
 
 where the fit denotes the area under the unconstrained posterior curve that agrees with $H_i$, and the complexity is the area under the unconstrained prior curve that agrees with $H_i$ @hoijtink2019. By definition, Bayes Factors reward hypotheses that fit the data well without being unnecessarily complex, and penalise hypotheses that are either too restrictive (poor fit), or insufficiently restrictive by allowing many values that are not in line with the data (too complex).
 
 In Bayesian Evidence Synthesis, study results are aggregated on the level of Bayes Factors. First, individual BFs are calculated per study. Assuming that all studies provide independent evidence for the hypothesis under consideration, the results can be synthesised by simply taking the product of all individual BFs (hereafter referred to as pBF):
 
-$pBF_{iu} = \prod_{i=1}^K (BF_{iu})^k \text{,  where k = {1, ..., K} is the number of studies}$
+\begin{align}
+pBF_{iu} = \prod_{i=1}^K (BF_{iu})^k \text{,  where k = {1, ..., K} is the number of studies}
+\end{align}
 
 This way, BES quantifies the amount of evidence for an overarching hypothesis in each of the studies. 
 
@@ -85,12 +91,12 @@ This internship was focused on evaluating the performance of BES based on the fu
 
 `Because the original simulation study focused on TP and TN, this internship mainly explored $pBF_{ic}$ distributions, as in this case either $H_i$ or $H_c$ would be true.` As it is already known that especially in boundary cases, where neither $H_i$ or $H_c$ is true, the performance of BES is not always optimal @elise, this scenario was highlighted in this internship. In this simulation, the boundary case was when $H_i: \rho > 0.1$ was tested against $H_c: \rho \leq 0.1$ and the true effect was $\rho = 0.1$. Given that an estimate can never exactly equal any specific value, in this case, by definition both $H_i$ and $H_c$ are not true. Therefore, in this boundary case, we would expect all pBF values to be centered around 1. This would indicate neutral evidence for either hypothesis. 
 
-## Simulation 1: Replication / Correlation Plots
+## Simulation 1: Replication / Correlation
 `Except for the results of the pBF, the confusion matrix did not completely replicate, which was likely due to slight numerical sensitivity of the evidence methods (see <github.com/lodewijn> for the replication scripts).`
 
-#### Simulation 1: Boundary Case: $Log_{10} \text{ } pBF_{ic}$, True Effect of $\rho = 0.1$ - $H_i$ and $H_c$ are both false
-
 ```{r, warning=FALSE, include=TRUE, echo=FALSE, message=FALSE}
+#| fig-cap: "Boundary case, true correlation = 0.1, Hi and Hc are both false"
+
 # log pbf IC, es = 0.1
 
 # New facet label names for k variable
@@ -125,9 +131,9 @@ orig_dat %>%
   facet_wrap(~ n, labeller = labeller(n = n.labs,k = k.labs)) + 
    geom_vline(xintercept=log10(1), color = "red", size = 0.2) +
   labs(x = expression(log[10](pBF_ic)), 
-       y = "Number of Studies (k)", 
-       subtitle = "Per Sample Size (n), Number of Studies (k) and Reliability (errorsd)",
-       caption = "Red line: log(1) = 0, 1000 iterations", fill = "Error SD") +  
+       y = "Number of Studies (k)",
+       caption = "Red line: log(1) = 0, 1000 iterations, \n Number of studies (k), within study sample size (n) and reliability (errorsd)", 
+       fill = "Error SD") +  
   theme_minimal()
 ```
 
@@ -135,15 +141,280 @@ In this plot, the true effect size (`es`) equals 0.1, which means that the true 
 
 Especially with increasing `errorsd` values, an interesting pattern emerged. Whereas the $log_{10} pBF_ic$ distributions were symmetrical around zero when the error was 0, at higher error values the $log_{10} pBF_ic$ shifted towards evidence in favour of $H_c$. If the within-study sample sizes (`n`) are small (e.g., 20 or 50), the shift was less prominent. However, when the within-study sample sizes (`n`) increase (e.g., 200, 500), especially in combination with higher numbers of studies (`k`), $H_c$ was consistently favoured over $H_i$. This suggests that higher error, especially in combination with many and large studies, will result in a stronger shift towards evidence for $H_c$.
 
-### Constrained Versus Unconstrained: Complexity
 The parameter of interest in this simulation study is a correlation, implying that the full parameter space is constrained: $\rho \in [-1, 1]$. This means that $H_c$ contains a larger proportion of the full parameter space ($\rho \in [-1, 0.1]$) than $H_i$ ($\rho \in [0.1 - 1]$), raising the question if the distributional shift we observe when es = 0.1 can be explained by the fact that the two hypotheses are not equally large in terms of the parameter space. When there's error, will the evidence distribution always shift in favour of the hypothesis that contains the largest parameter space? This was be tested by running the simulation again, while testing the following hypotheses: 
 
-- (1a) $H_i: \rho > 0 \text{ versus } H_c: \rho\le 0 \text{, when es = } 0$, in this case it is expected that at all error values, the distributions will be symmetrical around $log_{10} \text{ } pBF_{ic}$ values of zero, as both hypotheses entail an equally large parameter space. 
-- (1b) $H_i: \rho > 0.8 \text{ versus } H_c: \rho \le 0.8 \text{, when es = } 0.8$, in this case it is expected that with higher error values, there will be an even more dramatic shift towards negative $log_{10} \text{ } pBF_{ic}$ values, indicating evidence for $H_c$.
-- (1c) $H_i: \rho > -0.8 \text{ versus } H_c: \rho \le -0.8 \text{, when es = } -0.8$, in this case it is expected that with higher error values, there will be shift towards positive $log_{10} \text{ } pBF_{ic}$ values, indicating evidence for $H_i$, as now this hypothesis will entail the largest proportion of the parameter space.
+- (1b) $H_i: \rho > 0 \text{ versus } H_c: \rho\le 0 \text{, when es = } 0$, in this case it is expected that at all error values, the distributions will be symmetrical around $log_{10} \text{ } pBF_{ic}$ values of zero, as both hypotheses entail an equally large parameter space. 
+- (1c) $H_i: \rho > 0.8 \text{ versus } H_c: \rho \le 0.8 \text{, when es = } 0.8$, in this case it is expected that with higher error values, there will be an even more dramatic shift towards negative $log_{10} \text{ } pBF_{ic}$ values, indicating evidence for $H_c$.
+- (1d) $H_i: \rho > -0.8 \text{ versus } H_c: \rho \le -0.8 \text{, when es = } -0.8$, in this case it is expected that with higher error values, there will be shift towards positive $log_{10} \text{ } pBF_{ic}$ values, indicating evidence for $H_i$, as now this hypothesis will entail the largest proportion of the parameter space.
 
-These simulated results show exactly what we expected: when the reliability is low (high error), the $log_{10} \text{ } pBF_{ic}$ will always tend to provide evidence for the hypothesis that has the largest parameter space.
+#### Constrained Parameter Space and Complexity
+The simulated results showed exactly what we expected: when the reliability was low (high error), the $log_{10} \text{ } pBF_{ic}$ always tended towards evidence for the hypothesis with the largest parameter space. When the boundary value was more extreme (e.g., 0.8 or -0.8) the shift in evidence was also more extreme (see Figure 2 for an example). Moreover, in simulation 1b where both hypotheses had equal parameter spaces ($H_i: \rho \in [0,1]$ and $H_c: \rho \in [-1, 0]$) it stood out that all pBF distributions were centered nicely around a $log_{10} \text{ } pBF_{ic}$ of zero. 
 
-As shown before, BFs reward hypotheses that fit the data well ($f_i$) without being unnecessarily complex ($c_i$). It is likely that hypotheses with larger parameter spaces will often fit the data better. In Simulation 1a where both hypotheses had equal parameter spaces, $H_i: \rho \in [0,1]$ and $H_c: \rho \in [-1, 0]$, it stood out that all pBF distributions were centered nicely around $log_{10} \text{ } pBF_{ic}$ of zero. `In Simulation 1b and 1c, the improved fit of hypotheses with larger parameter spaces may often have outweighed the increasing complexity of hypotheses with larger parameter spaces, resulting in an evidence shift towards the hypothesis with the largest parameter space. `
+```{r, warning=FALSE, include=TRUE, echo=FALSE, message=FALSE}
+#| fig-cap: "Boundary case, true correlation = 0.8, Hi and Hc are both false"
 
-To understand looking at the way `bain` defines the prior probability, it is noticable 
+# log pbf IC, es = 0.8
+
+# New facet label names for k variable
+k.labs <- c("k = 2", "k = 3", "k = 10")
+names(k.labs) <- c("2", "3", "10")
+
+# New facet label names for n variable
+n.labs <- c("n = 20", "n = 80", "n = 200", "n = 500")
+names(n.labs) <- c("20", "80", "200", "500")
+
+dat_all_es_types %>%
+  filter(es == 0.8) %>%
+  ggplot(aes(x = log10(prodbf_cor_ic), y = factor(k), fill = factor(errorsd))) +
+  stat_halfeye(
+    adjust = 0.5,
+    justification = -0.3,
+    .width = 0,
+    point_colour = NA, 
+    alpha = 0.5
+  ) +
+  geom_boxplot(
+    width = 0.12,
+    outlier.color = NA,
+    alpha = 0.7
+  ) +
+  stat_dots(
+    side = "left",
+    justification = 1.3,
+    binwidth = 0.1, 
+    alpha=0.05, 
+  ) +
+  facet_wrap(~ n, labeller = labeller(n = n.labs,k = k.labs)) + 
+   geom_vline(xintercept=log10(1), color = "red", size = 0.2) +
+  labs(x = expression(log[10](pBF_ic)), 
+       y = "Number of Studies (k)", 
+       caption = "Red line: log(1) = 0, 1000 iterations, \n Number of studies (k), within study sample size (n) and reliability (errorsd)", , fill = "Error SD") +  
+  theme_minimal()
+```
+
+This suggests that the constrained parameter space of correlations may have played a role. To explain why error seems to affect this shift in evidence, we looked at the way `bain` defines its parameter prior. According to @hoijtink2019, the prior distribution for the population correlation is chosen in such a way that it accurately reflects the complexity of each hypothesis, and is specified as: 
+
+\begin{align}
+\rho_g \sim N(\rho_B, \frac{1}{bg} \cdot \frac{\hat{\sigma}^2}{Ng}),
+\end{align}
+
+where:
+
+- $\rho_B$ is the boundary value of the two hypotheses (e.g., 0.1) 
+- $\frac{1}{bg} = \frac{1}{Ng}$ is the fraction of information used from the data (default = 1)
+- $\hat{\sigma}^2 = SE_r^2$ is the estimated sampling variance of the correlation
+- Ng is the group sample size
+
+This means that the prior is defined as:
+
+\begin{align}
+\rho_g \sim N(\rho_B, \frac{Ng}{1} \cdot \frac{SE_r^2}{Ng}) = \\
+\rho_g \sim N(\rho_B, SE_r^2)
+\end{align}
+
+Although the prior follows a normal distributions, in case of bounded parameters like correlations ($\rho \in [-1,1]$), the prior is bounded by -1 and 1. Given that the prior is centered around a boundary value, for example $\rho_B = 0.1$, the area that agrees with $H_i$ ($\rho \in [0.1,1]$) is not always equal to the prior area that agrees with $H_c$ ($\rho \in [-1,0.1]$). In other words, depending on $\rho_B$, the complexity of $H_i$ ($c(H_i)$) is not necessarily the same as that of $H_c$ ($c(H_c)$).
+
+In addition, when measurement error (SE) increases, the prior distribution becomes wider. Depending on $\rho_B$, the prior is then truncated asymmetrically. For example, when $\rho_B = 0.1$, a relatively larger proportion of the distribution is truncated at the upper bound (1) than at the lower bound (-1), leaving more mass in [-1,0.1] than in [0.1, 1]. As a result, the complexity ratio would shift in favour of $H_c$, potentially contributing to the observed shift in evidence as SE increases.
+
+To test whether this asymmetric truncation of the prior could explain the observed pBF pattern, we examined whether the same shift occurs for effect sizes with unbounded parameter spaces ($es \in [-\infty, \infty]$), as truncation would not occur in this case.
+
+## Simulation 2: Covariances and Regression Coefficients ($\beta$)
+To answer the question how the pBF distributions behave when using effect sizes with unconstrained parameter spaces, we decided to include covariances, because these are unstandardised correlations, and regression coefficients ($\beta$), because these, like correlations, describe linear relationships. Again, four informed hypotheses were tested against their complement:
+
+- (2a) $H_i: \text{cov / }\beta > 0.1 \text{, when es = } 0.1$
+- (2b) $H_i: \text{cov / }\beta > 0 \text{, when es = } 0$
+- (2c) $H_i: \text{cov / }\beta > 0.8 \text{, when es = } 0.8$
+- (2d) $H_i: \text{cov / }\beta > -0.8 \text{, when es = } -0.8$
+
+Because both covariance and $\beta$ have unbounded parameter spaces, it was expected that for both effect size types, the $log_{10} \text{ } pBF_{ic}$ distributions would be symmetrical around 0, indicating neutral evidence for both $H_i$ and $H_c$. 
+
+```{r, warning=FALSE, include=TRUE, echo=FALSE, message=FALSE}
+#| fig-cap: "Boundary case, Hi and Hc are both false"
+#| fig-subcap:
+#|   - "True covariance = 0.8"
+#|   - "True beta = 0.8"
+#| layout-ncol: 2
+#| fig-cap-location: bottom
+#| subcap-labels: none
+
+# log pbf IC, es = 0.8
+
+# New facet label names for k variable
+k.labs <- c("k = 2", "k = 3", "k = 10")
+names(k.labs) <- c("2", "3", "10")
+
+# New facet label names for n variable
+n.labs <- c("n = 20", "n = 80", "n = 200", "n = 500")
+names(n.labs) <- c("20", "80", "200", "500")
+
+cov_08 <- dat_all_es_types %>%
+  filter(es == 0.8) %>%
+  ggplot(aes(x = log10(prodbf_cov_ic), y = factor(k), fill = factor(errorsd))) +
+  stat_halfeye(
+    adjust = 0.5,
+    justification = -0.3,
+    .width = 0,
+    point_colour = NA, 
+    alpha = 0.5
+  ) +
+  geom_boxplot(
+    width = 0.12,
+    outlier.color = NA,
+    alpha = 0.7
+  ) +
+  stat_dots(
+    side = "left",
+    justification = 1.3,
+    binwidth = 0.1, 
+    alpha=0.05, 
+  ) +
+  facet_wrap(~ n, labeller = labeller(n = n.labs,k = k.labs)) + 
+   geom_vline(xintercept=log10(1), color = "red", size = 0.2) +
+  labs(x = expression(log[10](pBF_ic)), 
+       y = "Number of Studies (k)",
+       caption = "Red line: log(1) = 0, 1000 iterations, \n Number of studies (k), within study sample size (n) and reliability (errorsd)", , fill = "Error SD") +  
+  theme_minimal()
+
+beta_08 <- dat_all_es_types %>%
+  filter(es == 0.8) %>%
+  ggplot(aes(x = log10(prodbf_beta_ic), y = factor(k), fill = factor(errorsd))) +
+  stat_halfeye(
+    adjust = 0.5,
+    justification = -0.3,
+    .width = 0,
+    point_colour = NA, 
+    alpha = 0.5
+  ) +
+  geom_boxplot(
+    width = 0.12,
+    outlier.color = NA,
+    alpha = 0.7
+  ) +
+  stat_dots(
+    side = "left",
+    justification = 1.3,
+    binwidth = 0.1, 
+    alpha=0.05, 
+  ) +
+  facet_wrap(~ n, labeller = labeller(n = n.labs,k = k.labs)) + 
+   geom_vline(xintercept=log10(1), color = "red", size = 0.2) +
+  labs(x = expression(log[10](pBF_ic)), 
+       y = "Number of Studies (k)",
+       caption = "Red line: log(1) = 0, 1000 iterations, \n Number of studies (k), within study sample size (n) and reliability (errorsd)", , fill = "Error SD") +  
+  theme_minimal()
+
+
+cov_08
+beta_08
+```
+
+As can be seen in Figure 3a (which shows simulation 2c because this is an extreme case), the covariances behaved exactly as we expected; in simulation 2a-2d, all $log_{10} \text{ } pBF_{ic}$ distributions were nicely centered around 0 (all simulation plots can be found <github/lodewijn>). 
+
+However, when $\beta$ was the effect size of interest, the $log_{10} \text{ } pBF_{ic}$ distributions did not behave as expected (see Figure 3b). All distributions showed the same pattern that was observed in the correlations, with more extreme boundary values resulting in stronger shifts towards the hypothesis that had the largest parameter space. This means that it is unlikely that the shift in evidence can be explained by prior truncation, as this does not happen in $\beta$.
+
+## Properties of the effect sizes
+Aiming to understand why the shift in evidence was observed in $\rho$ and $\beta$, but not in covariances, we decided to take a closer look at the data generating mechanism of the simulation and the properties of the effect size types.
+
+In the data generating mechanism of this simulation, in the covariance structure that is assumed $Var(X) = Var(Y) = 1$. 
+
+\begin{align}
+\rho = Cor(X,Y) = \frac{Cov(X,Y)}{\sqrt(Var(X) \cdot Var(Y)} = Cov(X,Y)
+\end{align}
+
+Given that $\beta$ is an ordinary least squares (OLS) estimator, the following holds:
+
+\begin{align}
+\beta = \frac{Cov(X,Y)}{Var(X)} = Cov(X,Y) = \rho
+\end{align}
+
+This means that all effect sizes are constrained to be equal in the data generating mechanism. This raises the question why the pBFs of covariances behave differently then those of $\rho$ and when $Cov(X,Y) = \beta = \rho$? 
+
+When we look at the data generating mechanism again, we have to take into account that noise is added to X and Y, such that the observed effect sizes are $X_{obs} = X + \epsilon$ and $Y_{obs} = Y + \epsilon$. Taking into account that $\epsilon$ is a random variable, translating this to the formulas of the effect sizes of interest, gives the following. 
+
+For the covariance:
+\begin{align}
+&Cov(X_{obs} + \epsilon_X,Y_{obs} + X + \epsilon_Y)  \\
+&= Cov(X,Y) + Cov(X, \epsilon_Y) + Cov(Y,\epsilon_X) + Cov(\epsilon_X,\epsilon_Y) \\
+&= Cov(X,Y) \\
+&= \rho \text{,}
+\end{align}
+
+given that $\epsilon_Y$ and $\epsilon_X$ are unrelated to each other and to X and Y.
+
+For the correlation:
+\begin{align}
+&Cor(X_{obs} + \epsilon_X,Y_{obs} + X + \epsilon_Y) \\
+&= \frac{Cov(X_{obs} + \epsilon_X,Y_{obs} + X + \epsilon_Y)}{\sqrt{Var(X + \epsilon_X) \cdot Var(Y + \epsilon_Y)}} \\
+&= \frac{\rho}{\sqrt{(Var(X) + Var(\epsilon_X)) \cdot (Var(Y) + Var(\epsilon_Y))}} \\
+&= \frac{\rho}{\sqrt{(1 + errorsd^2) \cdot (1 + errorsd^2)}} \\
+&= \frac{\rho}{1 + errorsd^2}
+\end{align}
+
+For the regression coefficient:
+\begin{align}
+&\beta_{obs} = \frac{Cov(X_{obs} + \epsilon_X,Y_{obs} + X + \epsilon_Y)}{Var(X_{obs} + \epsilon_X)} = \frac{\rho}{1 + errorsd^2}
+\end{align}
+
+This means that both $\rho_{obs}$ and $\beta_{obs}$ are limited by the standard deviation that is specified in the model parameters, while this does not hold for the covariances. This process of attenuation may explain why the observed shift with increasing error is only visible in $\rho$ and $\beta$, but not in the covariances. Since $\rho_{obs}$ and $\beta_{obs}$ are the effect sizes that are used to calculate BFs using bain, and both parameters shrink relative to their true values when there is error, the question becomes whether $\rho_{obs} > 0.1$, which it is not. This means that because of the attenuation, $H_c$ in fact becomes true, and it is not surprising the pBF consistently provides evidence in favour of this hypothesis. 
+
+## Simulation 3: Compare to RMA
+To see if attenuation would also play a role using frequentist methods, RMA was used to pool correlation estimates from the k different studies. The mean correlation estimate and SE resulting from this were then passed to `bain` to get one BF, which was repeated 1000 times, to then plot all BFs. 
+
+```{r, warning=FALSE, include=TRUE, echo=FALSE, message=FALSE}
+#| fig-cap: "RMA, boundary case, true correlation = 0.1, Hi and Hc are both false"
+
+# log pbf IC, es = 0.8
+
+# New facet label names for k variable
+k.labs <- c("k = 2", "k = 3", "k = 10")
+names(k.labs) <- c("2", "3", "10")
+
+# New facet label names for n variable
+n.labs <- c("n = 20", "n = 80", "n = 200", "n = 500")
+names(n.labs) <- c("20", "80", "200", "500")
+
+dat_all_es_types %>%
+  filter(es == 0.1) %>%
+  ggplot(aes(x = log10(rma_ic), y = factor(k), fill = factor(errorsd))) +
+  stat_halfeye(
+    adjust = 0.5,
+    justification = -0.3,
+    .width = 0,
+    point_colour = NA, 
+    alpha = 0.5
+  ) +
+  geom_boxplot(
+    width = 0.12,
+    outlier.color = NA,
+    alpha = 0.7
+  ) +
+  stat_dots(
+    side = "left",
+    justification = 1.3,
+    binwidth = 0.1, 
+    alpha=0.05, 
+  ) +
+  facet_wrap(~ n, labeller = labeller(n = n.labs,k = k.labs)) + 
+   geom_vline(xintercept=log10(1), color = "red", size = 0.2) +
+ labs(x = expression(log[10](BF_rma_ic)), 
+      y = "Number of Studies (k)",
+       caption = "Red line: log(1) = 0, 1000 iterations, \n Number of studies (k), within study sample size (n) and reliability (errorsd)", , fill = "Error SD") +  
+  theme_minimal()
+```
+Figure 4 shows the $log_{10} \text{ } BF_{ic}$ distributions when first pooling all correlation estimates, and then performing RMA. It stands out that the shift in evidence towards $H_c$ is also visible here. Consistent with the pBFs, with more extreme boundary values such as 0.8, the shift in evidence towards $H_c$ was more extreme in this case. This means that the evidence shift introduced by measurement error persists at the level of the pooled estimate, and pooling correlation estimates via RMA before applying `bain` does not protect against attenuation. 
+
+## Simulation 4: Ordered hypotheses
+Given that attenuation of correlation seems to play a role both in Bayesian and frequentist methods, the question of how to deal with this arose. When testing ordered hypotheses, such as $H_i: \rho_1 < \rho_2 < \rho3$, attenuation may not be as big of a problem, if all correlations would have equal measurement error. To see how the pBF would behave in this scenario, we set up a simulation where there were two conditions for $rho$:
+ 
+- Unequal: $rho_1$ = Cor(X,Y) = -0.1, $rho_2$ = Cor(X,Z) = 0, $rho_3$ = Cor(Y,Z) = 0.1, so $H_i$ was true
+- Equal: $rho_1 = rho_2 = rho_3$ = 0.1, so $H_i$ and $H_c$ were both
+
+In addition, for the error, three different conditions were tested:
+
+- Equal error at 0
+- Equal error at 0.5
+- Unqual error, where $\epsilon_X$ = 0.81, $\epsilon_Y$ = 0, $\epsilon_Z$ = 0.5
+
+
+
+
