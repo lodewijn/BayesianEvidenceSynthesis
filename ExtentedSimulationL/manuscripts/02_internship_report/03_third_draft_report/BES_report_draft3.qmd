@@ -1,6 +1,8 @@
 ---
-title: "BES Report Draft 2"
+title: "BES Report Draft 3"
 format: pdf
+number-sections: true
+bibliography: references.bib
 ---
 
 ```{r, warning=FALSE, include=TRUE, echo=FALSE, message=FALSE}
@@ -21,14 +23,12 @@ dat_all_es_types <- read_csv("../../../sim_results/06_sim_results_cor_cov_beta_R
 dat_ordered_hyp <- read_csv("../../../sim_results/07_sim_results_ordered_hypothesis/sim_results_ordered_2026-03-18.csv")
 ```
 
-Over recent years, the scientific community has been facing a replication crisis, with growing numbers of studies failing to reproduce previously published findings @klugkist_volker. In this light, research synthesis methods that aggregate evidence from multiple replication studies, have gained more popularity @vanlissa. One of the most well known research synthesis methods is meta-analysis, in which results from multiple studies are pooled on the level of effect sizes, increasing the power of the individual studies @klugkist, @vanlissa. Especially when using random-effects meta-analysis (RMA), which accounts for random between-study variation, studies do not need to be exact replications, making it a good way to deal with the replication crisis.
+Over recent years, the scientific community has been facing a replication crisis, with growing numbers of studies failing to reproduce previously published findings [@klugkist_bayesian_2025]. In this light, research synthesis methods that aggregate evidence from multiple replication studies have gained more popularity [@van_lissa_tutorial_2024]. One of the most well-known research synthesis methods is meta-analysis, in which results from multiple studies are pooled at the level of effect sizes to calculate a mean effect across studies. Because it is a pooling method, it can increase statistical power to find an effect compared to individual studies alone [@klugkist_bayesian_2025; @van_lissa_tutorial_2024]. Especially when using random-effects meta-analysis (RMA), which accounts for random between-study variation, the synthesised studies do not need to be exact replications, making it a suitable method for addressing the replication crisis.
 
-However, because results are pooled at the effect size level, a drawback of meta-analysis is that the effect sizes and methodologies of the synthesized studies need to be similar/comparable. So even when studies are theoretically similar and focus on the same underlying hypothesis, meta-analysis may not always be able to synthesise their results if their effect sizes differ @volker_klugkist. An alternative synthesis method that does allow synthesis on the hypothesis level, rather than the effect size level, is Bayesian Evidence Synthesis (BES) @volker, @vanlissa. Because the method does not pool the data, one disadvantage is that BES does not increase the power, but rather shows whether all studies align in the presence and direction of any effect. 
+However, because results are pooled at the effect size level, a drawback of meta-analysis is that the effect sizes and methodologies of the synthesised studies need to be comparable. So if the effect sizes differ across studies, meta-analysis may not always be able to synthesise their results, even when all studies are theoretically similar and focus on the same underlying hypothesis [@klugkist_bayesian_2025]. An alternative synthesis method that does allow synthesis on the hypothesis level, rather than the effect size level, is Bayesian Evidence Synthesis (BES), which evaluates whether all studies align in finding the presence and direction of any effect [@klugkist_bayesian_2025; @van_lissa_tutorial_2024]. An additional advantage of BES in the context of the replication crisis is that by synthesising conceptual replications, conclusions are not tied to a single methodological approach, reducing the influence of design-specific choices [@volker_combining_2023].
 
-In a simulation study by @vanlissa, BES was shown to be a promising synthesis method. This internship was aimed to replicate this simulation study, and expand it to new scenarios to test whether the very positive image they painted of BES would remain the same. *[mention here that they used an arbitrary threshold or do that later??]*
-
-## Bayesian Evidence Synthesis
-To understand BES, it is important to first understand how Bayes Factors (BFs) are defined. BFs measure the relative probability of the data under two different hypotheses, $H_1$ and $H_2$ @volkerklugkist, @hoijtink2019. This means that an informative hypothesis $H_i$ is always tested against an alternative hypothesis $H_a$. Three hypotheses that are often used as alternatives are (1) the unconstrained hypothesis, $H_u$, that includes all possible values within the parameter space, (2) the complement of the informative hypothesis, $H_c$, that includes the set of all values that are not in $H_i$, and (3) the null hypothesis, $H_0$.
+## Bayesian Evidence Synthesis {#sec-BES}
+To understand BES, it is important to first understand how Bayes Factors (BFs) are defined. BFs measure the relative probability of the data under two different hypotheses, $H_1$ and $H_2$ [@klugkist_bayesian_2025; @hoijtink_tutorial_2019]. This means that an informative hypothesis $H_i$ is always tested against an alternative hypothesis $H_a$. Three hypotheses that are often used as alternatives are (1) the unconstrained hypothesis, $H_u$, that includes all possible values within the parameter space, (2) the complement of the informative hypothesis, $H_c$, that includes the set of all values that are not in $H_i$, and (3) the null hypothesis, $H_0$.
 
 The BF is calculated by taking the ratio of the marginal likelihoods of the two hypotheses $P(E|H_1)$ and $P(E|H_2)$: 
 
@@ -44,26 +44,37 @@ Another way of conceptualising the BF, is in terms of the relative fit and relat
   BF_{iu} = \frac{f_i}{c_i},  
 \end{align}
 
-where the fit denotes the area under the unconstrained posterior curve that agrees with $H_i$, and the complexity is the area under the unconstrained prior curve that agrees with $H_i$ @hoijtink2019. By definition, Bayes Factors reward hypotheses that fit the data well without being unnecessarily complex, and penalise hypotheses that are either too restrictive (poor fit), or insufficiently restrictive by allowing many values that are not in line with the data (too complex).
+where the fit denotes the area under the unconstrained posterior curve that agrees with $H_i$, and the complexity is the area under the unconstrained prior curve that agrees with $H_i$ [@hoijtink_tutorial_2019; @van_lissa_teachers_2021]. Thus, by definition, Bayes Factors reward hypotheses that fit the data well without being unnecessarily complex, and penalise hypotheses that are either too restrictive (poor fit), or insufficiently restrictive by allowing many values that are not in line with the data (too complex).
 
 In Bayesian Evidence Synthesis, study results are aggregated on the level of Bayes Factors. First, individual BFs are calculated per study. Assuming that all studies provide independent evidence for the hypothesis under consideration, the results can be synthesised by simply taking the product of all individual BFs (hereafter referred to as pBF):
 
 \begin{align}
-pBF_{iu} = \prod_{i=1}^K (BF_{iu})^k \text{,  where k = {1, ..., K} is the number of studies}
+pBF_{ic} = \prod_{i=1}^K (BF_{ic})^k \text{,  where k = {1, ..., K} is the number of studies}
 \end{align}
 
-This way, BES quantifies the amount of evidence for an overarching hypothesis in each of the studies. 
+This way, BES quantifies the amount of evidence for an overarching hypothesis in each of the studies. Although one of the major advantages of BES is that it is a flexible method that allows synthesis of studies on a conceptual level, it is important to highlight that BES does not pool the results and thus does not increase power to find support for a hypothesized effect, contrasting with other synthesis methods such as Bayesian updating or meta-analysis [@klugkist_bayesian_2025].
 
 ## Performance of Bayesian Evidence Synthesis Versus Other Synthesis Methods
-Although one of the major advantages of BES is that it is a flexible method that allows synthesis of studies on a conceptual level, it is important to highlight that BES does not pool the results and thus does not increase power to find support for a hypothesized effect, contrasting with other synthesis methods such as Bayesian updating or meta-analysis. @vanlissa performed a simulation study to evaluate the pBF algorithm and compare its performance with other evidence synthesis methods. They contrasted the results of BES, where BFs were calculated using `bain`, to those of RMA, individual participant data (IPD), and vote counting. Specifically, they focused on the sensitivity (detecting an effect when it is truly present in the population, true positives (TP)) and specificity (ability to reject $H_i$ when it is not supported in the population, true negatives (TN)). They used $H_i: \rho > 0.1$, and tested this under different conditions, shown in Table 1.
+To evaluate the performance of BES relative to other well-known evidence synthesis methods, @lissa_online_2024 conducted a simulation study. They contrasted the results of BES, to those of RMA, individual participant data (IPD), and vote counting. Specifically, they focused on the sensitivity (detecting an effect when it is truly present in the population, true positives) and specificity (ability to reject $H_i$ when it is not supported in the population, true negatives). They tested the informed hypothesis $H_i: \rho > 0.1$ under different conditions, shown in @tbl-SIMCOND, to evaluate how different parameters would affect the performance of the synthesis methods under consideration.
 
-```{r, warning=FALSE, include=TRUE, echo=FALSE}
+```{r}
+#| label: tbl-SIMCOND
+#| tbl-cap: "Original simulation conditions"
+#| warning: false
+#| include: true
+#| echo: false
+
 sim_conditions <- data.frame(
   Condition = c("Number of Studies", 
                 "Within Study Sample Size", 
                 "True Effect Size", 
                 "Reliability", 
                 "Error Corresponding to Reliability"),
+  `Abbreviation in Simulation` = c("k",
+                   "n",
+                   "es",
+                   "",
+                   "errorsd"),
    Value = c("2, 3, 5",
          "20, 80, 200, 500",
          "0.1, 0.2", 
@@ -82,15 +93,23 @@ kable(
   )
 ```
 
-For RMA and IPD, $H_0$ was rejected if the 90% confidence interval excluded the hypothesised value under $H_i$. For vote counting, they simply counted the number of significant results, and if $H_0$ was rejected in the majority of all studies, it was classified as evidence for $H_i$. For BES, a decision criterion of a pBF larger than 3 was used to classify support for $H_i$. Using the true population effect sizes corresponding to $H_i$ or $H_0$, they found that the pBF had relatively high sensitivity and low specificity, compared to the other methods.
+For RMA and IPD, $H_c$ was rejected if the 90% confidence interval (corresponding to a one-sided test at $\alpha$ = .05) excluded the hypothesised value under $H_i$. For vote counting, one-sided z-tests were used to test $H_0: \rho = 0.1$ against $H_i: \rho > 0.1$, and if $H_0$ was rejected in the majority of all studies, it was classified as evidence for $H_i$. For BES, a decision criterion of a product Bayes Factor (see @sec-BES) larger than 3 was used to classify support for $H_i$ over its complement $H_c: \rho \leq 0.1$.
+
+Using the true population effect sizes, @lissa_online_2024 calculated the sensitivity and specificity of each algorithm. Overall, they found that BES had relatively high sensitivity and low specificity compared to the other methods. In addition, sample size seemed to have the largest impact on the performance of BES, followed by the number of studies and reliability. 
+Interestingly, BES responded differently to changes in reliability compared to the other methods. While sensitivity improved across all methods as reliability increased, only BES showed reduced specificity at the same time, while this remained stable in the other methods. This suggests that as measurement error decreases, BES becomes better at detecting true effects but simultaneously worse at correctly rejecting unsupported hypotheses.
 
 ## Present Study
-One drawback of the simulation by @vanlissa is that they used an arbitrary decision criterion to evaluate the pBF. Given that BES is a relatively new synthesis method, it is highly relevant to get a complete picture of its performance under different conditions. Moreover, as @hoijtink argues, unlike p-values, the BF can and should be interpreted on a continuous scale, which will likely give a better overview of the general performance of BES.
+One disadvantage of the simulation by @lissa_online_2024 is that they used an arbitrary decision criterion to evaluate the pBF. As @hoijtink_tutorial_2019 argues, unlike p-values, the BF can and should be interpreted on a continuous scale, which will likely give a better overview of the general performance of BES. 
 
-This internship was focused on evaluating the performance of BES based on the full distribution of pBF values, to better understand its behaviour across conditions, aiming to identify the parameters that seem to influence the results the most. To better visualise the pBF distributions, all pBF values were $log_{10}$ transformed. In addition, after exploring the pBF distributions, this internship extended the original simulation by also including other effect size types, namely covariances and regression coefficients ($\beta$). Additionally, instead of testing only $H_i: \rho > 0.1$, this internship also extended the simulation by including an ordered hypothesis: $H_i: \rho_1 < \rho_2 < \rho_3$ to evaluate the performance of the pBF in this scenario. 
+This internship was focused on extending the simulation by @lissa_online_2024 to evaluate the performance of BES based on the full distribution of pBF values, aiming to better understand its behaviour across the conditions specified in the original simulation. Each simulation was run with 1000 iterations in RSudio, version 4.4.2 [@RStudio_2024]. To better visualise the pBF distributions, all pBF values were $log_{10}$ transformed. Because the original simulation study mainly focused on sensitivity and specificity, testing $H_i$ against its complement $H_c$, this internship also mainly focused on $pBF_{ic}$ distributions.
 
-`Because the original simulation study focused on TP and TN, this internship mainly explored $pBF_{ic}$ distributions, as in this case either $H_i$ or $H_c$ would be true.` As it is already known that especially in boundary cases, where neither $H_i$ or $H_c$ is true, the performance of BES is not always optimal @elise, this scenario was highlighted in this internship. In this simulation, the boundary case was when $H_i: \rho > 0.1$ was tested against $H_c: \rho \leq 0.1$ and the true effect was $\rho = 0.1$. Given that an estimate can never exactly equal any specific value, in this case, by definition both $H_i$ and $H_c$ are not true. Therefore, in this boundary case, we would expect all pBF values to be centered around 1. This would indicate neutral evidence for either hypothesis. 
+After exploring the original $pBF_{ic}$ distributions, this internship extended the original simulation, as follows:
 
+- Testing a wider range of informed hypotheses ($H_i: \rho > -0.8$, $H_i: \rho > 0$ and $H_i: \rho > 0.8$).
+- Including other effect size types, namely covariances and regression coefficients ($\beta$). 
+- Including an ordered hypothesis: $H_i: \rho_1 < \rho_2 < \rho_3$. 
+
+Another simulation conducted by @van_wonderen_bayesian_2024 showed that the performance of BES is not always optimal in boundary cases, where neither $H_i$ nor $H_c$ is true. Therefore, this internship focused primarily on these boundary scenarios. In the original simulation, the boundary scenario occurred when $H_i: \rho > 0.1$ was tested against $H_c: \rho \leq 0.1$ and the true effect was $\rho = 0.1$. Given that an estimate can never exactly equal any specific value, by definition both $H_i$ and $H_c$ are not true when the true effect size is exactly 0.1. Since neither hypothesis is true, we expect all $log_{10} pBF_ic$ distributions to be centered around 0 ($log_{10}(1)$). This would indicate neutral evidence for either hypothesis. 
 ## Simulation 1: Replication / Correlation
 `Except for the results of the pBF, the confusion matrix did not completely replicate, which was likely due to slight numerical sensitivity of the evidence methods (see <github.com/lodewijn> for the replication scripts).`
 
@@ -192,7 +211,7 @@ dat_all_es_types %>%
   theme_minimal()
 ```
 
-This suggests that the constrained parameter space of correlations may have played a role. To explain why error seems to affect this shift in evidence, we looked at the way `bain` defines its parameter prior. According to @hoijtink2019, the prior distribution for the population correlation is chosen in such a way that it accurately reflects the complexity of each hypothesis, and is specified as: 
+This suggests that the constrained parameter space of correlations may have played a role. To explain why error seems to affect this shift in evidence, we looked at the way `bain` defines its parameter prior [@hoijtink_introduction_2024]. According to @hoijtink_tutorial_2019, the prior distribution for the population correlation is chosen in such a way that it accurately reflects the complexity of each hypothesis, and is specified as: 
 
 \begin{align}
 \rho_g \sim N(\rho_B, \frac{1}{bg} \cdot \frac{\hat{\sigma}^2}{Ng}),
@@ -201,7 +220,7 @@ This suggests that the constrained parameter space of correlations may have play
 where:
 
 - $\rho_B$ is the boundary value of the two hypotheses (e.g., 0.1) 
-- $\frac{1}{bg} = \frac{1}{Ng}$ is the fraction of information used from the data (default = 1)
+- $\frac{1}{bg} = \frac{1}{Ng}$ is the fraction of information used from the data (default = 1) [@noauthor_bain_nodate]
 - $\hat{\sigma}^2 = SE_r^2$ is the estimated sampling variance of the correlation
 - Ng is the group sample size
 
@@ -404,12 +423,12 @@ dat_all_es_types %>%
 @fig-RMABF shows the $log_{10} \text{ } BF_{ic}$ distributions when first pooling all correlation estimates, and then performing RMA. It stands out that the shift in evidence towards $H_c$ is also visible here. Consistent with the pBFs for $\rho$ and $\beta$, with more extreme boundary values such as 0.8, the shift in BF values indicating evidence for $H_c$ was more extreme. This means that the evidence shift introduced by measurement error persists at the level of the pooled estimate, and pooling correlation estimates via RMA before applying `bain` does not seem to protect against attenuation.
 
 ## Simulation 4: Ordered hypotheses
-Given that attenuation of correlation seems to play a role both in Bayesian and frequentist methods, the question remains how to deal with this. When testing ordered hypotheses, such as $H_i: \rho_1 < \rho_2 < \rho3$, attenuation may not be as big of a problem. If all correlations have equal measurement error, they are expected to all attenuate the same, so it is expected that the order would remain the same as well. To see how the pBF behaves in this scenario, we set up a simulation where $H_i: \rho_1 < \rho_2 < \rho3$, or $H_i: Cov(X,Y) < Cov(X,Z) < Cov(Y,Z)$ was tested, under different measurement conditions. For the conditions, see @tab-ORDEREDCOND. 
+Given that attenuation of correlation seems to play a role both in Bayesian and frequentist methods, the question remains how to deal with this. When testing ordered hypotheses, such as $H_i: \rho_1 < \rho_2 < \rho3$, attenuation may not be as big of a problem. If all correlations have equal measurement error, they are expected to all attenuate the same, so it is expected that the order would remain the same as well. To see how the pBF behaves in this scenario, we set up a simulation where $H_i: \rho_1 < \rho_2 < \rho3$, or $H_i: Cov(X,Y) < Cov(X,Z) < Cov(Y,Z)$ was tested, under different measurement conditions. For the conditions, see @tbl-ORDEREDCOND. 
  
 ```{r, warning=FALSE, include=TRUE, echo=FALSE}
-#| label: tab-ORDEREDCOND
+#| label: tbl-ORDEREDCOND
 #| tbl-cap: "Simulation conditions for ordered hypothesis Hi: r1 < r2 < r3."
-
+#| 
 ordered_sim_conditions <- data.frame(
   Hypothesis = c("Hi is true",
              "Hi and Hc are both false",
@@ -537,5 +556,11 @@ For the correlation in the unequal condition:
 \end{align}
 
 
+## Discussion
+The seemingly paradoxical finding by @lissa_online_2024 that BES seems to become better at detecting true effects (increased sensitivity) while at the same time worse at correctly rejecting unsupported hypotheses (decreased specificity) when reliability increases, can be explained by attenuation. With higher measurement error, the pBF distribution shifts towards $H_c$ so strongly that very few values exceed the decision threshold of 3, artificially inflating specificity. As error decreases, the distribution center shifts closer to neutral evidence (a $log_{10} \text{ } BF_{ic}$ of zero), making it more likely that some pBF values exceed the threshold by chance.
 
+## AI Statement
+During this internship, generative AI (Claude Sonnet 4.6, Claude Opus 4.6, ChatGPT) was used for grammatical improvements of the text and some assistance during coding.
+
+## References
 
