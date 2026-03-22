@@ -3,6 +3,7 @@ title: "BES Report Draft 3"
 format: pdf
 number-sections: true
 bibliography: references.bib
+csl: apa.csl
 ---
 
 ```{r, warning=FALSE, include=TRUE, echo=FALSE, message=FALSE}
@@ -27,16 +28,16 @@ Over recent years, the scientific community has been facing a replication crisis
 
 However, because results are pooled at the effect size level, a drawback of meta-analysis is that the effect sizes and methodologies of the synthesised studies need to be comparable. So if the effect sizes differ across studies, meta-analysis may not always be able to synthesise their results, even when all studies are theoretically similar and focus on the same underlying hypothesis [@klugkist_bayesian_2025]. An alternative synthesis method that does allow synthesis on the hypothesis level, rather than the effect size level, is Bayesian Evidence Synthesis (BES), which evaluates whether all studies align in finding the presence and direction of any effect [@klugkist_bayesian_2025; @van_lissa_tutorial_2024]. An additional advantage of BES in the context of the replication crisis is that by synthesising conceptual replications, conclusions are not tied to a single methodological approach, reducing the influence of design-specific choices [@volker_combining_2023].
 
-## Bayesian Evidence Synthesis {#sec-BES}
-To understand BES, it is important to first understand how Bayes Factors (BFs) are defined. BFs measure the relative probability of the data under two different hypotheses, $H_1$ and $H_2$ [@klugkist_bayesian_2025; @hoijtink_tutorial_2019]. This means that an informative hypothesis $H_i$ is always tested against an alternative hypothesis $H_a$. Three hypotheses that are often used as alternatives are (1) the unconstrained hypothesis, $H_u$, that includes all possible values within the parameter space, (2) the complement of the informative hypothesis, $H_c$, that includes the set of all values that are not in $H_i$, and (3) the null hypothesis, $H_0$.
+## Bayesian Evidence Synthesis
+To understand BES, it is important to first understand how Bayes Factors (BFs) are defined. BFs measure the relative probability of the data under two different hypotheses [@klugkist_bayesian_2025; @hoijtink_tutorial_2019]. This means that an informative hypothesis, $H_i$, is always tested against an alternative hypothesis $H_a$. Three hypotheses that are often used as alternatives are (1) the unconstrained hypothesis, $H_u$, which includes all possible values within the parameter space, (2) the complement of the informative hypothesis, $H_c$, which includes the set of all values that are not in $H_i$, and (3) the null hypothesis, $H_0$.
 
 The BF is calculated by taking the ratio of the marginal likelihoods of the two hypotheses $P(E|H_1)$ and $P(E|H_2)$: 
 
 \begin{align}
-  BF_{ia} = \frac{P(D|H_i)}{P(D|H_a)}. 
+  BF_{ia} = \frac{P(D | H_i)}{P(D | H_a)}. 
 \end{align}
 
-When the $BF_{ia}$ is larger than 1, this means there is more support for $H_i$, while a BF smaller than 1 implies evidence in favour of $H_a$. A BF of 3 indicates that there is three times more evidence in favour of $H_i$ than for $H_a$. 
+When $BF_{ia}$ is larger than 1, this means there is more support for $H_i$ relative to $H_a$, while a BF smaller than 1 implies evidence in favour of $H_a$. A BF of 3 indicates that there is three times more evidence for $H_i$ than for $H_a$. 
 
 Another way of conceptualising the BF, is in terms of the relative fit and relative complexity of $H_i$ versus $H_u$:
 
@@ -55,7 +56,7 @@ pBF_{ic} = \prod_{i=1}^K (BF_{ic})^k \text{,  where k = {1, ..., K} is the numbe
 This way, BES quantifies the amount of evidence for an overarching hypothesis in each of the studies. Although one of the major advantages of BES is that it is a flexible method that allows synthesis of studies on a conceptual level, it is important to highlight that BES does not pool the results and thus does not increase power to find support for a hypothesized effect, contrasting with other synthesis methods such as Bayesian updating or meta-analysis [@klugkist_bayesian_2025].
 
 ## Performance of Bayesian Evidence Synthesis Versus Other Synthesis Methods
-To evaluate the performance of BES relative to other well-known evidence synthesis methods, @lissa_online_2024 conducted a simulation study. They contrasted the results of BES, to those of RMA, individual participant data (IPD), and vote counting. Specifically, they focused on the sensitivity (detecting an effect when it is truly present in the population, true positives) and specificity (ability to reject $H_i$ when it is not supported in the population, true negatives). They tested the informed hypothesis $H_i: \rho > 0.1$ under different conditions, shown in @tbl-SIMCOND, to evaluate how different parameters would affect the performance of the synthesis methods under consideration.
+To evaluate the performance of BES relative to other well-known evidence synthesis methods, @lissa_online_2024 conducted a simulation study. They contrasted the results of BES to those of RMA, individual participant data (IPD), and vote counting. Specifically, they focused on the sensitivity (detecting an effect when it is truly present in the population, true positives) and specificity (ability to reject $H_i$ when it is not supported in the population, true negatives). They tested the informed hypothesis $H_i: \rho > 0.1$ under different conditions, shown in @tbl-SIMCOND, to evaluate how different parameters would affect the performance of the synthesis methods under consideration.
 
 ```{r}
 #| label: tbl-SIMCOND
@@ -560,7 +561,7 @@ For the correlation in the unequal condition:
 The seemingly paradoxical finding by @lissa_online_2024 that BES seems to become better at detecting true effects (increased sensitivity) while at the same time worse at correctly rejecting unsupported hypotheses (decreased specificity) when reliability increases, can be explained by attenuation. With higher measurement error, the pBF distribution shifts towards $H_c$ so strongly that very few values exceed the decision threshold of 3, artificially inflating specificity. As error decreases, the distribution center shifts closer to neutral evidence (a $log_{10} \text{ } BF_{ic}$ of zero), making it more likely that some pBF values exceed the threshold by chance.
 
 ## AI Statement
-During this internship, generative AI (Claude Sonnet 4.6, Claude Opus 4.6, ChatGPT) was used for grammatical improvements of the text and some assistance during coding.
+During this internship, generative AI (Claude Sonnet 4.6, Claude Opus 4.6, ChatGPT) was used for text editing / improving grammar and some assistance during coding.
 
 ## References
 
