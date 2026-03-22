@@ -21,11 +21,11 @@ dat_all_es_types <- read_csv("../../../sim_results/06_sim_results_cor_cov_beta_R
 dat_ordered_hyp <- read_csv("../../../sim_results/07_sim_results_ordered_hypothesis/sim_results_ordered_2026-03-18.csv")
 ```
 
-Over recent years, the scientific community has been facing a replication crisis, with growing numbers of studies failing to reproduce previously published findings @klugkist_volker. In this light, research synthesis methods that aggregate evidence from multiple replication studies, have gained more popularity @vanlissa. One of the most well known research synthesis methods is meta-analysis, in which results from multiple studies are pooled on the level of effect sizes, increasing the power of the individual studies @klugkist, @vanlissa. Especially when using random-effects meta-analysis (RMA), which accounts for random between-study variation, studies do not need to be exact replications, making it a good way to deal with the replicaiton crisis.
+Over recent years, the scientific community has been facing a replication crisis, with growing numbers of studies failing to reproduce previously published findings @klugkist_volker. In this light, research synthesis methods that aggregate evidence from multiple replication studies, have gained more popularity @vanlissa. One of the most well known research synthesis methods is meta-analysis, in which results from multiple studies are pooled on the level of effect sizes, increasing the power of the individual studies @klugkist, @vanlissa. Especially when using random-effects meta-analysis (RMA), which accounts for random between-study variation, studies do not need to be exact replications, making it a good way to deal with the replication crisis.
 
 However, because results are pooled at the effect size level, a drawback of meta-analysis is that the effect sizes and methodologies of the synthesized studies need to be similar/comparable. So even when studies are theoretically similar and focus on the same underlying hypothesis, meta-analysis may not always be able to synthesise their results if their effect sizes differ @volker_klugkist. An alternative synthesis method that does allow synthesis on the hypothesis level, rather than the effect size level, is Bayesian Evidence Synthesis (BES) @volker, @vanlissa. Because the method does not pool the data, one disadvantage is that BES does not increase the power, but rather shows whether all studies align in the presence and direction of any effect. 
 
-In a simulation study by @vanlissa, BES was shown to be a promising synthesis method. This internship was aimed to replicate this simulation study, and expand it to new scenarios to test whether the very positive image they pained of BES would remain the same. *[mention here that they used an arbitrary threshold or do that later??]*
+In a simulation study by @vanlissa, BES was shown to be a promising synthesis method. This internship was aimed to replicate this simulation study, and expand it to new scenarios to test whether the very positive image they painted of BES would remain the same. *[mention here that they used an arbitrary threshold or do that later??]*
 
 ## Bayesian Evidence Synthesis
 To understand BES, it is important to first understand how Bayes Factors (BFs) are defined. BFs measure the relative probability of the data under two different hypotheses, $H_1$ and $H_2$ @volkerklugkist, @hoijtink2019. This means that an informative hypothesis $H_i$ is always tested against an alternative hypothesis $H_a$. Three hypotheses that are often used as alternatives are (1) the unconstrained hypothesis, $H_u$, that includes all possible values within the parameter space, (2) the complement of the informative hypothesis, $H_c$, that includes the set of all values that are not in $H_i$, and (3) the null hypothesis, $H_0$.
@@ -95,7 +95,8 @@ This internship was focused on evaluating the performance of BES based on the fu
 `Except for the results of the pBF, the confusion matrix did not completely replicate, which was likely due to slight numerical sensitivity of the evidence methods (see <github.com/lodewijn> for the replication scripts).`
 
 ```{r, warning=FALSE, include=TRUE, echo=FALSE, message=FALSE}
-#| fig-cap: "Boundary case, true correlation = 0.1, Hi and Hc are both false"
+#| label: fig-pBFCOR
+#| fig-cap: "Boundary case, true correlation = 0.1, Hi and Hc are both false. Red line: log(1) = 0, 1000 iterations, Number of studies (k), within study sample size (n) and reliability (errorsd)"
 
 # log pbf IC, es = 0.1
 
@@ -131,13 +132,12 @@ orig_dat %>%
   facet_wrap(~ n, labeller = labeller(n = n.labs,k = k.labs)) + 
    geom_vline(xintercept=log10(1), color = "red", size = 0.2) +
   labs(x = expression(log[10](pBF_ic)), 
-       y = "Number of Studies (k)",
-       caption = "Red line: log(1) = 0, 1000 iterations, \n Number of studies (k), within study sample size (n) and reliability (errorsd)", 
+       y = "Number of Studies (k)", 
        fill = "Error SD") +  
   theme_minimal()
 ```
 
-In this plot, the true effect size (`es`) equals 0.1, which means that the true parameter value is on the boundary of the hypotheses $H_i$ and $H_c$. Therefore it is expected that the $log_{10} pBF_ic$ would be distributed symmetrically around zero, being unable to provide convincing evidence for either hypothesis. 
+In @fig-pBFCOR, the true effect size (`es`) equals 0.1, which means that the true parameter value is on the boundary of the hypotheses $H_i$ and $H_c$. Therefore it is expected that the $log_{10} pBF_ic$ would be distributed symmetrically around zero, being unable to provide convincing evidence for either hypothesis. 
 
 Especially with increasing `errorsd` values, an interesting pattern emerged. Whereas the $log_{10} pBF_ic$ distributions were symmetrical around zero when the error was 0, at higher error values the $log_{10} pBF_ic$ shifted towards evidence in favour of $H_c$. If the within-study sample sizes (`n`) are small (e.g., 20 or 50), the shift was less prominent. However, when the within-study sample sizes (`n`) increase (e.g., 200, 500), especially in combination with higher numbers of studies (`k`), $H_c$ was consistently favoured over $H_i$. This suggests that higher error, especially in combination with many and large studies, will result in a stronger shift towards evidence for $H_c$.
 
@@ -148,10 +148,11 @@ The parameter of interest in this simulation study is a correlation, implying th
 - (1d) $H_i: \rho > -0.8 \text{ versus } H_c: \rho \le -0.8 \text{, when es = } -0.8$, in this case it is expected that with higher error values, there will be shift towards positive $log_{10} \text{ } pBF_{ic}$ values, indicating evidence for $H_i$, as now this hypothesis will entail the largest proportion of the parameter space.
 
 #### Constrained Parameter Space and Complexity
-The simulated results showed exactly what we expected: when the reliability was low (high error), the $log_{10} \text{ } pBF_{ic}$ always tended towards evidence for the hypothesis with the largest parameter space. When the boundary value was more extreme (e.g., 0.8 or -0.8) the shift in evidence was also more extreme (see Figure 2 for an example). Moreover, in simulation 1b where both hypotheses had equal parameter spaces ($H_i: \rho \in [0,1]$ and $H_c: \rho \in [-1, 0]$) it stood out that all pBF distributions were centered nicely around a $log_{10} \text{ } pBF_{ic}$ of zero. 
+The simulated results showed exactly what we expected: when the reliability was low (high error), the $log_{10} \text{ } pBF_{ic}$ always tended towards evidence for the hypothesis with the largest parameter space. When the boundary value was more extreme (e.g., 0.8 or -0.8) the shift in evidence was also more extreme (see @fig-pBFCOR08 for an example). Moreover, in simulation 1b where both hypotheses had equal parameter spaces ($H_i: \rho \in [0,1]$ and $H_c: \rho \in [-1, 0]$) it stood out that all pBF distributions were centered nicely around a $log_{10} \text{ } pBF_{ic}$ of zero. 
 
 ```{r, warning=FALSE, include=TRUE, echo=FALSE, message=FALSE}
-#| fig-cap: "Boundary case, true correlation = 0.8, Hi and Hc are both false"
+#| label: fig-pBFCOR08
+#| fig-cap: "Boundary case, true correlation = 0.8, Hi and Hc are both false. Red line: log(1) = 0, 1000 iterations, Number of studies (k), within study sample size (n) and reliability (errorsd)"
 
 # log pbf IC, es = 0.8
 
@@ -187,8 +188,7 @@ dat_all_es_types %>%
   facet_wrap(~ n, labeller = labeller(n = n.labs,k = k.labs)) + 
    geom_vline(xintercept=log10(1), color = "red", size = 0.2) +
   labs(x = expression(log[10](pBF_ic)), 
-       y = "Number of Studies (k)", 
-       caption = "Red line: log(1) = 0, 1000 iterations, \n Number of studies (k), within study sample size (n) and reliability (errorsd)", , fill = "Error SD") +  
+       y = "Number of Studies (k)", fill = "Error SD") +  
   theme_minimal()
 ```
 
@@ -229,7 +229,8 @@ To answer the question how the pBF distributions behave when using effect sizes 
 Because both covariance and $\beta$ have unbounded parameter spaces, it was expected that for both effect size types, the $log_{10} \text{ } pBF_{ic}$ distributions would be symmetrical around 0, indicating neutral evidence for both $H_i$ and $H_c$. 
 
 ```{r, warning=FALSE, include=TRUE, echo=FALSE, message=FALSE}
-#| fig-cap: "Boundary case, Hi and Hc are both false"
+#| label: fig-COVBETA
+#| fig-cap: "Boundary case, Hi and Hc are both false. Red line: log(1) = 0, 1000 iterations, Number of studies (k), within study sample size (n) and reliability (errorsd)"
 #| fig-subcap:
 #|   - "True covariance = 0.8"
 #|   - "True beta = 0.8"
@@ -271,9 +272,8 @@ cov_08 <- dat_all_es_types %>%
   facet_wrap(~ n, labeller = labeller(n = n.labs,k = k.labs)) + 
    geom_vline(xintercept=log10(1), color = "red", size = 0.2) +
   labs(x = expression(log[10](pBF_ic)), 
-       y = "Number of Studies (k)",
-       caption = "Red line: log(1) = 0, 1000 iterations, \n Number of studies (k), within study sample size (n) and reliability (errorsd)", , fill = "Error SD") +  
-  theme_minimal()
+       y = "Number of Studies (k)", fill = "Error SD") +  
+  theme_minimal() + theme(legend.position = "none")
 
 beta_08 <- dat_all_es_types %>%
   filter(es == 0.8) %>%
@@ -299,8 +299,7 @@ beta_08 <- dat_all_es_types %>%
   facet_wrap(~ n, labeller = labeller(n = n.labs,k = k.labs)) + 
    geom_vline(xintercept=log10(1), color = "red", size = 0.2) +
   labs(x = expression(log[10](pBF_ic)), 
-       y = "Number of Studies (k)",
-       caption = "Red line: log(1) = 0, 1000 iterations, \n Number of studies (k), within study sample size (n) and reliability (errorsd)", , fill = "Error SD") +  
+       y = "Number of Studies (k)", fill = "Error SD") +  
   theme_minimal()
 
 
@@ -308,9 +307,9 @@ cov_08
 beta_08
 ```
 
-As can be seen in Figure 3a (which shows simulation 2c because this is an extreme case), the covariances behaved exactly as we expected; in simulation 2a-2d, all $log_{10} \text{ } pBF_{ic}$ distributions were nicely centered around 0 (all simulation plots can be found <github/lodewijn>). 
+As can be seen in @fig-COVBETA-1 (which shows simulation 2c because this is an extreme case), the covariances behaved exactly as we expected; in simulation 2a-2d, all $log_{10} \text{ } pBF_{ic}$ distributions were nicely centered around 0 (all simulation plots can be found <github/lodewijn>). 
 
-However, when $\beta$ was the effect size of interest, the $log_{10} \text{ } pBF_{ic}$ distributions did not behave as expected (see Figure 3b). All distributions showed the same pattern that was observed in the correlations, with more extreme boundary values resulting in stronger shifts towards the hypothesis that had the largest parameter space. This means that it is unlikely that the shift in evidence can be explained by prior truncation, as this does not happen in $\beta$.
+However, when $\beta$ was the effect size of interest, the $log_{10} \text{ } pBF_{ic}$ distributions did not behave as expected (see @fig-COVBETA-2). All distributions showed the same pattern that was observed in the correlations, with more extreme boundary values resulting in stronger shifts towards the hypothesis that had the largest parameter space. This means that it is unlikely that the shift in evidence can be explained by prior truncation, as this does not happen in $\beta$.
 
 ## Properties of the effect sizes
 Aiming to understand why the shift in evidence was observed in $\rho$ and $\beta$, but not in covariances, we decided to take a closer look at the data generating mechanism of the simulation and the properties of the effect size types.
@@ -333,8 +332,8 @@ When we look at the data generating mechanism again, we have to take into accoun
 
 For the covariance:
 \begin{align}
-&Cov(X_{obs} + \epsilon_X,Y_{obs} + X + \epsilon_Y)  \\
-&= Cov(X,Y) + Cov(X, \epsilon_Y) + Cov(Y,\epsilon_X) + Cov(\epsilon_X,\epsilon_Y) \\
+&Cov(X_{obs}, Y_{obs}) = Cov(X + \epsilon_X, Y + \epsilon_Y)  \\
+&= Cov(X,Y) + Cov(X, \epsilon_Y) + Cov(Y,\epsilon_X) + Cov(\epsilon_X, \epsilon_Y) \\
 &= Cov(X,Y) \\
 &= \rho \text{,}
 \end{align}
@@ -343,8 +342,8 @@ given that $\epsilon_Y$ and $\epsilon_X$ are unrelated to each other and to X an
 
 For the correlation:
 \begin{align}
-&Cor(X_{obs} + \epsilon_X,Y_{obs} + X + \epsilon_Y) \\
-&= \frac{Cov(X_{obs} + \epsilon_X,Y_{obs} + X + \epsilon_Y)}{\sqrt{Var(X + \epsilon_X) \cdot Var(Y + \epsilon_Y)}} \\
+&\rho{obs} = Cor(X_{obs} + \epsilon_X, Y_{obs} + \epsilon_Y) \\
+&= \frac{Cov(X_{obs}, Y_{obs})}{\sqrt{Var(X + \epsilon_X) \cdot Var(Y + \epsilon_Y)}} \\
 &= \frac{\rho}{\sqrt{(Var(X) + Var(\epsilon_X)) \cdot (Var(Y) + Var(\epsilon_Y))}} \\
 &= \frac{\rho}{\sqrt{(1 + errorsd^2) \cdot (1 + errorsd^2)}} \\
 &= \frac{\rho}{1 + errorsd^2}
@@ -352,16 +351,18 @@ For the correlation:
 
 For the regression coefficient:
 \begin{align}
-&\beta_{obs} = \frac{Cov(X_{obs} + \epsilon_X,Y_{obs} + X + \epsilon_Y)}{Var(X_{obs} + \epsilon_X)} = \frac{\rho}{1 + errorsd^2}
+&\beta_{obs} = \frac{Cov(X_{obs}, Y_{obs})}{Var(X_{obs})} \\
+&= \frac{\rho}{(Var(X) + Var(\epsilon_X))} = \frac{\rho}{1 + errorsd^2}
 \end{align}
 
 This means that both $\rho_{obs}$ and $\beta_{obs}$ are limited by the standard deviation that is specified in the model parameters, while this does not hold for the covariances. This process of attenuation may explain why the observed shift with increasing error is only visible in $\rho$ and $\beta$, but not in the covariances. Since $\rho_{obs}$ and $\beta_{obs}$ are the effect sizes that are used to calculate BFs using bain, and both parameters shrink relative to their true values when there is error, the question becomes whether $\rho_{obs} > 0.1$, which it is not. This means that because of the attenuation, $H_c$ in fact becomes true, and it is not surprising the pBF consistently provides evidence in favour of this hypothesis. 
 
 ## Simulation 3: Compare to RMA
-To see if attenuation would also play a role using frequentist methods, RMA was used to pool correlation estimates from the k different studies. The mean correlation estimate and SE resulting from this were then passed to `bain` to get one BF, which was repeated 1000 times, to then plot all BFs. 
+To see if attenuation would also play a role using frequentist methods, RMA was used to pool correlation estimates from the k different studies. The mean correlation estimates and SEs resulting from this were then passed to `bain` to get one BF, which was repeated 1000 times, to then plot all BFs. 
 
 ```{r, warning=FALSE, include=TRUE, echo=FALSE, message=FALSE}
-#| fig-cap: "RMA, boundary case, true correlation = 0.1, Hi and Hc are both false"
+#| label: fig-RMABF
+#| fig-cap: "RMA, boundary case, true correlation = 0.1, Hi and Hc are both false. Red line: log(1) = 0, 1000 iterations, Number of studies (k), within study sample size (n) and reliability (errorsd)"
 
 # log pbf IC, es = 0.8
 
@@ -397,23 +398,143 @@ dat_all_es_types %>%
   facet_wrap(~ n, labeller = labeller(n = n.labs,k = k.labs)) + 
    geom_vline(xintercept=log10(1), color = "red", size = 0.2) +
  labs(x = expression(log[10](BF_rma_ic)), 
-      y = "Number of Studies (k)",
-       caption = "Red line: log(1) = 0, 1000 iterations, \n Number of studies (k), within study sample size (n) and reliability (errorsd)", , fill = "Error SD") +  
+      y = "Number of Studies (k)", fill = "Error SD") +  
   theme_minimal()
 ```
-Figure 4 shows the $log_{10} \text{ } BF_{ic}$ distributions when first pooling all correlation estimates, and then performing RMA. It stands out that the shift in evidence towards $H_c$ is also visible here. Consistent with the pBFs, with more extreme boundary values such as 0.8, the shift in evidence towards $H_c$ was more extreme in this case. This means that the evidence shift introduced by measurement error persists at the level of the pooled estimate, and pooling correlation estimates via RMA before applying `bain` does not protect against attenuation. 
+@fig-RMABF shows the $log_{10} \text{ } BF_{ic}$ distributions when first pooling all correlation estimates, and then performing RMA. It stands out that the shift in evidence towards $H_c$ is also visible here. Consistent with the pBFs for $\rho$ and $\beta$, with more extreme boundary values such as 0.8, the shift in BF values indicating evidence for $H_c$ was more extreme. This means that the evidence shift introduced by measurement error persists at the level of the pooled estimate, and pooling correlation estimates via RMA before applying `bain` does not seem to protect against attenuation.
 
 ## Simulation 4: Ordered hypotheses
-Given that attenuation of correlation seems to play a role both in Bayesian and frequentist methods, the question of how to deal with this arose. When testing ordered hypotheses, such as $H_i: \rho_1 < \rho_2 < \rho3$, attenuation may not be as big of a problem, if all correlations would have equal measurement error. To see how the pBF would behave in this scenario, we set up a simulation where there were two conditions for $rho$:
+Given that attenuation of correlation seems to play a role both in Bayesian and frequentist methods, the question remains how to deal with this. When testing ordered hypotheses, such as $H_i: \rho_1 < \rho_2 < \rho3$, attenuation may not be as big of a problem. If all correlations have equal measurement error, they are expected to all attenuate the same, so it is expected that the order would remain the same as well. To see how the pBF behaves in this scenario, we set up a simulation where $H_i: \rho_1 < \rho_2 < \rho3$, or $H_i: Cov(X,Y) < Cov(X,Z) < Cov(Y,Z)$ was tested, under different measurement conditions. For the conditions, see @tab-ORDEREDCOND. 
  
-- Unequal: $rho_1$ = Cor(X,Y) = -0.1, $rho_2$ = Cor(X,Z) = 0, $rho_3$ = Cor(Y,Z) = 0.1, so $H_i$ was true
-- Equal: $rho_1 = rho_2 = rho_3$ = 0.1, so $H_i$ and $H_c$ were both
+```{r, warning=FALSE, include=TRUE, echo=FALSE}
+#| label: tab-ORDEREDCOND
+#| tbl-cap: "Simulation conditions for ordered hypothesis Hi: r1 < r2 < r3."
+#| 
+ordered_sim_conditions <- data.frame(
+  Hypothesis = c("Hi is true",
+             "Hi and Hc are both false",
+             ""),
+  `True Correlation` = c("Ordered: r1 < r2 < r3",
+                  "Equal: r1 = r2 = r3 = 0.1",
+                  ""),
+  `Error Condition` = c("Equal at 0", 
+                        "Equal at 0.5",
+                        "Unequal: eX = 0.81, eY = 0, eZ = 0.5"),
+  check.names = FALSE
+)
 
-In addition, for the error, three different conditions were tested:
+kable(
+  ordered_sim_conditions,
+  booktabs = TRUE
+) |>
+  kable_styling(
+    full_width = FALSE,
+    bootstrap_options = c()
+  )
+```
 
-- Equal error at 0
-- Equal error at 0.5
-- Unqual error, where $\epsilon_X$ = 0.81, $\epsilon_Y$ = 0, $\epsilon_Z$ = 0.5
+
+
+```{r, warning=FALSE, include=TRUE, echo=FALSE, message=FALSE}
+#| label: fig-ORDERED
+#| fig-cap: "Ordered hypothesis r1 < r2 < r3. Red line: log(1) = 0, 1000 iterations, Number of studies (k), within study sample size (n) and reliability (errorsd)."
+#| fig-subcap:
+#|   - "True r1 = -0.1, r2 = 0, r3 = 0.1, Hi is true"
+#|   - "True r1 = r2 = r3 = 0.1, Hi is false"
+#| layout-ncol: 2
+#| fig-cap-location: bottom
+#| subcap-labels: none
+
+# log pbf IC, es = 0.8
+
+# New facet label names for k variable
+k.labs <- c("k = 2", "k = 3", "k = 10")
+names(k.labs) <- c("2", "3", "10")
+
+# New facet label names for n variable
+n.labs <- c("n = 20", "n = 80", "n = 200", "n = 500")
+names(n.labs) <- c("20", "80", "200", "500")
+
+ordered_Hi_false <- dat_ordered_hyp %>%
+  filter(rho_type == "equal") %>%
+  ggplot(aes(x = log10(prodbf_ordered_ic), y = factor(k), fill = factor(errorsd_type))) +
+  stat_halfeye(
+    adjust = 0.5,
+    justification = -0.3,
+    .width = 0,
+    point_colour = NA, 
+    alpha = 0.5
+  ) +
+  geom_boxplot(
+    width = 0.12,
+    outlier.color = NA,
+    alpha = 0.7
+  ) +
+  stat_dots(
+    side = "left",
+    justification = 1.3,
+    binwidth = 0.1, 
+    alpha=0.05, 
+  ) +
+  facet_wrap(~ n, labeller = labeller(n = n.labs,k = k.labs)) + 
+   geom_vline(xintercept=log10(1), color = "red", size = 0.2) +
+  labs(x = expression(log[10](pBF_ic)), 
+       y = "Number of Studies (k)", fill = "Error SD") +  
+  theme_minimal() + theme(legend.position = "none")
+
+ordered_Hi_true <- dat_ordered_hyp %>%
+  filter(rho_type == "ordered") %>%
+  ggplot(aes(x = log10(prodbf_ordered_ic), y = factor(k), fill = factor(errorsd_type))) +
+  stat_halfeye(
+    adjust = 0.5,
+    justification = -0.3,
+    .width = 0,
+    point_colour = NA, 
+    alpha = 0.5
+  ) +
+  geom_boxplot(
+    width = 0.12,
+    outlier.color = NA,
+    alpha = 0.7
+  ) +
+  stat_dots(
+    side = "left",
+    justification = 1.3,
+    binwidth = 0.1, 
+    alpha=0.05, 
+  ) +
+  facet_wrap(~ n, labeller = labeller(n = n.labs,k = k.labs)) + 
+   geom_vline(xintercept=log10(1), color = "red", size = 0.2) +
+  labs(x = expression(log[10](pBF_ic)), 
+       y = "Number of Studies (k)", fill = "Error SD") +  
+  theme_minimal()
+
+ordered_Hi_false
+ordered_Hi_true
+```
+
+@fig-ORDERED-1 shows the $log_{10} \text{ } BF_{ic}$ distributions where both $H_i$ and $H_c$ are false. It stands out that all distributions are centered around zero, even when there is error, suggesting that attenuation does not seem to affect the pBF when testing an ordered hypothesis. Only when the number of studies is large, there seems to be a small shift in evidence towards $H_c$. 
+
+In @fig-ORDERED-2, two things become clear. First, when the within study sample size is small, it becomes clear that pBF does not increase the power to find an effect when it is indeed there. Secondly, regardless of whether all $\rho$ values have equal or unequal error values, any error will induce a shift in evidence away from $H_i$. 
+
+`In Figure 5b, it is clear that measurement error reduces the power of the pBF to detect a true ordered hypothesis. When errorsd = 0, the distributions shift rightward toward Hi, particularly with larger n and k. However, when measurement error is present — whether equal or unequal across groups — this shift is attenuated, with distributions remaining closer to zero. Importantly, measurement error does not appear to actively mislead the pBF toward Hc, suggesting that for ordered hypotheses, attenuation reduces sensitivity without inducing false evidence against Hi.`
+
+`Figure 5b shows that when n is small (n = 20), the pBF distributions are centred around zero across all errorsd conditions, including when there is no measurement error (equal_0). This suggests that with small within-study sample sizes, the pBF lacks the power to detect the true ordering even when Hi is true. As n increases, the equal_0 condition shifts rightward, indicating that without measurement error the pBF does detect the true ordering with sufficient data. However, when measurement error is present (equal_05 and unequal), the distributions remain closer to zero regardless of n, suggesting that attenuation reduces the power to detect the true ordering. Notably, this reduction in power does not manifest as a shift toward HcH_c Hc​ — the pBF simply becomes less decisive rather than actively misleading.`
+
+When looking at the formulas, the fact that both error conditions that contain error greater than zero, it makes sense that the unequal and equal condition behave similarly. 
+
+For the correlation in the unequal condition:
+\begin{align}
+&\rho_{1obs} = Cor(X_{obs} + \epsilon_X,Y_{obs} + \epsilon_Y) \\
+&= \frac{\rho_{1obs}}{\sqrt{(Var(X) + Var(\epsilon_X)) \cdot (Var(Y) + Var(\epsilon_Y))}} \\
+&= \frac{\rho}{\sqrt{(1 + errorsd_X^2) \cdot (1 + errorsd_Y^2)}}
+\end{align}
+
+\begin{align}
+&\rho_{2obs} = Cor(X_{obs} + \epsilon_X, Z_{obs} + \epsilon_Z) \\
+&= \frac{\rho_{1obs}}{\sqrt{(Var(X) + Var(\epsilon_X)) \cdot (Var(Y) + Var(\epsilon_Y))}} \\
+&= \frac{\rho}{\sqrt{(1 + errorsd_X^2) \cdot (1 + errorsd_Y^2)}}
+\end{align}
 
 
 

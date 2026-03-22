@@ -147,13 +147,13 @@ dat2 %>%
 
 ## Test how observed rho changes with errorsd
 ```{r}
-r1 = 0.05 # X,Y
+r1 = 0.1 # X,Y
 r2 = 0.1 # X, Z
-r3 = 0.15 # Y, Z
+r3 = 0.1 # Y, Z
 
-errorsd_X = 0.5
-errorsd_Y = 0.5
-errorsd_Z = 0.5
+errorsd_X = 0
+errorsd_Y = 0
+errorsd_Z = 0.8
 
 r_obs = function(r, error1, error2) {r / sqrt((1+error1^2) * (1+error2^2))}
 
@@ -165,9 +165,9 @@ r1_obs
 r2_obs
 r3_obs
 
-0.15 - 0.05 # error = 0
-0.12 - 0.04 # error = 0.5
-0.09 - 0.03 # error = 0.81
+#0.15 - 0.05 # error = 0
+#0.12 - 0.04 # error = 0.5
+#0.09 - 0.03 # error = 0.81
 
 # the difference between r1_obs and r3_obs becomes smaller when the error increases
 # indicating that more and more power is needed to detect an effect (which can be a problem with pBF)
