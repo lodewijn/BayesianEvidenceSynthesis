@@ -1,6 +1,18 @@
-# Readme <a href='https://osf.io/zcvbs/'><img src='worcs_icon.png' align="right" height="139" /></a>
+# README
+Although the simulation by @lissa_online_2024 has shown that BES seems to perform quite well compared to other methods, one disadvantage is that they used an arbitrary decision criterion to evaluate the pBF. As @hoijtink_tutorial_2019 argues, unlike p-values, Bayes Factors can and should be interpreted on a continuous scale, not as a binary decision. To properly evaluate the general performance of BES, it might thus be better to take the whole pBF distribution into account.
 
-<!-- Please add a brief introduction to explain what the project is about    -->
+This internship focused on extending the simulation by @lissa_online_2024 to evaluate the performance of BES based on the full distribution of pBF values, aiming to better understand its behaviour across the conditions specified in the original simulation. Each simulation was run with 1000 iterations in RSudio, version 4.4.2 [@RStudio_2024]. To better visualise the pBF distributions, all pBF values were $log_{10}$ transformed. Because the original simulation study mainly focused on sensitivity and specificity, by testing $H_i$ against its complement $H_c$, this internship mainly focused on $pBF_{ic}$ distributions.
+
+Another simulation conducted by @van_wonderen_bayesian_2024 showed that the performance of BES is not always optimal in boundary cases, where neither $H_i$ nor $H_c$ is true. Therefore, this internship focused primarily on these boundary scenarios. In the original simulation, the boundary scenario occurred when $H_i: \rho > 0.1$ was tested against $H_c: \rho \leq 0.1$ and the true effect was $\rho = 0.1$. Given that an estimate can never exactly equal any specific value, by definition both $H_i$ and $H_c$ are not true when the true effect size is exactly 0.1. Since neither hypothesis is true, it was expected that all $log_{10} pBF_ic$ distributions were centered around 0 (corresponding to a pBF of 1 - $log_{10}(1) = 0$). This would indicate neutral evidence for either hypothesis.
+
+After exploring the original $pBF_{ic}$ distributions, this internship extended the original simulation as follows:
+
+- **Simulation 1:**  Testing a wider range of informed hypotheses ($H_i: \rho > -0.8$, $H_i: \rho > 0$ and $H_i: \rho > 0.8$).
+- **Simulation 2:** Including other effect size types, namely covariances and regression coefficients ($\beta$). 
+- **Simulation 3:** Pooling the results from k studies using RMA and passing the mean correlation estimates and SEs to `bain`, then plot the BFs based on pooled estimates.
+- **Simulation 4:** Testing an ordered hypothesis: $H_i: \rho_1 < \rho_2 < \rho_3$. 
+
+All extensions of the original simulations can be found in the forked repository, under [ExtentedSimulationL](https://github.com/lodewijn/BayesianEvidenceSynthesis/tree/master/ExtentedSimulationL).
 
 ## Where do I start?
 
